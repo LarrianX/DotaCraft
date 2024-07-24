@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "dotacraft",
+	"version": "${version}",
+	"name": "DotaCraft",
+	"description": "Мод переносящий Dota 2 в Minecraft",
+	"authors": [
+		"LarrianX",
+		"Youlday",
+		"Nuklon"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/dotacraft/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.dota2.DotaCraft"
+		],
+		"client": [
+			"com.dota2.DotaCraftClient"
+		],
+		"fabric-datagen": [
+			"com.dota2.DotaCraftDataGenerator"
+		]
+	},
+	"mixins": [
+		"dotacraft.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
