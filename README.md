@@ -1,2 +1,2 @@
 # DotaCraft
-Mod for Minecraft which makes the Dota 2
+Дота 2 в Minecraft. Что может быть лучше?
