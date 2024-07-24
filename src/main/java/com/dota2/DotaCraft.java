@@ -1,5 +1,6 @@
 package com.dota2;
 
+import com.dota2.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -12,6 +13,6 @@ public class DotaCraft implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		LOGGER.info("Hello world!");
+		ModItems.registerModItems();
 	}
 }
