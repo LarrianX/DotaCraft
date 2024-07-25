@@ -57,6 +57,10 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: build-artifacts
+        
+
+    - name: List build directory
+      run: ls -R build
 
     - name: Create GitHub Release
       id: create_release
