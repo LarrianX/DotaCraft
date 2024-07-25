@@ -88,5 +88,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.VERSION }}-${{ env.MINECRAFT_VERSION }}.jar
-        asset_name: dotacraft-{{ env.VERSION }}-{{ env.MINECRAFT_VERSION }}.jar
+        asset_name: dotacraft-${{ env.VERSION }}-${{ env.MINECRAFT_VERSION }}.jar
         asset_content_type: application/java-archive
