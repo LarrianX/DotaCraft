@@ -20,6 +20,7 @@ public class ModItems {
         entries.add(FLASK);
         entries.add(CLARITY);
         entries.add(MANGO);
+
     }
 
     private static Item registerItem(String name, Item item) {
