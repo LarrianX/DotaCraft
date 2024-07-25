@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Build Mod
 
 on:
   push:
@@ -70,12 +70,15 @@ jobs:
         draft: false
         prerelease: false
 
+    - name: List build directory
+      run: ls -R /home/runner/work/DotaCraft/DotaCraft/build
+    
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: build/libs/*.jar
+        asset_path: /home/runner/work/DotaCraft/DotaCraft/build/libs/*.jar
         asset_name: my-java-app.jar
         asset_content_type: application/java-archive
