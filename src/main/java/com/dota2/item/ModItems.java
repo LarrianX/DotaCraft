@@ -15,6 +15,7 @@ public class ModItems {
     public static final Item FLASK = registerItem("flask", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item CLARITY = registerItem("clarity", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item MANGO = registerItem("mango", new Item(new FabricItemSettings().maxCount(8)));
+    // уауауауауаауа
 
     public static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries) {
         entries.add(FLASK);
