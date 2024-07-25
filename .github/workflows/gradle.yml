@@ -37,6 +37,9 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: List build directory
+      run: ls -R build
+
     - name: Save build artifacts
       uses: actions/upload-artifact@v3
       with:
