@@ -71,7 +71,7 @@ jobs:
         prerelease: false
 
     - name: List build directory
-      run: ls -R /home/runner/work/DotaCraft/DotaCraft/build
+      run: ls -R /home/runner/work/DotaCraft/DotaCraft/
     
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
@@ -79,6 +79,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: /home/runner/work/DotaCraft/DotaCraft/build/libs/*.jar
+        asset_path: /home/runner/work/DotaCraft/DotaCraft/*.jar
         asset_name: my-java-app.jar
         asset_content_type: application/java-archive
