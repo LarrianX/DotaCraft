@@ -13,9 +13,11 @@ import net.minecraft.util.Identifier;
 public class ModItems {
     // Даже несмотря на то, что правильно называть Healing Salve, его id - flask
     public static final Item FLASK = registerItem("flask", new Item(new FabricItemSettings().maxCount(8)));
+    public static final Item CLARITY = registerItem("clarity", new Item(new FabricItemSettings().maxCount(8)));
 
     public static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries) {
         entries.add(FLASK);
+        entries.add(CLARITY);
     }
 
     private static Item registerItem(String name, Item item) {
