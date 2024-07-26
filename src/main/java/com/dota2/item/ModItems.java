@@ -22,8 +22,13 @@ public class ModItems {
 
     public static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
         for (CustomItemWrapper<?> wrapper : items) {
-            registerItem(wrapper.item().getId(), wrapper.item());
             entries.add(wrapper.item().getForTabItemGroup());
+        }
+    }
+
+    public static void registerItems() {
+        for (CustomItemWrapper<?> wrapper : items) {
+            registerItem(wrapper.item().getId(), wrapper.item());
         }
     }
 
@@ -33,6 +38,7 @@ public class ModItems {
 
     public static void registerModItems() {
         DotaCraft.LOGGER.info("Registering Mod Items for " + DotaCraft.MOD_ID);
+        registerItems();
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemsToTabItemGroup);
     }

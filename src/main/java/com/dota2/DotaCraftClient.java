@@ -12,28 +12,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DotaCraftClient implements ClientModInitializer {
-    public static final String MOD_ID = "dotacraft";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override
     public void onInitializeClient() {
-//        Item bottle = null;
-//        for (CustomItemWrapper<?> wrapper : ModItems.items) {
-//            if (wrapper.item().getId().equals("bottle")) {
-//                bottle = wrapper.item();
-//            }
-//        }
+        Item bottle = null;
+        for (CustomItemWrapper<?> wrapper : ModItems.items) {
+            if (wrapper.item().getId().equals("bottle")) {
+                bottle = wrapper.item();
+            }
+        }
 
-//        if (bottle != null) {
-//            ModelPredicateProviderRegistry.register(
-//                    bottle,
-//                    new Identifier("fullness"),
-//                    (stack, world, entity, seed) -> {
-//                        float value = (float) Bottle.getFullness(stack) / Bottle.MAX_FULLNESS;
-//                        return Math.round(value * 100.0f) / 100.0f;
-//                    }
-//            );
-//            LOGGER.info("Registered predicate for bottle");
-//        }
+        if (bottle != null) {
+            ModelPredicateProviderRegistry.register(
+                    bottle,
+                    new Identifier("fullness"),
+                    (stack, world, entity, seed) -> {
+                        float value = (float) Bottle.getFullness(stack) / Bottle.MAX_FULLNESS;
+                        return Math.round(value * 100.0f) / 100.0f;
+                    }
+            );
+            DotaCraft.LOGGER.info("Registered predicate for bottle");
+        }
     }
 }
