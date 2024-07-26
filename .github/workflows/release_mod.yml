@@ -14,20 +14,26 @@ jobs:
       contents: write
 
     steps:
-      - name: Set up GitHub CLI
-        uses: actions/setup-gh@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Download artifacts from previous workflow
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up GitHub CLI
+        uses: cli/cli@v2
+        with:
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get the latest workflow run ID
+        id: get_run_id
+        run: |
+          RUN_ID=$(gh run list --workflow=build.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+          echo "RUN_ID=${RUN_ID}" >> $GITHUB_ENV
+
+      - name: Download artifact
         run: |
           ARTIFACT_NAME=${{ github.event.inputs.artifact_name }}
-          WORKFLOW_RUN_ID=$(gh run list --workflow=build.yml --limit 1 --json databaseId --jq '.[0].databaseId')
-          ARTIFACT_URL="https://api.github.com/repos/${{ github.repository }}/actions/runs/${WORKFLOW_RUN_ID}/artifacts"
+          ARTIFACT_URL="https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ env.RUN_ID }}/artifacts"
           
-          ARTIFACT_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" $ARTIFACT_URL | jq '.artifacts[] | select(.name == "'$ARTIFACT_NAME'") | .id')
+          ARTIFACT_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" $ARTIFACT_URL | jq -r '.artifacts[] | select(.name == "'"$ARTIFACT_NAME"'") | .id')
           ARTIFACT_DOWNLOAD_URL="https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${ARTIFACT_ID}/zip"
           
           curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" $ARTIFACT_DOWNLOAD_URL -o artifact.zip
