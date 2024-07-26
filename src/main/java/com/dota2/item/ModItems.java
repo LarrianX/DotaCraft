@@ -15,12 +15,14 @@ public class ModItems {
     public static final Item FLASK = registerItem("flask", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item CLARITY = registerItem("clarity", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item MANGO = registerItem("mango", new Item(new FabricItemSettings().maxCount(8)));
+    public static final Item BOTTLE1 = registerItem("bottle1", new Item(new FabricItemSettings().maxCount(1)));
     // уауауауауаауаaaa
 
     public static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries) {
         entries.add(FLASK);
         entries.add(CLARITY);
         entries.add(MANGO);
+        entries.add(BOTTLE1);
 
     }
 
