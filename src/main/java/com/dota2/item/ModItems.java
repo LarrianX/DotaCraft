@@ -29,6 +29,7 @@ public class ModItems {
         entries.add(BOTTLE2);
         entries.add(BOTTLE3);
         entries.add(BOTTLE4);
+
     }
 
     private static Item registerItem(String name, Item item) {
