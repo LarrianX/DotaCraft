@@ -12,10 +12,12 @@ public class Mango extends Item implements CustomItem {
         super(new FabricItemSettings().maxCount(8).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.2F).build()));
     }
 
+    @Override
     public String getId() {
         return ID;
     }
 
+    @Override
     public ItemStack getForTabItemGroup() {
         return new ItemStack(this);
     }

@@ -11,10 +11,12 @@ public class Daedalus extends Item implements CustomItem {
         super(new FabricItemSettings().maxCount(1));
     }
 
+    @Override
     public String getId() {
         return ID;
     }
 
+    @Override
     public ItemStack getForTabItemGroup() {
         return new ItemStack(this);
     }

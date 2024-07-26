@@ -55,10 +55,12 @@ public class Bottle extends Item implements CustomItem {
         nbt.putInt(FULLNESS_KEY, fullness);
     }
 
+    @Override
     public String getId() {
         return ID;
     }
 
+    @Override
     public ItemStack getForTabItemGroup() {
         ItemStack fullBottleStack = new ItemStack(this);
         Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
