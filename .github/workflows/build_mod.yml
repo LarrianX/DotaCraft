@@ -86,10 +86,15 @@ jobs:
         body: ${{ github.event.inputs.body }}
         draft: false
         prerelease: false
+      continue-on-error: true
+
+    - name: Check for Release Error
+      if: steps.create_release.outcome == 'failure'
+      run: echo "Ошибка: Не удалось создать релиз. Возможно, релиз с таким тегом уже существует." && exit 1
 
     - name: List build directory
       run: ls -R /home/runner/work/DotaCraft/DotaCraft/
-    
+
     - name: Upload Release Assets
       uses: actions/upload-release-asset@v1
       env:
@@ -98,4 +103,14 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.FULL_VERSION }}.jar
         asset_name: dotacraft-${{ env.FULL_VERSION }}.jar
+        asset_content_type: application/java-archive
+
+    - name: Upload Source Jar
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.FULL_VERSION }}-sources.jar
+        asset_name: dotacraft-${{ env.FULL_VERSION }}-sources.jar
         asset_content_type: application/java-archive
