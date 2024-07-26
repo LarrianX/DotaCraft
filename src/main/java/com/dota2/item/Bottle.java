@@ -31,13 +31,13 @@ public class Bottle extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
         ItemStack stack = user.getStackInHand(hand);
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
         if (fullness > 0) {
             nbt.putInt(FULLNESS_KEY, fullness - 1);
+            user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
             return TypedActionResult.success(stack);
         } else {
             return TypedActionResult.fail(stack);
