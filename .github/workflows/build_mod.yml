@@ -75,19 +75,6 @@ jobs:
         echo "VERSION=$version"
         echo "VERSION=$version" >> $GITHUB_ENV
 
-    - name: Create GitHub Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ env.VERSION }}
-        release_name: ${{ env.FULL_VERSION }}
-        body: ${{ github.event.inputs.body }}
-        draft: false
-        prerelease: false
-      continue-on-error: true
-
     - name: Check for Release Error
       if: steps.create_release.outcome == 'failure'
       run: echo "Ошибка: Не удалось создать релиз. Возможно, релиз с таким тегом уже существует." && exit 1
