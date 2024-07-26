@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -15,20 +16,16 @@ public class ModItems {
     public static final Item FLASK = registerItem("flask", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item CLARITY = registerItem("clarity", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item MANGO = registerItem("mango", new Item(new FabricItemSettings().maxCount(8)));
-    public static final Item BOTTLE1 = registerItem("bottle1", new Item(new FabricItemSettings().maxCount(1)));
-    public static final Item BOTTLE2 = registerItem("bottle2", new Item(new FabricItemSettings().maxCount(1)));
-    public static final Item BOTTLE3 = registerItem("bottle3", new Item(new FabricItemSettings().maxCount(1)));
-    public static final Item BOTTLE4 = registerItem("bottle4", new Item(new FabricItemSettings().maxCount(1)));
-    // уауауауауаауаaaa
+    public static final Item BOTTLE = registerItem("bottle", new Bottle(new FabricItemSettings().maxCount(1)));
 
     public static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries) {
         entries.add(FLASK);
         entries.add(CLARITY);
         entries.add(MANGO);
-        entries.add(BOTTLE1);
-        entries.add(BOTTLE2);
-        entries.add(BOTTLE3);
-        entries.add(BOTTLE4);
+
+        ItemStack fullBottleStack = new ItemStack(BOTTLE);
+        Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
+        entries.add(fullBottleStack);
     }
 
     private static Item registerItem(String name, Item item) {
