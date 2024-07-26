@@ -1,0 +1,56 @@
+name: Release Mod
+
+on:
+  workflow_dispatch:
+    inputs:
+      body:
+        description: 'Описание релиза'
+        required: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build-artifacts
+
+    - name: Extract version from file
+      id: extract_version
+      run: |
+        filename=$(basename build/libs/*.jar)
+        version=$(echo $filename | sed -n 's/.*-\([0-9]\+\.[0-9]\+\)-.*/\1/p')
+        echo "VERSION=$version" >> $GITHUB_ENV
+
+    - name: Extract Minecraft version from file
+      id: extract_minecraft_version
+      run: |
+        filename=$(basename build/libs/*.jar)
+        minecraft_version=$(echo $filename | sed -n 's/.*-[0-9]\+\.[0-9]\+-\([0-9]\+\.[0-9]\+\.[0-9]\+\)\.jar/\1/p')
+        echo "MINECRAFT_VERSION=$minecraft_version" >> $GITHUB_ENV
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ env.VERSION }}
+        release_name: ${{ env.VERSION }}
+        body: ${{ github.event.inputs.body }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: build/libs/dotacraft-${{ env.VERSION }}-${{ env.MINECRAFT_VERSION }}.jar
+        asset_name: dotacraft-${{ env.VERSION }}-${{ env.MINECRAFT_VERSION }}.jar
+        asset_content_type: application/java-archive
