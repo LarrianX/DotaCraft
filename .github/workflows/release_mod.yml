@@ -14,9 +14,16 @@ jobs:
       contents: write
 
     steps:
+      - name: Set up GitHub CLI
+        uses: actions/setup-gh@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Download artifacts from previous workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ARTIFACT_NAME=build_artifacts
+          ARTIFACT_NAME=${{ github.event.inputs.artifact_name }}
           WORKFLOW_RUN_ID=$(gh run list --workflow=build.yml --limit 1 --json databaseId --jq '.[0].databaseId')
           ARTIFACT_URL="https://api.github.com/repos/${{ github.repository }}/actions/runs/${WORKFLOW_RUN_ID}/artifacts"
           
