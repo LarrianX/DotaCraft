@@ -58,13 +58,20 @@ jobs:
       with:
         name: build-artifacts
 
-    - name: Extract version from file
-      id: extract_version
+    - name: Extract full version from file
+      id: extract_full_version
       run: |
         filename=$(basename build/libs/dotacraft-*.jar)
         version=${filename#dotacraft-}
         version=${version%.jar}
-        echo "VERSION=$version" >> $GITHUB_ENV
+        echo "FULL_VERSION=$version" >> $GITHUB_ENV
+
+    - name: Extract version from file
+      id: extract_version
+      run: |
+          filename=$(basename build/libs/dotacraft-*-1.20.1.jar)
+          version=$(echo $filename | sed -n 's/^dotacraft-\(.*\)-1\.20\.1\.jar$/\1/p')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
     - name: Create GitHub Release
       id: create_release
@@ -73,7 +80,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ env.VERSION }}
-        release_name: ${{ env.VERSION }}
+        release_name: ${{ env.FULL_VERSION }}
         body: ${{ github.event.inputs.body }}
         draft: false
         prerelease: false
@@ -87,6 +94,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.VERSION }}.jar
-        asset_name: dotacraft-${{ env.VERSION }}.jar
+        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.FULL_VERSION }}.jar
+        asset_name: dotacraft-${{ env.FULL_VERSION }}.jar
         asset_content_type: application/java-archive
