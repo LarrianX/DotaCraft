@@ -64,6 +64,7 @@ jobs:
         filename=$(basename build/libs/dotacraft-*.jar)
         version=${filename#dotacraft-}
         version=${version%.jar}
+        echo "FULL_VERSION=$version"
         echo "FULL_VERSION=$version" >> $GITHUB_ENV
 
     - name: Extract version from file
@@ -71,6 +72,7 @@ jobs:
       run: |
           filename=$(basename build/libs/dotacraft-*-1.20.1.jar)
           version=$(echo $filename | sed -n 's/^dotacraft-\(.*\)-1\.20\.1\.jar$/\1/p')
+          echo "VERSION=$version"
           echo "VERSION=$version" >> $GITHUB_ENV
 
     - name: Create GitHub Release
