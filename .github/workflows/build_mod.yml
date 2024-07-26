@@ -61,16 +61,10 @@ jobs:
     - name: Extract version from file
       id: extract_version
       run: |
-        filename=$(basename build/libs/*.jar)
-        version=$(echo $filename | sed -n 's/.*-\([0-9]\+\.[0-9]\+\)-.*/\1/p')
+        filename=$(basename build/libs/dotacraft-*.jar)
+        version=${filename#dotacraft-}
+        version=${version%.jar}
         echo "VERSION=$version" >> $GITHUB_ENV
-
-    - name: Extract Minecraft version from file
-      id: extract_minecraft_version
-      run: |
-        filename=$(basename build/libs/*.jar)
-        minecraft_version=$(echo $filename | sed -n 's/.*-[0-9]\+\.[0-9]\+-\([0-9]\+\.[0-9]\+\.[0-9]\+\)\.jar/\1/p')
-        echo "MINECRAFT_VERSION=$minecraft_version" >> $GITHUB_ENV
 
     - name: Create GitHub Release
       id: create_release
@@ -93,6 +87,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.VERSION }}-${{ env.MINECRAFT_VERSION }}.jar
-        asset_name: dotacraft-${{ env.VERSION }}-${{ env.MINECRAFT_VERSION }}.jar
+        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.VERSION }}.jar
+        asset_name: dotacraft-${{ env.VERSION }}.jar
         asset_content_type: application/java-archive
