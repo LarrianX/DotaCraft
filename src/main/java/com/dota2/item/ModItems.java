@@ -17,11 +17,13 @@ public class ModItems {
     public static final Item CLARITY = registerItem("clarity", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item MANGO = registerItem("mango", new Item(new FabricItemSettings().maxCount(8)));
     public static final Item BOTTLE = registerItem("bottle", new Bottle(new FabricItemSettings().maxCount(1)));
+    public static final Item DAEDALUS = registerItem("daedalus", new Item(new FabricItemSettings().maxCount(1)));
 
     public static void addItemsToIngredientTabItemGroup(FabricItemGroupEntries entries) {
         entries.add(FLASK);
         entries.add(CLARITY);
         entries.add(MANGO);
+        entries.add(DAEDALUS);
 
         ItemStack fullBottleStack = new ItemStack(BOTTLE);
         Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
