@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class Clarity extends Item implements CustomItem {
-    public static final String ID = "clarity";
+    private static final String ID = "clarity";
 
     public Clarity() {
         super(new FabricItemSettings().maxCount(8));

@@ -4,11 +4,11 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class Daedalus extends Item implements CustomItem {
-    private static final String ID = "daedalus";
+public class BattleFury extends Item implements CustomItem {
+    public static final String ID = "battle_fury";
 
-    public Daedalus() {
-        super(new FabricItemSettings().maxCount(1));
+    public BattleFury() {
+        super(new FabricItemSettings());
     }
 
     @Override

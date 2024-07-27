@@ -11,10 +11,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class Bottle extends Item implements CustomItem {
-    public static final String ID = "bottle";
-    public static final String FULLNESS_KEY = "fullness";
-    public static final int MAX_FULLNESS = 3;
+public class Bottle extends Item implements CustomItem, HasPredicate {
+    private static final String ID = "bottle";
+    private static final String FULLNESS_KEY = "fullness";
+    private static final int MAX_FULLNESS = 3;
+    private static final Predicate PREDICATE = new Predicate(FULLNESS_KEY, (stack, world, entity, seed) -> {
+        float value = (float) Bottle.getFullness(stack) / Bottle.MAX_FULLNESS;
+        return Math.round(value * 100.0f) / 100.0f;
+    });
 
     public Bottle() {
         super(new FabricItemSettings().maxCount(1));
@@ -65,5 +69,10 @@ public class Bottle extends Item implements CustomItem {
         ItemStack fullBottleStack = new ItemStack(this);
         Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
         return fullBottleStack;
+    }
+
+    @Override
+    public Predicate getPredicate() {
+        return PREDICATE;
     }
 }
