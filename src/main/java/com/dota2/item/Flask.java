@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class Flask extends Item implements CustomItem {
-    public static final String ID = "flask";
+    private static final String ID = "flask";
 
     public Flask() {
         super(new FabricItemSettings().maxCount(8));

@@ -9,29 +9,31 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-
 public class ModItems {
-    public static CustomItemWrapper<?>[] items = {
+    private static final CustomItemWrapper<?>[] ITEMS = {
             new CustomItemWrapper<>(new Flask()),
             new CustomItemWrapper<>(new Clarity()),
             new CustomItemWrapper<>(new Mango()),
-            new CustomItemWrapper<>(new Bottle()),
             new CustomItemWrapper<>(new Daedalus()),
             new CustomItemWrapper<>(new Scepter()),
             new CustomItemWrapper<>(new BattleFury()),
-
+    };
+    private static final CustomPredicateItemWrapper<?>[] PREDICATE_ITEMS = {
+            new CustomPredicateItemWrapper<>(new Bottle()),
     };
 
-    public static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
-        for (CustomItemWrapper<?> wrapper : items) {
-            entries.add(wrapper.item().getForTabItemGroup());
+    private static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
+        for (CustomItemWrapper<?> wrapper : ITEMS) {
+            entries.add(wrapper.getItem().getForTabItemGroup());
+        }
+        for (CustomItemWrapper<?> wrapper : PREDICATE_ITEMS) {
+            entries.add(wrapper.getItem().getForTabItemGroup());
         }
     }
 
-    public static void registerItems() {
+    private static void registerItems(CustomItemWrapper<?>[] items) {
         for (CustomItemWrapper<?> wrapper : items) {
-            registerItem(wrapper.item().getId(), wrapper.item());
+            registerItem(wrapper.getItem().getId(), wrapper.getItem());
         }
     }
 
@@ -41,8 +43,17 @@ public class ModItems {
 
     public static void registerModItems() {
         DotaCraft.LOGGER.info("Registering Mod Items for " + DotaCraft.MOD_ID);
-        registerItems();
+        registerItems(ITEMS);
+        registerItems(PREDICATE_ITEMS);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemsToTabItemGroup);
+    }
+
+    public static CustomItemWrapper<?>[] getItems() {
+        return ITEMS;
+    }
+
+    public static CustomPredicateItemWrapper<?>[] getPredicateItems() {
+        return PREDICATE_ITEMS;
     }
 }

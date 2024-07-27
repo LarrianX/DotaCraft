@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class Mango extends Item implements CustomItem {
-    public static final String ID = "mango";
+    private static final String ID = "mango";
 
     public Mango() {
         super(new FabricItemSettings()

@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class Daedalus extends Item implements CustomItem {
-    public static final String ID = "daedalus";
+    private static final String ID = "daedalus";
 
     public Daedalus() {
         super(new FabricItemSettings().maxCount(1));
