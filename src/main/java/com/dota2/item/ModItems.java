@@ -20,6 +20,7 @@ public class ModItems {
     };
     private static final CustomPredicateItemWrapper<?>[] PREDICATE_ITEMS = {
             new CustomPredicateItemWrapper<>(new Bottle()),
+            new CustomPredicateItemWrapper<>(new Tango())
     };
 
     private static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
