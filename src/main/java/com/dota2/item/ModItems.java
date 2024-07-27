@@ -17,7 +17,10 @@ public class ModItems {
             new CustomItemWrapper<>(new Clarity()),
             new CustomItemWrapper<>(new Mango()),
             new CustomItemWrapper<>(new Bottle()),
-            new CustomItemWrapper<>(new Daedalus())
+            new CustomItemWrapper<>(new Daedalus()),
+            new CustomItemWrapper<>(new Scepter()),
+            new CustomItemWrapper<>(new BattleFury()),
+
     };
 
     public static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
