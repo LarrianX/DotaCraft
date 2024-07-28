@@ -3,8 +3,11 @@ package com.dota2;
 import com.dota2.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static net.minecraft.server.command.CommandManager.literal;
 
 public class DotaCraft implements ModInitializer {
 	public static final String MOD_ID = "dotacraft";
@@ -12,7 +15,6 @@ public class DotaCraft implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
 		ModItems.registerModItems();
 	}
 }
