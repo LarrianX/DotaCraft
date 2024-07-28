@@ -17,7 +17,6 @@ public class Mango extends Item implements CustomItem {
                         new FoodComponent.Builder()
                                 .hunger(4)
                                 .saturationModifier(0.2F)
-                                .statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100, 2), 100.0f)
                                 .alwaysEdible()
                                 .snack()
                                 .build()
