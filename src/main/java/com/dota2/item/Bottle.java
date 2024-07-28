@@ -2,6 +2,8 @@ package com.dota2.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,6 +44,8 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         if (fullness > 0) {
             nbt.putInt(FULLNESS_KEY, fullness - 1);
             user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
+            user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2),null);
+            user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0),null);
             return TypedActionResult.success(stack);
         } else {
             return TypedActionResult.fail(stack);
