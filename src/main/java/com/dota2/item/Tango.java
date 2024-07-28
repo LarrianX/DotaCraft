@@ -1,6 +1,9 @@
 package com.dota2.item;
 
+import com.dota2.DotaCraft;
+import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -11,19 +14,20 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 
-public class Bottle extends Item implements CustomItem, HasPredicate {
-    private static final String ID = "bottle";
+public class Tango extends Item implements CustomItem, HasPredicate {
+    private static final String ID = "tango";
     private static final String FULLNESS_KEY = "fullness";
     private static final int MAX_FULLNESS = 3;
     private static final Predicate PREDICATE = new Predicate(FULLNESS_KEY, (stack, world, entity, seed) -> {
-        float value = (float) Bottle.getFullness(stack) / Bottle.MAX_FULLNESS;
+        float value = (float) Tango.getFullness(stack) / Tango.MAX_FULLNESS;
         return Math.round(value * 100.0f) / 100.0f;
     });
 
-    public Bottle() {
-        super(new FabricItemSettings().maxCount(1));
+    public Tango() {
+        super(new FabricItemSettings().maxCount(8));
     }
 
     @Override
@@ -37,20 +41,24 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0),null);
         ItemStack stack = user.getStackInHand(hand);
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
-        if (fullness > 0) {
+        if (fullness > 1) {
             nbt.putInt(FULLNESS_KEY, fullness - 1);
-            user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2),null);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0),null);
             return TypedActionResult.success(stack);
         } else {
-            return TypedActionResult.fail(stack);
+            if (stack.getCount() > 1) {
+                nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
+                stack.decrement(1); // Работает только в выживании
+                return TypedActionResult.success(stack);
+            } else {
+                return TypedActionResult.success(ItemStack.EMPTY); // Возвращаем пустой ItemStack
+            }
         }
-
     }
 
     public static int getFullness(ItemStack stack) {
@@ -70,9 +78,9 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
 
     @Override
     public ItemStack getForTabItemGroup() {
-        ItemStack fullBottleStack = new ItemStack(this);
-        Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
-        return fullBottleStack;
+        ItemStack fullTangoStack = new ItemStack(this);
+        Tango.setFullness(fullTangoStack, Tango.MAX_FULLNESS);
+        return fullTangoStack;
     }
 
     @Override

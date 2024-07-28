@@ -1,14 +1,31 @@
 package com.dota2.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.World;
 
 public class Flask extends Item implements CustomItem {
     private static final String ID = "flask";
 
     public Flask() {
         super(new FabricItemSettings().maxCount(8));
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+        stack.decrement(1);
+        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 260, 2),null);
+        return TypedActionResult.success(stack);
     }
 
     @Override
