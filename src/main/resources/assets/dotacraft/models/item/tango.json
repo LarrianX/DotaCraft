@@ -2,6 +2,10 @@
   "parent": "item/generated",
   "overrides": [
     {
+      "predicate": {"fullness": 0},
+      "model": "dotacraft:item/tango_0"
+    },
+    {
       "predicate": {"fullness": 0.33},
       "model": "dotacraft:item/tango_1"
     },
