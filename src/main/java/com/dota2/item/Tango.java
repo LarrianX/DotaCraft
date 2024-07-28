@@ -5,6 +5,8 @@ import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -40,6 +42,7 @@ public class Tango extends Item implements CustomItem, HasPredicate {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0),null);
         ItemStack stack = user.getStackInHand(hand);
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
