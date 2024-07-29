@@ -43,25 +43,32 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
-        // Получаем NBT и ищем значение fullness
+        // Получаем NBT и значение fullness
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
-        if (fullness >= 1) {
-            // Если человек не в креативе - уменьшаем fullness на 1
+        // Проверяем, достаточно ли fullness для выполнения действия
+        if (fullness > 0) {
+            // Если не в креативе, уменьшаем fullness на 1
             if (!user.isCreative()) {
                 nbt.putInt(FULLNESS_KEY, fullness - 1);
             }
-            // Воспроизводим нужные действия
-            user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2), null);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0), null);
-            // Возращаем удачный результат
+
+            // Применяем эффекты
+            applyEffects(user);
+
             return TypedActionResult.success(stack);
         } else {
-            // Не удалось выпить пустую бутылку
+            // Если fullness не достаточно, возвращаем неудачный результат
             return TypedActionResult.fail(stack);
         }
+    }
+
+    private void applyEffects(PlayerEntity user) {
+        // Воспроизводим звуки и эффекты
+        user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2), null);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0), null);
     }
 
     public static int getFullness(ItemStack stack) {

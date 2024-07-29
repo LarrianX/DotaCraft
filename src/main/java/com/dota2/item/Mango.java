@@ -24,8 +24,7 @@ public class Mango extends Item implements CustomItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // Воспроизводим нужные действия
-        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 260, 2),null);
+        applyEffects(user);
         // Получаем стак, и уменьшаем его на один
         ItemStack stack = user.getStackInHand(hand);
         // Если человек не в креативе - уменьшаем стак на один
@@ -34,6 +33,12 @@ public class Mango extends Item implements CustomItem {
         }
         // Успех
         return TypedActionResult.success(stack);
+    }
+
+    private void applyEffects(PlayerEntity user) {
+        // Воспроизводим звуки и эффекты
+        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 260, 2), null);
     }
 
     @Override

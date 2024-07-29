@@ -45,28 +45,42 @@ public class Tango extends Item implements CustomItem, HasPredicate {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Выполняем ожидаемые действия
-        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0),null);
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
-        // Если человек в креативе - пропускаем уменьшение fullness
-        if (user.isCreative()) {
-            return TypedActionResult.success(stack);
-        }
-        // Получаем NBT и ищем значение fullness
+        // Получаем NBT и значение fullness
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
+        if (fullness == 0) {
+            // Такая ситуация невозможна без команд, но, why not
+            return TypedActionResult.fail(stack);
+        }
+
+        // Выполняем действия
+        applyEffects(user);
+
+        // Проверяем режим игры игрока и обновляем стак
+        if (user.isCreative()) {
+            return TypedActionResult.success(stack);
+        }
+
+        updateStack(stack, nbt, fullness);
+
+        return TypedActionResult.success(stack);
+    }
+
+    private void applyEffects(PlayerEntity user) {
+        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0), null);
+    }
+
+    private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
         if (fullness > 1) {
-            // Уменьшаем значение fullness на 1
             nbt.putInt(FULLNESS_KEY, fullness - 1);
         } else {
-            // Уменьшаем значение стака на 1 и ставим макс. fullness
             nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
             stack.decrement(1);
         }
-        return TypedActionResult.success(stack);
     }
 
     public static int getFullness(ItemStack stack) {
