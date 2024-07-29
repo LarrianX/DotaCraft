@@ -8,7 +8,7 @@ public class BattleFury extends Item implements CustomItem {
     public static final String ID = "battle_fury";
 
     public BattleFury() {
-        super(new FabricItemSettings());
+        super(new FabricItemSettings().maxCount(1));
     }
 
     @Override
