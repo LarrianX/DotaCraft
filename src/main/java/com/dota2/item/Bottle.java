@@ -26,10 +26,14 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         super(new FabricItemSettings().maxCount(1));
     }
 
+    // Отключено в целях оптимизации
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
+        // inventoryTick - функция вызывается каждый тик в инвентаре
         super.inventoryTick(stack, world, entity, slot, selected);
+        // Получаем nbt из стака
         NbtCompound nbt = stack.getOrCreateNbt();
+        // Если у предмета нет в nbt нашего fullness - создаём fullness и ставим максимум
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
             nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
         }
@@ -37,20 +41,27 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
+        // Получаем NBT и ищем значение fullness
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
-        if (fullness > 0) {
-            nbt.putInt(FULLNESS_KEY, fullness - 1);
+        if (fullness >= 1) {
+            // Если человек не в креативе - уменьшаем fullness на 1
+            if (!user.isCreative()) {
+                nbt.putInt(FULLNESS_KEY, fullness - 1);
+            }
+            // Воспроизводим нужные действия
             user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2),null);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0),null);
+            user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2), null);
+            user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0), null);
+            // Возращаем удачный результат
             return TypedActionResult.success(stack);
         } else {
+            // Не удалось выпить пустую бутылку
             return TypedActionResult.fail(stack);
         }
-
     }
 
     public static int getFullness(ItemStack stack) {

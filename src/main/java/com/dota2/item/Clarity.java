@@ -18,12 +18,19 @@ public class Clarity extends Item implements CustomItem {
         super(new FabricItemSettings().maxCount(8));
     }
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        stack.decrement(1);
+        // Воспроизводим нужные действия
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 11, 0), null);
-        return net.minecraft.util.TypedActionResult.success(stack);
+        // Получаем стак
+        ItemStack stack = user.getStackInHand(hand);
+        // Если человек не в креативе - уменьшаем стак на один
+        if (!user.isCreative()) {
+            stack.decrement(1);
+        }
+        // Успех
+        return TypedActionResult.success(stack);
     }
 
     @Override

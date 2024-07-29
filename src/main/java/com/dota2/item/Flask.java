@@ -21,10 +21,16 @@ public class Flask extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        stack.decrement(1);
+        // Воспроизводим нужные действия
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 260, 2),null);
+        // Получаем стак
+        ItemStack stack = user.getStackInHand(hand);
+        // Если человек не в креативе - уменьшаем стак на один
+        if (!user.isCreative()) {
+            stack.decrement(1);
+        }
+        // Успех
         return TypedActionResult.success(stack);
     }
 

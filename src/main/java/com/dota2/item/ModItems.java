@@ -10,24 +10,29 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModItems {
-    private static final CustomItemWrapper<?>[] ITEMS = {
-            new CustomItemWrapper<>(new Flask()),
-            new CustomItemWrapper<>(new Clarity()),
-            new CustomItemWrapper<>(new Mango()),
-            new CustomItemWrapper<>(new Daedalus()),
-            new CustomItemWrapper<>(new Scepter()),
-            new CustomItemWrapper<>(new BattleFury()),
-    };
-    private static final CustomPredicateItemWrapper<?>[] PREDICATE_ITEMS = {
-            new CustomPredicateItemWrapper<>(new Bottle()),
-            new CustomPredicateItemWrapper<>(new Tango())
+    public static final Flask FLASK = new Flask();
+    public static final Clarity CLARITY = new Clarity();
+    public static final Mango MANGO = new Mango();
+    public static final Daedalus DAEDALUS = new Daedalus();
+    public static final Scepter SCEPTER = new Scepter();
+    public static final BattleFury BATTLE_FURY = new BattleFury();
+
+    public static final Bottle BOTTLE = new Bottle();
+    public static final Tango TANGO = new Tango();
+
+    public static final CustomItemWrapper<?>[] ITEMS = {
+            new CustomItemWrapper<>(FLASK),
+            new CustomItemWrapper<>(CLARITY),
+            new CustomItemWrapper<>(MANGO),
+            new CustomItemWrapper<>(DAEDALUS),
+            new CustomItemWrapper<>(SCEPTER),
+            new CustomItemWrapper<>(BATTLE_FURY),
+            new CustomItemWrapper<>(BOTTLE),
+            new CustomItemWrapper<>(TANGO),
     };
 
     private static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
         for (CustomItemWrapper<?> wrapper : ITEMS) {
-            entries.add(wrapper.getItem().getForTabItemGroup());
-        }
-        for (CustomItemWrapper<?> wrapper : PREDICATE_ITEMS) {
             entries.add(wrapper.getItem().getForTabItemGroup());
         }
     }
@@ -45,16 +50,5 @@ public class ModItems {
     public static void registerModItems() {
         DotaCraft.LOGGER.info("Registering Mod Items for " + DotaCraft.MOD_ID);
         registerItems(ITEMS);
-        registerItems(PREDICATE_ITEMS);
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(ModItems::addItemsToTabItemGroup);
-    }
-
-    public static CustomItemWrapper<?>[] getItems() {
-        return ITEMS;
-    }
-
-    public static CustomPredicateItemWrapper<?>[] getPredicateItems() {
-        return PREDICATE_ITEMS;
     }
 }
