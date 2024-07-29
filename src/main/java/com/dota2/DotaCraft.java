@@ -1,5 +1,7 @@
 package com.dota2;
 
+import com.dota2.block.ModBlocks;
+import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
@@ -16,5 +18,7 @@ public class DotaCraft implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModItems();
+		ModBlocks.registerModBlocks();
+		ModItemGroups.registerItemGroups();
 	}
 }

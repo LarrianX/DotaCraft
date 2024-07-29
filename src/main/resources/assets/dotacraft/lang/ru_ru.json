@@ -6,5 +6,7 @@
   "item.dotacraft.daedalus": "Дедал",
   "item.dotacraft.battle_fury": "Фури",
   "item.dotacraft.scepter": "Скипетр",
-  "item.dotacraft.tango": "Танго"
+  "item.dotacraft.tango": "Танго",
+  "itemgroup.dota": "Dota Craft",
+  "block.dotacraft.portal": "Портал"
 }

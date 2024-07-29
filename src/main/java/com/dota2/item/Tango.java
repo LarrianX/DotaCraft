@@ -23,7 +23,8 @@ public class Tango extends Item implements CustomItem, HasPredicate {
     private static final int MAX_FULLNESS = 3;
     private static final Predicate PREDICATE = new Predicate(FULLNESS_KEY, (stack, world, entity, seed) -> {
         float value = (float) Tango.getFullness(stack) / Tango.MAX_FULLNESS;
-        return Math.round(value * 100.0f) / 100.0f;
+        // Делим fullness на макс. fullness и получаем float
+        return Math.round(value * 100.0f) / 100.0f; // Округляем до двух чисел после запятой
     });
 
     public Tango() {
@@ -32,8 +33,11 @@ public class Tango extends Item implements CustomItem, HasPredicate {
 
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
+        // inventoryTick - функция вызывается каждый тик в инвентаре
         super.inventoryTick(stack, world, entity, slot, selected);
+        // Получаем nbt из стака
         NbtCompound nbt = stack.getOrCreateNbt();
+        // Если у предмета нет в nbt нашего fullness - создаём fullness и ставим максимум
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
             nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
         }
@@ -41,24 +45,28 @@ public class Tango extends Item implements CustomItem, HasPredicate {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        // Выполняем ожидаемые действия
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0),null);
+        // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
+        // Если человек в креативе - пропускаем уменьшение fullness
+        if (user.isCreative()) {
+            return TypedActionResult.success(stack);
+        }
+        // Получаем NBT и ищем значение fullness
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
         if (fullness > 1) {
+            // Уменьшаем значение fullness на 1
             nbt.putInt(FULLNESS_KEY, fullness - 1);
-            return TypedActionResult.success(stack);
         } else {
-            if (stack.getCount() > 1) {
-                nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
-                stack.decrement(1); // Работает только в выживании
-                return TypedActionResult.success(stack);
-            } else {
-                return TypedActionResult.success(ItemStack.EMPTY); // Возвращаем пустой ItemStack
-            }
+            // Уменьшаем значение стака на 1 и ставим макс. fullness
+            nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
+            stack.decrement(1);
         }
+        return TypedActionResult.success(stack);
     }
 
     public static int getFullness(ItemStack stack) {
