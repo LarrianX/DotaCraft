@@ -28,7 +28,10 @@ public class Mango extends Item implements CustomItem {
         user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 260, 2),null);
         // Получаем стак, и уменьшаем его на один
         ItemStack stack = user.getStackInHand(hand);
-        stack.decrement(1);
+        // Если человек не в креативе - уменьшаем стак на один
+        if (!user.isCreative()) {
+            stack.decrement(1);
+        }
         // Успех
         return TypedActionResult.success(stack);
     }
