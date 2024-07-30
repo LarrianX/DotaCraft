@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -67,8 +68,8 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2), null);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 53, 2), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.SATURATION, 50, 94), null);
     }
 
     public static int getFullness(ItemStack stack) {

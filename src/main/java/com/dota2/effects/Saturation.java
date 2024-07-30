@@ -5,15 +5,19 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static net.minecraft.entity.effect.StatusEffects.SATURATION;
 
 
 public class Saturation extends StatusEffect implements CustomEffect {
     private static final String ID = "saturation";
-    private static final int PER_TICK = 10;
-    private static int TICK_COUNTER = 0;
+    private static final int PER_TICK = 100;
+    private final Map<PlayerEntity, Integer> tickCounters = new HashMap<>();
 
     protected Saturation() {
         // category: StatusEffectCategory - describes if the effect is helpful (BENEFICIAL), harmful (HARMFUL) or useless (NEUTRAL)
@@ -30,15 +34,29 @@ public class Saturation extends StatusEffect implements CustomEffect {
     // Called when the effect is applied.
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        if (entity instanceof PlayerEntity) {
-            int per_tick = PER_TICK * (amplifier + 1);
-            if (TICK_COUNTER == 0) {
-                TICK_COUNTER = per_tick;
-                entity.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 1, 1), null);
+        if (amplifier > 100) {
+            amplifier = 100;
+        }
+        if (entity instanceof PlayerEntity player) {
+            int perTick = PER_TICK - amplifier;
+
+            // Получаем или устанавливаем начальное значение TICK_COUNTER для игрока
+            int tickCounter = tickCounters.getOrDefault(player, 0);
+
+            if (tickCounter == 0) {
+                tickCounters.put(player, perTick);
+                HungerManager hunger = player.getHungerManager();
+                if (hunger.isNotFull()) {
+                    hunger.setFoodLevel(hunger.getFoodLevel() + 1);
+                }
             } else {
-                TICK_COUNTER--;
+                tickCounters.put(player, tickCounter - 1);
             }
-//            ((PlayerEntity) entity).addExperience(1 << amplifier); // Higher amplifier gives you experience faster
+
+            // Обязательно удаляем игрока из карты, если он больше не имеет эффекта
+            if (player.getStatusEffect(this) == null) {
+                tickCounters.remove(player);
+            }
         }
 
         super.applyUpdateEffect(entity, amplifier);
