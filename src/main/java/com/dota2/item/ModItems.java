@@ -31,14 +31,8 @@ public class ModItems {
             new CustomItemWrapper<>(TANGO),
     };
 
-    private static void addItemsToTabItemGroup(FabricItemGroupEntries entries) {
+    private static void registerItems() {
         for (CustomItemWrapper<?> wrapper : ITEMS) {
-            entries.add(wrapper.getItem().getForTabItemGroup());
-        }
-    }
-
-    private static void registerItems(CustomItemWrapper<?>[] items) {
-        for (CustomItemWrapper<?> wrapper : items) {
             registerItem(wrapper.getItem().getId(), wrapper.getItem());
         }
     }
@@ -49,6 +43,6 @@ public class ModItems {
 
     public static void registerModItems() {
         DotaCraft.LOGGER.info("Registering Mod Items for " + DotaCraft.MOD_ID);
-        registerItems(ITEMS);
+        registerItems();
     }
 }

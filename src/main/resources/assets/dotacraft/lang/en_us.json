@@ -8,5 +8,6 @@
   "item.dotacraft.scepter": "Aghanim's Scepter",
   "item.dotacraft.tango": "Tango",
   "itemgroup.dota": "Dota Craft",
-  "block.dotacraft.portal": "Portal"
+  "block.dotacraft.portal": "Portal",
+  "effect.dotacraft.saturation": "Saturation"
 }

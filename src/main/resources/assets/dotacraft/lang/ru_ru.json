@@ -8,5 +8,6 @@
   "item.dotacraft.scepter": "Аганим",
   "item.dotacraft.tango": "Танго",
   "itemgroup.dota": "Dota Craft",
-  "block.dotacraft.portal": "Портал"
+  "block.dotacraft.portal": "Портал",
+  "effect.dotacraft.saturation": "Насыщение"
 }
