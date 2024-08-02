@@ -1,9 +1,9 @@
 package com.dota2.item;
 
 import com.dota2.DotaCraft;
-import com.dota2.block.CustomBlockWrapper;
-import com.dota2.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -20,11 +20,13 @@ public class ModItemGroups {
             new Identifier(DotaCraft.MOD_ID, "dota"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.dota"))
                     .icon(() -> new ItemStack(ModItems.BOTTLE)).entries(((displayContext, entries) -> {
-                        for (CustomItemWrapper<?> wrapper : ITEMS) {
-                            entries.add(wrapper.getItem().getForTabItemGroup());
+                        for (Item item : ITEMS) {
+                            if (item instanceof CustomItem) {
+                                entries.add(((CustomItem) item).getForTabItemGroup());
+                            }
                         }
-                        for (CustomBlockWrapper<?> wrapper: BLOCKS) {
-                            entries.add(wrapper.getBlock());
+                        for (Block block: BLOCKS) {
+                            entries.add(block);
                         }
                     })).build());
 

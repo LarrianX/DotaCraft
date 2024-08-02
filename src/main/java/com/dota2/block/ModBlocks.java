@@ -11,14 +11,18 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
     public static final Portal PORTAL = new Portal();
+    public static final PressurePlate PRESSURE_PLATE = new PressurePlate();
 
-    public static final CustomBlockWrapper<?>[] BLOCKS = {
-            new CustomBlockWrapper<>(PORTAL),
+    public static final Block[] BLOCKS = {
+            PORTAL,
+            PRESSURE_PLATE
     };
 
     private static void registerBlocks() {
-        for (CustomBlockWrapper<?> wrapper : BLOCKS) {
-            registerBlock(wrapper.getBlock().getId(), wrapper.getBlock());
+        for (Block block : BLOCKS) {
+            if (block instanceof CustomBlock) {
+                registerBlock(((CustomBlock) block).getId(), block);
+            }
         }
     }
 

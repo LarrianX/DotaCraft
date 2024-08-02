@@ -9,13 +9,15 @@ import net.minecraft.util.Identifier;
 public class ModEffects {
     public static final Saturation SATURATION = new Saturation();
 
-    public static final CustomEffectWrapper<?>[] EFFECTS = {
-            new CustomEffectWrapper<>(SATURATION),
+    public static final StatusEffect[] EFFECTS = {
+            SATURATION,
     };
 
     private static void registerEffects() {
-        for (CustomEffectWrapper<?> wrapper : EFFECTS) {
-            registerEffect(wrapper.getEffect().getId(), wrapper.getEffect());
+        for (StatusEffect effect : EFFECTS) {
+            if (effect instanceof CustomEffect) {
+                registerEffect(((CustomEffect) effect).getId(), effect);
+            }
         }
     }
 
