@@ -6,13 +6,13 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
-public class ChangeTexture {
+public class SetX {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
-                CommandManager.literal("change")
-                        .then(CommandManager.argument("index", IntegerArgumentType.integer()).executes(context -> {
-                                    final int index = IntegerArgumentType.getInteger(context, "index");
-                                    DotaCraftClient.setIndex(index);
+                CommandManager.literal("setx")
+                        .then(CommandManager.argument("value", IntegerArgumentType.integer()).executes(context -> {
+                                    final int value = IntegerArgumentType.getInteger(context, "value");
+                                    DotaCraftClient.setX(value);
                                     return 1;
                                 }
                         ))

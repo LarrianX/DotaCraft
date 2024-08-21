@@ -10,14 +10,23 @@ import net.minecraft.item.Item;
 import static com.dota2.item.ModItems.ITEMS;
 
 public class DotaCraftClient implements ClientModInitializer {
-    private static int INDEX = 0;
+    private static int X = -20;
+    private static int Y = 115;
 
-    public static void setIndex(int index) {
-        INDEX = index;
+    public static void setX(int x) {
+        X = x;
     }
 
-    public static int getIndex() {
-        return INDEX;
+    public static void setY(int y) {
+        Y = y;
+    }
+
+    public static int getX() {
+        return X;
+    }
+
+    public static int getY() {
+        return Y;
     }
 
     @Override

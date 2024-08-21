@@ -15,11 +15,11 @@ public class TurnOffHealthBar {
     @Unique
     private static final Identifier ICON = new Identifier("dotacraft:textures/test.png");
 
-    @Inject(method = "renderStatusBars", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"), cancellable = true)
-    private void onRenderHealthBar(DrawContext context, CallbackInfo ci) {
+    @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At("HEAD"), cancellable = true)
+    private void onRenderStatusBars(DrawContext context, CallbackInfo ci) {
         ci.cancel();
-//        context.drawTexture(ICON, 40, 40, DotaCraftClient.getIndex(), 0, 40, 40);
-        context.drawTexture(ICON, 40, 40, 0, (float)DotaCraftClient.getIndex(), (float)0, 40, 40, 40, 40);
+        int x = context.getScaledWindowWidth() / 2 + DotaCraftClient.getX();
+        int y = context.getScaledWindowHeight() / 2 + DotaCraftClient.getY();
+        context.drawTexture(ICON, x, y, 0, 0, 0, 40, 40, 40, 40);
     }
 }

@@ -7,11 +7,12 @@ import net.minecraft.server.command.ServerCommandSource;
 
 public class ModCommands {
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-        ChangeTexture.register(dispatcher);
+        SetX.register(dispatcher);
+        SetY.register(dispatcher);
     }
 
     public static void registerModCommands() {
-        DotaCraft.LOGGER.info("Registering Mod effects for " + DotaCraft.MOD_ID);
+        DotaCraft.LOGGER.info("Registering Mod commands for " + DotaCraft.MOD_ID);
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> registerCommands(dispatcher)));
     }
 }
