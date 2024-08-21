@@ -10,6 +10,16 @@ import net.minecraft.item.Item;
 import static com.dota2.item.ModItems.ITEMS;
 
 public class DotaCraftClient implements ClientModInitializer {
+    private static int INDEX = 0;
+
+    public static void setIndex(int index) {
+        INDEX = index;
+    }
+
+    public static int getIndex() {
+        return INDEX;
+    }
+
     @Override
     public void onInitializeClient() {
         for (Item item : ITEMS) {
