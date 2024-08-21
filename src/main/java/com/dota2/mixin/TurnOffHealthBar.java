@@ -13,12 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class TurnOffHealthBar {
     @Unique
-    private static final Identifier ICONS = new Identifier("textures/gui/icons.png");
+    private static final Identifier ICON = new Identifier("dotacraft:textures/test.png");
 
     @Inject(method = "renderStatusBars", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"), cancellable = true)
     private void onRenderHealthBar(DrawContext context, CallbackInfo ci) {
         ci.cancel();
-        context.drawTexture(ICONS, 30, 30, DotaCraftClient.getIndex(), 0, 9, 9);
+//        context.drawTexture(ICON, 40, 40, DotaCraftClient.getIndex(), 0, 40, 40);
+        context.drawTexture(ICON, 40, 40, 0, (float)DotaCraftClient.getIndex(), (float)0, 40, 40, 40, 40);
     }
 }
