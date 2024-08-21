@@ -11,7 +11,7 @@ import static com.dota2.item.ModItems.ITEMS;
 
 public class DotaCraftClient implements ClientModInitializer {
     private static int X = -20;
-    private static int Y = 115;
+    private static int Y = -80;
 
     public static void setX(int x) {
         X = x;

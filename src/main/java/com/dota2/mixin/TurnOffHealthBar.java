@@ -19,7 +19,7 @@ public class TurnOffHealthBar {
     private void onRenderStatusBars(DrawContext context, CallbackInfo ci) {
         ci.cancel();
         int x = context.getScaledWindowWidth() / 2 + DotaCraftClient.getX();
-        int y = context.getScaledWindowHeight() / 2 + DotaCraftClient.getY();
+        int y = context.getScaledWindowHeight() + DotaCraftClient.getY();
         context.drawTexture(ICON, x, y, 0, 0, 0, 40, 40, 40, 40);
     }
 }
