@@ -9,6 +9,7 @@ public class ModCommands {
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
         SetX.register(dispatcher);
         SetY.register(dispatcher);
+        SetHealth.register(dispatcher);
     }
 
     public static void registerModCommands() {

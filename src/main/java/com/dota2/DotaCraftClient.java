@@ -10,8 +10,9 @@ import net.minecraft.item.Item;
 import static com.dota2.item.ModItems.ITEMS;
 
 public class DotaCraftClient implements ClientModInitializer {
-    private static int X = -20;
-    private static int Y = -80;
+    private static int X = -91;
+    private static int Y = -39;
+    private static double HEALTH = 10.0;
 
     public static void setX(int x) {
         X = x;
@@ -21,12 +22,20 @@ public class DotaCraftClient implements ClientModInitializer {
         Y = y;
     }
 
+    public static void setHealth(double health) {
+        HEALTH = health;
+    }
+
     public static int getX() {
         return X;
     }
 
     public static int getY() {
         return Y;
+    }
+
+    public static double getHealth() {
+        return HEALTH;
     }
 
     @Override
