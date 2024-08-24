@@ -67,7 +67,7 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
-        user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
+        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 53, 2), null);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.SATURATION, 50, 94), null);
     }

@@ -16,6 +16,7 @@ public class ModItems {
     public static final Daedalus DAEDALUS = new Daedalus();
     public static final Scepter SCEPTER = new Scepter();
     public static final BattleFury BATTLE_FURY = new BattleFury();
+    public static final tpscroll TPSCROLL = new tpscroll();
 
     public static final Bottle BOTTLE = new Bottle();
     public static final Tango TANGO = new Tango();
@@ -29,6 +30,7 @@ public class ModItems {
             BATTLE_FURY,
             BOTTLE,
             TANGO,
+            TPSCROLL,
     };
 
     private static void registerItems() {

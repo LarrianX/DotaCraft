@@ -35,7 +35,7 @@ public class Clarity extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
-        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
+        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.SATURATION, 160, 80), null);
     }
     

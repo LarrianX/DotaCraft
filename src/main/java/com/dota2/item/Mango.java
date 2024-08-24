@@ -17,8 +17,7 @@ public class Mango extends Item implements CustomItem {
     private static final String ID = "mango";
 
     public Mango() {
-        super(new FabricItemSettings()
-                .maxCount(8)
+        super(new FabricItemSettings().maxCount(3)
         );
     }
 
@@ -38,7 +37,7 @@ public class Mango extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
-        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
+        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
         HungerManager hunger = (user.getHungerManager());
         hunger.setFoodLevel(hunger.getFoodLevel() + 6);
     }
