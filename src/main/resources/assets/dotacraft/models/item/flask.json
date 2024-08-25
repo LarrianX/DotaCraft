@@ -276,13 +276,17 @@
 			"scale": [0.8, 0.8, 0.8]
 		},
 		"ground": {
-			"translation": [0, 3, 0],
+			"translation": [0, 1.5, 0],
 			"scale": [0.8, 0.8, 0.8]
 		},
 		"gui": {
 			"rotation": [0, 140, 38],
 			"translation": [3, 4.75, 0],
 			"scale": [1.43, 1.43, 1.43]
+		},
+		"head": {
+			"translation": [0, 16, 0],
+			"scale": [3.19531, 3.19531, 3.19531]
 		},
 		"fixed": {
 			"translation": [0, 6.5, 0],
