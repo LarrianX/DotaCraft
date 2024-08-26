@@ -4,10 +4,10 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class tpscroll extends Item implements CustomItem {
+public class TpScroll extends Item implements CustomItem {
     private static final String ID = "tpscroll";
 
-    public tpscroll() {
+    public TpScroll() {
         super(new FabricItemSettings().maxCount(64));
     }
 

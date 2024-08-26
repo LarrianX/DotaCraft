@@ -1,10 +1,7 @@
 package com.dota2.item;
 
 import com.dota2.DotaCraft;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -16,8 +13,8 @@ public class ModItems {
     public static final Daedalus DAEDALUS = new Daedalus();
     public static final Scepter SCEPTER = new Scepter();
     public static final BattleFury BATTLE_FURY = new BattleFury();
-    public static final tpscroll TPSCROLL = new tpscroll();
-    public static final shadowblade SHADOWBLADE = new shadowblade();
+    public static final TpScroll TPSCROLL = new TpScroll();
+    public static final ShadowBlade SHADOWBLADE = new ShadowBlade();
     public static final Bottle BOTTLE = new Bottle();
     public static final Tango TANGO = new Tango();
 

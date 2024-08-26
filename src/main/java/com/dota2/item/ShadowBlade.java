@@ -1,29 +1,31 @@
 package com.dota2.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class shadowblade extends Item implements CustomItem {
+public class ShadowBlade extends Item implements CustomItem {
     private static final String ID = "shadowblade";
 
-    public shadowblade() {
+    public ShadowBlade() {
         super(new FabricItemSettings().maxCount(1));
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+
+        // Применяем эффекты
         applyEffects(user);
 
-        return null;
-                // Линар, я хуй знает что я тут сделал, но я пытался. Тут мои полномочия всё. Заливаю коммит.
+        return TypedActionResult.success(stack);
     }
 
     private void applyEffects(PlayerEntity user) {
