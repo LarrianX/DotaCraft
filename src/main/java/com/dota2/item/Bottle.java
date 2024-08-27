@@ -55,6 +55,9 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
                 nbt.putInt(FULLNESS_KEY, fullness - 1);
             }
 
+            if(!user.isCreative()) {
+                user.getItemCooldownManager().set(this, 10);
+            }
             // Применяем эффекты
             applyEffects(user);
 
