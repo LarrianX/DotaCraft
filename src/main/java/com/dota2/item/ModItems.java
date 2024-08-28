@@ -17,6 +17,7 @@ public class ModItems {
     public static final ShadowBlade SHADOWBLADE = new ShadowBlade();
     public static final Bottle BOTTLE = new Bottle();
     public static final Tango TANGO = new Tango();
+    public static final BootsOfSpeed BOOTSOFSPEED = new BootsOfSpeed();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -25,6 +26,7 @@ public class ModItems {
             DAEDALUS,
             SCEPTER,
             BATTLE_FURY,
+            BOOTSOFSPEED,
             BOTTLE,
             TANGO,
             TPSCROLL,

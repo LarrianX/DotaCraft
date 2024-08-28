@@ -1,0 +1,205 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "dotacraft:item/bootsofspeed",
+		"particle": "dotacraft:item/bootsofspeed"
+	},
+	"elements": [
+		{
+			"name": "Boots_of_speed_0",
+			"from": [3, 4, 7.5],
+			"to": [6, 15, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [6, 1, 3, 12], "texture": "#0"},
+				"east": {"uv": [5, 1, 6, 12], "texture": "#0"},
+				"south": {"uv": [3, 1, 6, 12], "texture": "#0"},
+				"west": {"uv": [3, 1, 4, 12], "texture": "#0"},
+				"up": {"uv": [3, 1, 6, 2], "texture": "#0"},
+				"down": {"uv": [3, 11, 6, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_1",
+			"from": [2, 11, 7.5],
+			"to": [3, 14, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [3, 2, 2, 5], "texture": "#0"},
+				"east": {"uv": [2, 2, 3, 5], "texture": "#0"},
+				"south": {"uv": [2, 2, 3, 5], "texture": "#0"},
+				"west": {"uv": [2, 2, 3, 5], "texture": "#0"},
+				"up": {"uv": [2, 2, 3, 3], "texture": "#0"},
+				"down": {"uv": [2, 4, 3, 5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_2",
+			"from": [6, 2, 7.5],
+			"to": [9, 14, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [9, 2, 6, 14], "texture": "#0"},
+				"east": {"uv": [8, 2, 9, 14], "texture": "#0"},
+				"south": {"uv": [6, 2, 9, 14], "texture": "#0"},
+				"west": {"uv": [6, 2, 7, 14], "texture": "#0"},
+				"up": {"uv": [6, 2, 9, 3], "texture": "#0"},
+				"down": {"uv": [6, 13, 9, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_3",
+			"from": [9, 10, 7.5],
+			"to": [10, 13, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [10, 3, 9, 6], "texture": "#0"},
+				"east": {"uv": [9, 3, 10, 6], "texture": "#0"},
+				"south": {"uv": [9, 3, 10, 6], "texture": "#0"},
+				"west": {"uv": [9, 3, 10, 6], "texture": "#0"},
+				"up": {"uv": [9, 3, 10, 4], "texture": "#0"},
+				"down": {"uv": [9, 5, 10, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_4",
+			"from": [2, 5, 7.5],
+			"to": [3, 9, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [3, 7, 2, 11], "texture": "#0"},
+				"east": {"uv": [2, 7, 3, 11], "texture": "#0"},
+				"south": {"uv": [2, 7, 3, 11], "texture": "#0"},
+				"west": {"uv": [2, 7, 3, 11], "texture": "#0"},
+				"up": {"uv": [2, 7, 3, 8], "texture": "#0"},
+				"down": {"uv": [2, 10, 3, 11], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_5",
+			"from": [9, 1, 7.5],
+			"to": [10, 8, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [10, 8, 9, 15], "texture": "#0"},
+				"east": {"uv": [9, 8, 10, 15], "texture": "#0"},
+				"south": {"uv": [9, 8, 10, 15], "texture": "#0"},
+				"west": {"uv": [9, 8, 10, 15], "texture": "#0"},
+				"up": {"uv": [9, 8, 10, 9], "texture": "#0"},
+				"down": {"uv": [9, 14, 10, 15], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_6",
+			"from": [10, 1, 7.5],
+			"to": [12, 7, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [12, 9, 10, 15], "texture": "#0"},
+				"east": {"uv": [11, 9, 12, 15], "texture": "#0"},
+				"south": {"uv": [10, 9, 12, 15], "texture": "#0"},
+				"west": {"uv": [10, 9, 11, 15], "texture": "#0"},
+				"up": {"uv": [10, 9, 12, 10], "texture": "#0"},
+				"down": {"uv": [10, 14, 12, 15], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_7",
+			"from": [12, 4, 7.5],
+			"to": [15, 6, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [15, 10, 12, 12], "texture": "#0"},
+				"east": {"uv": [14, 10, 15, 12], "texture": "#0"},
+				"south": {"uv": [12, 10, 15, 12], "texture": "#0"},
+				"west": {"uv": [12, 10, 13, 12], "texture": "#0"},
+				"up": {"uv": [12, 10, 15, 11], "texture": "#0"},
+				"down": {"uv": [12, 11, 15, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_8",
+			"from": [4, 3, 7.5],
+			"to": [6, 4, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [6, 12, 4, 13], "texture": "#0"},
+				"east": {"uv": [5, 12, 6, 13], "texture": "#0"},
+				"south": {"uv": [4, 12, 6, 13], "texture": "#0"},
+				"west": {"uv": [4, 12, 5, 13], "texture": "#0"},
+				"up": {"uv": [4, 12, 6, 13], "texture": "#0"},
+				"down": {"uv": [4, 12, 6, 13], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_9",
+			"from": [12, 3, 7.5],
+			"to": [14, 4, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [14, 12, 12, 13], "texture": "#0"},
+				"east": {"uv": [13, 12, 14, 13], "texture": "#0"},
+				"south": {"uv": [12, 12, 14, 13], "texture": "#0"},
+				"west": {"uv": [12, 12, 13, 13], "texture": "#0"},
+				"up": {"uv": [12, 12, 14, 13], "texture": "#0"},
+				"down": {"uv": [12, 12, 14, 13], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Boots_of_speed_10",
+			"from": [12, 2, 7.5],
+			"to": [13, 3, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 7.5]},
+			"faces": {
+				"north": {"uv": [13, 13, 12, 14], "texture": "#0"},
+				"east": {"uv": [12, 13, 13, 14], "texture": "#0"},
+				"south": {"uv": [12, 13, 13, 14], "texture": "#0"},
+				"west": {"uv": [12, 13, 13, 14], "texture": "#0"},
+				"up": {"uv": [12, 13, 13, 14], "texture": "#0"},
+				"down": {"uv": [12, 13, 13, 14], "texture": "#0"}
+			}
+		}
+	],
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0, -1.5, -1.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -90, 0],
+			"translation": [0, -1.5, -1.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 90, 0],
+			"translation": [0.75, 1.5, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, 0],
+			"translation": [0.75, 1.5, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"ground": {
+			"translation": [0, 2.75, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"head": {
+			"rotation": [0, 0, -120],
+			"translation": [0, 4.25, -7]
+		},
+		"fixed": {
+			"rotation": [0, 180, 0]
+		}
+	},
+	"groups": [
+		{
+			"name": "Boots_of_speed",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+		}
+	]
+}
