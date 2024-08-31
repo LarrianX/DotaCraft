@@ -27,6 +27,16 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         super(new FabricItemSettings().maxCount(1));
     }
 
+    public static int getFullness(ItemStack stack) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        return nbt.getInt(FULLNESS_KEY);
+    }
+
+    public static void setFullness(ItemStack stack, int fullness) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putInt(FULLNESS_KEY, fullness);
+    }
+
     // Отключено в целях оптимизации
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
@@ -55,7 +65,7 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
                 nbt.putInt(FULLNESS_KEY, fullness - 1);
             }
 
-            if(!user.isCreative()) {
+            if (!user.isCreative()) {
                 user.getItemCooldownManager().set(this, 10);
             }
             // Применяем эффекты
@@ -73,16 +83,6 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 53, 2), null);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.SATURATION, 50, 94), null);
-    }
-
-    public static int getFullness(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(FULLNESS_KEY);
-    }
-
-    public static void setFullness(ItemStack stack, int fullness) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(FULLNESS_KEY, fullness);
     }
 
     @Override

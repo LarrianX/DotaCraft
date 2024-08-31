@@ -7,8 +7,9 @@ import net.minecraft.server.command.ServerCommandSource;
 
 public class ModCommands {
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-        SetX.register(dispatcher);
-        SetY.register(dispatcher);
+        BecomeHero.register(dispatcher);
+        Undo.register(dispatcher);
+        SetHealth.register(dispatcher);
     }
 
     public static void registerModCommands() {

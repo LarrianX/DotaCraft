@@ -26,7 +26,7 @@ public class ShadowBlade extends Item implements CustomItem {
         applyEffects(user);
 
         // Устанавливаем кулдаун на 25 секунд для выживача (500 тиков)
-        if(!user.isCreative()) {
+        if (!user.isCreative()) {
             user.getItemCooldownManager().set(this, 500);
         }
 

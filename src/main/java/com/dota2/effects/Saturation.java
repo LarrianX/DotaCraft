@@ -3,15 +3,11 @@ package com.dota2.effects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static net.minecraft.entity.effect.StatusEffects.SATURATION;
 
 
 public class Saturation extends StatusEffect implements CustomEffect {

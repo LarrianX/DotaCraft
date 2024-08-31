@@ -6,37 +6,12 @@ import com.dota2.item.Predicate;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.Item;
+import org.slf4j.Logger;
 
 import static com.dota2.item.ModItems.ITEMS;
 
 public class DotaCraftClient implements ClientModInitializer {
-    private static int X = -91;
-    private static int Y = -39;
-    private static double HEALTH = 10.0;
-
-    public static void setX(int x) {
-        X = x;
-    }
-
-    public static void setY(int y) {
-        Y = y;
-    }
-
-    public static void setHealth(double health) {
-        HEALTH = health;
-    }
-
-    public static int getX() {
-        return X;
-    }
-
-    public static int getY() {
-        return Y;
-    }
-
-    public static double getHealth() {
-        return HEALTH;
-    }
+    private static final Logger LOGGER = DotaCraft.LOGGER;
 
     @Override
     public void onInitializeClient() {
@@ -49,7 +24,7 @@ public class DotaCraftClient implements ClientModInitializer {
                         predicate.getProvider()
                 );
 
-                DotaCraft.LOGGER.info("Registered predicate for {}", ((CustomItem) item).getId());
+                LOGGER.info("Registered predicate for {}", ((CustomItem) item).getId());
             }
         }
     }

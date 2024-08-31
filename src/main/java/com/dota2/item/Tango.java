@@ -1,9 +1,6 @@
 package com.dota2.item;
 
-import com.dota2.DotaCraft;
-import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,7 +11,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 
 public class Tango extends Item implements CustomItem, HasPredicate {
@@ -29,6 +25,16 @@ public class Tango extends Item implements CustomItem, HasPredicate {
 
     public Tango() {
         super(new FabricItemSettings().maxCount(8));
+    }
+
+    public static int getFullness(ItemStack stack) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        return nbt.getInt(FULLNESS_KEY);
+    }
+
+    public static void setFullness(ItemStack stack, int fullness) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putInt(FULLNESS_KEY, fullness);
     }
 
     @Override
@@ -81,16 +87,6 @@ public class Tango extends Item implements CustomItem, HasPredicate {
             nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
             stack.decrement(1);
         }
-    }
-
-    public static int getFullness(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(FULLNESS_KEY);
-    }
-
-    public static void setFullness(ItemStack stack, int fullness) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(FULLNESS_KEY, fullness);
     }
 
     @Override

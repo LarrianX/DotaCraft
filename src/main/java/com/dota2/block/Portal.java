@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.sound.BlockSoundGroup;
 
-public class Portal extends Block implements CustomBlock{
+public class Portal extends Block implements CustomBlock {
     private static final String ID = "portal";
 
     public Portal() {

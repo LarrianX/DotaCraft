@@ -3,7 +3,6 @@ package com.dota2.item;
 import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -38,7 +37,7 @@ public class Clarity extends Item implements CustomItem {
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.SATURATION, 160, 80), null);
     }
-    
+
     @Override
     public String getId() {
         return ID;

@@ -25,7 +25,7 @@ public class ModItemGroups {
                                 entries.add(((CustomItem) item).getForTabItemGroup());
                             }
                         }
-                        for (Block block: BLOCKS) {
+                        for (Block block : BLOCKS) {
                             entries.add(block);
                         }
                     })).build());
