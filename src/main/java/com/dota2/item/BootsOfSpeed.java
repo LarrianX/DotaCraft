@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class BootsOfSpeed extends Item implements CustomItem {
-    private static final String ID = "bootsofspeed";
+    private static final String ID = "boots_of_speed";
 
     public BootsOfSpeed() {
         super(new FabricItemSettings().maxCount(1));

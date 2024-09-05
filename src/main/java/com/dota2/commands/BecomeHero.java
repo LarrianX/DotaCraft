@@ -14,8 +14,10 @@ public class BecomeHero {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("become_hero")
+                        .executes(BecomeHero::execute)
                         .then(CommandManager.argument("max health", IntegerArgumentType.integer(1, 1024))
-                                .executes(BecomeHero::execute))
+                                .then(CommandManager.argument("max mana", IntegerArgumentType.integer(0, 1024))
+                                        .executes(BecomeHero::execute_with_attributes)))
         );
     }
 
@@ -24,14 +26,25 @@ public class BecomeHero {
 
         if (player != null) {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            int max_health = IntegerArgumentType.getInteger(context, "max health");
-//            int max_mana = IntegerArgumentType.getInteger(context, "max mana");
 
-            component.setHero(!component.isHero());
-            component.setHealth(max_health);
-            component.setMaxHealth(max_health);
-//            component.setMana(max_mana);
-//            component.setMaxMana(max_mana);
+            component.setHero(true);
+        }
+        return 1;
+    }
+
+    private static int execute_with_attributes(CommandContext<ServerCommandSource> context) {
+        ServerPlayerEntity player = context.getSource().getPlayer();
+
+        if (player != null) {
+            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
+            int maxHealth = IntegerArgumentType.getInteger(context, "max health");
+            int maxMana = IntegerArgumentType.getInteger(context, "max mana");
+
+            component.setHero(true);
+            component.setHealth(maxHealth);
+            component.setMaxHealth(maxHealth);
+            component.setMana(maxMana);
+            component.setMaxMana(maxMana);
         }
         return 1;
     }

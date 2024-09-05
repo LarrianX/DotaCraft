@@ -9,7 +9,7 @@ public class ModCommands {
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
         BecomeHero.register(dispatcher);
         Undo.register(dispatcher);
-        SetHealth.register(dispatcher);
+        SetAttributes.register(dispatcher);
     }
 
     public static void registerModCommands() {

@@ -10,22 +10,38 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
 
-public class SetHealth {
+public class SetAttributes {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
-                CommandManager.literal("set_health")
+                CommandManager.literal("set")
                         .then(CommandManager.argument("health", IntegerArgumentType.integer(0, 1024))
-                                .executes(SetHealth::execute))
+                                .executes(SetAttributes::setHealth)
+                                .then(CommandManager.argument("mana", IntegerArgumentType.integer(0, 1024))
+                                        .executes(SetAttributes::setHealthAndMana)))
         );
     }
 
-    private static int execute(CommandContext<ServerCommandSource> context) {
+    private static int setHealth(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
             int health = IntegerArgumentType.getInteger(context, "health");
             component.setHealth(health);
+        }
+
+        return 1;
+    }
+
+    private static int setHealthAndMana(CommandContext<ServerCommandSource> context) {
+        ServerPlayerEntity player = context.getSource().getPlayer();
+
+        if (player != null) {
+            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
+            int health = IntegerArgumentType.getInteger(context, "health");
+            int mana = IntegerArgumentType.getInteger(context, "mana");
+            component.setHealth(health);
+            component.setMana(mana);
         }
 
         return 1;

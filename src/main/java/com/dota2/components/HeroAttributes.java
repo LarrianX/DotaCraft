@@ -19,10 +19,10 @@ public interface HeroAttributes extends ComponentV3 {
     // Методы для переменной 'hunger'
     int getMana();
 
-    void setMana(int hunger);
+    void setMana(int mana);
 
     // Методы для переменной 'max_hunger'
     int getMaxMana();
 
-    void setMaxMana(int maxHunger);
+    void setMaxMana(int maxMana);
 }
