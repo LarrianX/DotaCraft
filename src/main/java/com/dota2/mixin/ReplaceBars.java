@@ -3,6 +3,7 @@ package com.dota2.mixin;
 import com.dota2.DotaCraft;
 import com.dota2.components.HeroAttributes;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.text.DecimalFormat;
+
 import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
 
 @Mixin(InGameHud.class)
@@ -24,6 +27,8 @@ public class ReplaceBars {
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
     @Unique
     private static final int MAX_PIXELS = 88;
+    @Unique
+    private static final DecimalFormat outputFormat = new DecimalFormat("00");
 
     @Unique
     private int calculatePixels(int value, int max_value) {
@@ -34,9 +39,10 @@ public class ReplaceBars {
     }
 
     @Unique
-    private void drawHealthBar(DrawContext context, int pixels) {
+    private void drawHealthBar(DrawContext context, int health, int max_health, MinecraftClient client) {
         int x = context.getScaledWindowWidth() / 2 - 91;
         int y = context.getScaledWindowHeight() - 39;
+        int pixels = calculatePixels(health, max_health);
 
         context.drawTexture(ICONS, x, y, 0, 0, 1, 9);  // Левая граница
         x += 1;
@@ -45,13 +51,26 @@ public class ReplaceBars {
         context.drawTexture(ICONS, x, y, 1 + pixels, 9, MAX_PIXELS - pixels, 9); // Незаполненная часть
         x += MAX_PIXELS - pixels;
         context.drawTexture(ICONS, x, y, MAX_PIXELS + 1, 0, 1, 9); // Правая граница
+        // Надпись
+        drawHealthText(context, health, max_health, client);
     }
 
     @Unique
-    private void drawManaBar(DrawContext context, int pixels) {
+    private void drawHealthText(DrawContext context, int health, int max_health, MinecraftClient client) {
+        int x = context.getScaledWindowWidth() / 2 - 91 + (MAX_PIXELS / 2) - (5 * 3);
+        int y = context.getScaledWindowHeight() - 39;
+        String text = outputFormat.format(health) + "/" + outputFormat.format(max_health);
+
+        context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
+    }
+
+    @Unique
+    private void drawManaBar(DrawContext context, int mana, int max_mana, MinecraftClient client) {
         int x = context.getScaledWindowWidth() / 2;
         int y = context.getScaledWindowHeight() - 39;
+        int pixels = calculatePixels(mana, max_mana);
 
+        // Полоска маны
         context.drawTexture(ICONS, x, y, 0, 18, 1, 9);  // Левая граница
         x += 1;
         context.drawTexture(ICONS, x, y, 1, 18, pixels, 9); // Заполненная часть
@@ -59,6 +78,17 @@ public class ReplaceBars {
         context.drawTexture(ICONS, x, y, 1 + pixels, 27, MAX_PIXELS - pixels, 9); // Незаполненная часть
         x += MAX_PIXELS - pixels;
         context.drawTexture(ICONS, x, y, MAX_PIXELS + 1, 18, 1, 9); // Правая граница
+        // Надпись
+        drawManaText(context, mana, max_mana, client);
+    }
+
+    @Unique
+    private void drawManaText(DrawContext context, int mana, int max_mana, MinecraftClient client) {
+        int x = context.getScaledWindowWidth() / 2 + (MAX_PIXELS / 2) - (5 * 3);
+        int y = context.getScaledWindowHeight() - 39;
+        String text = outputFormat.format(mana) + "/" + outputFormat.format(max_mana);
+
+        context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
     }
 
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;ceil(F)I"), cancellable = true)
@@ -72,9 +102,10 @@ public class ReplaceBars {
                 int max_health = component.getMaxHealth();
                 int mana = component.getMana();
                 int max_mana = component.getMaxMana();
+                MinecraftClient client = MinecraftClient.getInstance();
 
-                drawHealthBar(context, calculatePixels(health, max_health));
-                drawManaBar(context, calculatePixels(mana, max_mana));
+                drawHealthBar(context, health, max_health, client);
+                drawManaBar(context, mana, max_mana, client);
             }
         }
     }
