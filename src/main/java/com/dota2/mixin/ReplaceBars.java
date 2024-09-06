@@ -28,7 +28,7 @@ public class ReplaceBars {
     @Unique
     private static final int MAX_PIXELS = 88;
     @Unique
-    private static final DecimalFormat outputFormat = new DecimalFormat("00");
+    private static final DecimalFormat outputFormat = new DecimalFormat("000");
 
     @Unique
     private int calculatePixels(int value, int max_value) {
@@ -36,6 +36,13 @@ public class ReplaceBars {
             return 0;
         }
         return (int) (MAX_PIXELS * ((double) value / (double) max_value));
+    }
+
+    @Unique
+    private int correctPosition(int value) {
+//        (MAX_PIXELS / 2) - (7 * 3)
+        int correct_len = (3 - String.valueOf(value).length()) * 6;
+        return (MAX_PIXELS / 2) - (3 * 6) + correct_len;
     }
 
     @Unique
@@ -57,9 +64,9 @@ public class ReplaceBars {
 
     @Unique
     private void drawHealthText(DrawContext context, int health, int max_health, MinecraftClient client) {
-        int x = context.getScaledWindowWidth() / 2 - 91 + (MAX_PIXELS / 2) - (5 * 3);
+        int x = context.getScaledWindowWidth() / 2 - 91 + correctPosition(health);
         int y = context.getScaledWindowHeight() - 39;
-        String text = outputFormat.format(health) + "/" + outputFormat.format(max_health);
+        String text = health + "/" + outputFormat.format(max_health);
 
         context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
     }
@@ -84,9 +91,9 @@ public class ReplaceBars {
 
     @Unique
     private void drawManaText(DrawContext context, int mana, int max_mana, MinecraftClient client) {
-        int x = context.getScaledWindowWidth() / 2 + (MAX_PIXELS / 2) - (5 * 3);
+        int x = context.getScaledWindowWidth() / 2 + correctPosition(mana);
         int y = context.getScaledWindowHeight() - 39;
-        String text = outputFormat.format(mana) + "/" + outputFormat.format(max_mana);
+        String text = mana + "/" + outputFormat.format(max_mana);
 
         context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
     }

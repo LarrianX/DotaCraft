@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -66,18 +67,17 @@ public class Tango extends Item implements CustomItem, HasPredicate {
         applyEffects(user);
 
         // Проверяем режим игры игрока и обновляем стак
-        if (user.isCreative()) {
-            return TypedActionResult.success(stack);
+        if (!user.isCreative()) {
+            updateStack(stack, nbt, fullness);
+            user.getItemCooldownManager().set(this, 10);
         }
-
-        updateStack(stack, nbt, fullness);
 
         return TypedActionResult.success(stack);
     }
 
     private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
     }
 
     private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
