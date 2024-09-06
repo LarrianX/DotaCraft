@@ -4,7 +4,6 @@ import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -63,9 +62,6 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
             // Если не в креативе, уменьшаем fullness на 1
             if (!user.isCreative()) {
                 nbt.putInt(FULLNESS_KEY, fullness - 1);
-            }
-
-            if (!user.isCreative()) {
                 user.getItemCooldownManager().set(this, 10);
             }
             // Применяем эффекты
@@ -81,8 +77,8 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 53, 2), null);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.SATURATION, 50, 94), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA, 50, 94), null);
     }
 
     @Override

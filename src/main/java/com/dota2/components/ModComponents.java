@@ -11,10 +11,13 @@ import net.minecraft.util.Identifier;
 public final class ModComponents implements EntityComponentInitializer {
     public static final ComponentKey<HeroAttributes> HERO_ATTRIBUTES =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "hero_attributes"), HeroAttributes.class);
+    public static final ComponentKey<EffectAttributes> EFFECT_ATTRIBUTES =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "effect_attributes"), EffectAttributes.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         // Add the component to every PlayerEntity instance, and copy it on respawn with keepInventory
-        registry.registerForPlayers(HERO_ATTRIBUTES, player -> new PlayerComponent(player), RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(HERO_ATTRIBUTES, PlayerSyncedComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(EFFECT_ATTRIBUTES, player -> new PlayerNonSyncedComponent(), RespawnCopyStrategy.INVENTORY);
     }
 }

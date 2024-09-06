@@ -4,7 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-public class PlayerComponent implements HeroAttributes, AutoSyncedComponent {
+public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponent {
     private final PlayerEntity provider;  // or World, or whatever you are attaching to
     private boolean hero;
     private int health;
@@ -12,7 +12,7 @@ public class PlayerComponent implements HeroAttributes, AutoSyncedComponent {
     private int mana;
     private int maxMana;
 
-    public PlayerComponent(PlayerEntity provider) {
+    public PlayerSyncedComponent(PlayerEntity provider) {
         this.provider = provider;
     }
 
@@ -54,6 +54,11 @@ public class PlayerComponent implements HeroAttributes, AutoSyncedComponent {
     }
 
     @Override
+    public boolean isNotFullHealth() {
+        return (this.health != this.maxHealth);
+    }
+
+    @Override
     public int getMana() {
         return mana;
     }
@@ -73,6 +78,28 @@ public class PlayerComponent implements HeroAttributes, AutoSyncedComponent {
     public void setMaxMana(int maxMana) {
         this.maxMana = maxMana;
         sync();
+    }
+
+    @Override
+    public boolean isNotFullMana() {
+        return (this.mana != this.maxMana);
+    }
+
+    @Override
+    public void serverTick() {
+        if (this.maxHealth < 0)
+            this.maxHealth = 0;
+        if (this.health > this.maxHealth)
+            this.health = this.maxHealth;
+        else if (this.health < 0)
+            this.health = 0;
+
+        if (this.maxMana < 0)
+            this.maxMana = 0;
+        if (this.mana > this.maxMana)
+            this.mana = this.maxMana;
+        else if (this.mana < 0)
+            this.mana = 0;
     }
 
     @Override

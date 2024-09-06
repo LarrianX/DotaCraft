@@ -9,9 +9,10 @@
   "item.dotacraft.tango": "Tango",
   "item.dotacraft.tpscroll": "Teleport Scroll",
   "item.dotacraft.shadowblade": "Shadow Blade",
-  "item.dotacraft.bootsofspeed": "Boots of Speed",
+  "item.dotacraft.boots_of_speed": "Boots of Speed",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Portal",
   "block.dotacraft.pressure_plate": "Pressure Plate",
-  "effect.dotacraft.saturation": "Saturation"
+  "effect.dotacraft.regeneration_mana": "Regeneration of mana",
+  "effect.dotacraft.regeneration_health": "Regeneration of health"
 }

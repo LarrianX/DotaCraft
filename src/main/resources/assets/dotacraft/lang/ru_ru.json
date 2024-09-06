@@ -9,9 +9,10 @@
   "item.dotacraft.tango": "Танго",
   "item.dotacraft.tpscroll": "Свиток телепортации",
   "item.dotacraft.shadowblade": "Теневой клинок",
-  "item.dotacraft.bootsofspeed": "Сапоги-Скороходы",
+  "item.dotacraft.boots_of_speed": "Сапоги-Скороходы",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Портал",
   "block.dotacraft.pressure_plate": "Нажимная плита",
-  "effect.dotacraft.saturation": "Восполнение маны"
+  "effect.dotacraft.regeneration_mana": "Регенерация маны",
+  "effect.dotacraft.regeneration_health": "Регенерация жизни"
 }

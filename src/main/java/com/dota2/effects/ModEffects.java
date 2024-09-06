@@ -7,10 +7,12 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEffects {
-    public static final Saturation SATURATION = new Saturation();
+    public static final RegenerationMana REGENERATION_MANA = new RegenerationMana();
+    public static final RegenerationHealth REGENERATION_HEALTH = new RegenerationHealth();
 
     public static final StatusEffect[] EFFECTS = {
-            SATURATION,
+            REGENERATION_MANA,
+            REGENERATION_HEALTH
     };
 
     private static void registerEffects() {
