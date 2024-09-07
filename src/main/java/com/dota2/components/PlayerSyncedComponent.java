@@ -89,16 +89,18 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     public void serverTick() {
         if (this.maxHealth < 0)
             this.maxHealth = 0;
-        if (this.health > this.maxHealth)
-            this.health = this.maxHealth;
-        else if (this.health < 0)
+        else if (this.maxHealth > 30000)
+            this.maxHealth = 30000;
+        maxHealth = 30000;
+        if (this.health < 0)
             this.health = 0;
 
         if (this.maxMana < 0)
             this.maxMana = 0;
-        if (this.mana > this.maxMana)
-            this.mana = this.maxMana;
-        else if (this.mana < 0)
+        else if (this.maxMana > 30000)
+            this.maxMana = 30000;
+        maxMana = 30000;
+        if (this.mana < 0)
             this.mana = 0;
     }
 

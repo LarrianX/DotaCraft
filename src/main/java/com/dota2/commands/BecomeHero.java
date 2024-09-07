@@ -15,8 +15,8 @@ public class BecomeHero {
         dispatcher.register(
                 CommandManager.literal("become_hero")
                         .executes(BecomeHero::execute)
-                        .then(CommandManager.argument("max health", IntegerArgumentType.integer(1, 1024))
-                                .then(CommandManager.argument("max mana", IntegerArgumentType.integer(0, 1024))
+                        .then(CommandManager.argument("max health", IntegerArgumentType.integer(1, 30000))
+                                .then(CommandManager.argument("max mana", IntegerArgumentType.integer(0, 30000))
                                         .executes(BecomeHero::execute_with_attributes)))
         );
     }

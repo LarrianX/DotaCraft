@@ -14,9 +14,9 @@ public class SetAttributes {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("set")
-                        .then(CommandManager.argument("health", IntegerArgumentType.integer(0, 1024))
+                        .then(CommandManager.argument("health", IntegerArgumentType.integer(0, 30000))
                                 .executes(SetAttributes::setHealth)
-                                .then(CommandManager.argument("mana", IntegerArgumentType.integer(0, 1024))
+                                .then(CommandManager.argument("mana", IntegerArgumentType.integer(0, 30000))
                                         .executes(SetAttributes::setHealthAndMana)))
         );
     }
