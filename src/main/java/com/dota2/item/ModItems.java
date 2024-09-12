@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 public class ModItems {
     public static final Flask FLASK = new Flask();
     public static final Clarity CLARITY = new Clarity();
+    public static final Crystalys CRYSTALYS = new Crystalys();
     public static final Mango MANGO = new Mango();
     public static final Daedalus DAEDALUS = new Daedalus();
     public static final Scepter SCEPTER = new Scepter();
@@ -22,6 +23,7 @@ public class ModItems {
     public static final Item[] ITEMS = {
             FLASK,
             CLARITY,
+            CRYSTALYS,
             MANGO,
             DAEDALUS,
             SCEPTER,

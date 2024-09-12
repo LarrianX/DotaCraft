@@ -1,0 +1,19 @@
+{
+  "item.dotacraft.flask": "Цѣлебная Мазь ",
+  "item.dotacraft.clarity": "Мазь Просвященія",
+  "item.dotacraft.crystalys": "Кристальный мечъ",
+  "item.dotacraft.mango": "Манго",
+  "item.dotacraft.bottle": "Бутыль",
+  "item.dotacraft.daedalus": "Дедалъ",
+  "item.dotacraft.battle_fury": "Боевая ярость",
+  "item.dotacraft.scepter": "Аганимъ",
+  "item.dotacraft.tango": "Танго",
+  "item.dotacraft.tpscroll": "Свитокъ телепортаціи",
+  "item.dotacraft.shadowblade": "Тѣневой клинокъ",
+  "item.dotacraft.boots_of_speed": "Сапоги-Скороходы",
+  "itemgroup.dota": "Dota Craft",
+  "block.dotacraft.portal": "Порталъ",
+  "block.dotacraft.pressure_plate": "Нажимная плита",
+  "effect.dotacraft.regeneration_mana": "Регенерація маны",
+  "effect.dotacraft.regeneration_health": "Регенерація здоровья"
+}

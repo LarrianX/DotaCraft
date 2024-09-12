@@ -1,6 +1,7 @@
 {
   "item.dotacraft.flask": "Фласка",
   "item.dotacraft.clarity": "Кларити",
+  "item.dotacraft.crystalys": "Кристалис",
   "item.dotacraft.mango": "Манго",
   "item.dotacraft.bottle": "Бутыль",
   "item.dotacraft.daedalus": "Дедал",
@@ -14,5 +15,5 @@
   "block.dotacraft.portal": "Портал",
   "block.dotacraft.pressure_plate": "Нажимная плита",
   "effect.dotacraft.regeneration_mana": "Регенерация маны",
-  "effect.dotacraft.regeneration_health": "Регенерация жизни"
+  "effect.dotacraft.regeneration_health": "Регенерация здоровья"
 }
