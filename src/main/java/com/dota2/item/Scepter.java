@@ -8,7 +8,7 @@ public class Scepter extends Item implements CustomItem {
     public static final String ID = "scepter";
 
     public Scepter() {
-        super(new FabricItemSettings());
+        super(new FabricItemSettings().maxCount(1));
     }
 
     @Override

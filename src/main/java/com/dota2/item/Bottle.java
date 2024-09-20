@@ -1,9 +1,9 @@
 package com.dota2.item;
 
+import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,6 +26,16 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         super(new FabricItemSettings().maxCount(1));
     }
 
+    public static int getFullness(ItemStack stack) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        return nbt.getInt(FULLNESS_KEY);
+    }
+
+    public static void setFullness(ItemStack stack, int fullness) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putInt(FULLNESS_KEY, fullness);
+    }
+
     // Отключено в целях оптимизации
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
@@ -43,35 +53,32 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
-        // Получаем NBT и ищем значение fullness
+        // Получаем NBT и значение fullness
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
-        if (fullness >= 1) {
-            // Если человек не в креативе - уменьшаем fullness на 1
+        // Проверяем, достаточно ли fullness для выполнения действия
+        if (fullness > 0) {
+            // Если не в креативе, уменьшаем fullness на 1
             if (!user.isCreative()) {
                 nbt.putInt(FULLNESS_KEY, fullness - 1);
+                user.getItemCooldownManager().set(this, 10);
             }
-            // Воспроизводим нужные действия
-            user.playSound(SoundEvents.BLOCK_AMETHYST_BLOCK_PLACE, 1.0F, 1.0F);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 65, 2), null);
-            user.setStatusEffect(new StatusEffectInstance(StatusEffects.SATURATION, 7, 0), null);
-            // Возращаем удачный результат
+            // Применяем эффекты
+            applyEffects(user);
+
             return TypedActionResult.success(stack);
         } else {
-            // Не удалось выпить пустую бутылку
+            // Если fullness не достаточно, возвращаем неудачный результат
             return TypedActionResult.fail(stack);
         }
     }
 
-    public static int getFullness(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(FULLNESS_KEY);
-    }
-
-    public static void setFullness(ItemStack stack, int fullness) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(FULLNESS_KEY, fullness);
+    private void applyEffects(PlayerEntity user) {
+        // Воспроизводим звуки и эффекты
+        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA, 50, 94), null);
     }
 
     @Override

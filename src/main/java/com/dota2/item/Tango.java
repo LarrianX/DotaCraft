@@ -1,9 +1,7 @@
 package com.dota2.item;
 
-import com.dota2.DotaCraft;
-import com.mojang.authlib.GameProfile;
+import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -14,7 +12,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 
 public class Tango extends Item implements CustomItem, HasPredicate {
@@ -31,6 +28,16 @@ public class Tango extends Item implements CustomItem, HasPredicate {
         super(new FabricItemSettings().maxCount(8));
     }
 
+    public static int getFullness(ItemStack stack) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        return nbt.getInt(FULLNESS_KEY);
+    }
+
+    public static void setFullness(ItemStack stack, int fullness) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putInt(FULLNESS_KEY, fullness);
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
         // inventoryTick - функция вызывается каждый тик в инвентаре
@@ -45,38 +52,41 @@ public class Tango extends Item implements CustomItem, HasPredicate {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Выполняем ожидаемые действия
-        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 320, 0),null);
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
-        // Если человек в креативе - пропускаем уменьшение fullness
-        if (user.isCreative()) {
-            return TypedActionResult.success(stack);
-        }
-        // Получаем NBT и ищем значение fullness
+        // Получаем NBT и значение fullness
         NbtCompound nbt = stack.getOrCreateNbt();
         int fullness = nbt.getInt(FULLNESS_KEY);
 
-        if (fullness > 1) {
-            // Уменьшаем значение fullness на 1
-            nbt.putInt(FULLNESS_KEY, fullness - 1);
-        } else {
-            // Уменьшаем значение стака на 1 и ставим макс. fullness
-            nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
-            stack.decrement(1);
+        if (fullness == 0) {
+            // Такая ситуация невозможна без команд, но, why not
+            return TypedActionResult.fail(stack);
         }
+
+        // Выполняем действия
+        applyEffects(user);
+
+        // Проверяем режим игры игрока и обновляем стак
+        if (!user.isCreative()) {
+            updateStack(stack, nbt, fullness);
+            user.getItemCooldownManager().set(this, 10);
+        }
+
         return TypedActionResult.success(stack);
     }
 
-    public static int getFullness(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(FULLNESS_KEY);
+    private void applyEffects(PlayerEntity user) {
+        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
     }
 
-    public static void setFullness(ItemStack stack, int fullness) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(FULLNESS_KEY, fullness);
+    private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
+        if (fullness > 1) {
+            nbt.putInt(FULLNESS_KEY, fullness - 1);
+        } else {
+            nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
+            stack.decrement(1);
+        }
     }
 
     @Override

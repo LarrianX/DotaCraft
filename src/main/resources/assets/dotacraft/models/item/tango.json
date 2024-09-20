@@ -2,19 +2,27 @@
   "parent": "item/generated",
   "overrides": [
     {
-      "predicate": {"fullness": 0},
+      "predicate": {
+        "fullness": 0
+      },
       "model": "dotacraft:item/tango_0"
     },
     {
-      "predicate": {"fullness": 0.33},
+      "predicate": {
+        "fullness": 0.33
+      },
       "model": "dotacraft:item/tango_1"
     },
     {
-      "predicate": {"fullness": 0.67},
+      "predicate": {
+        "fullness": 0.67
+      },
       "model": "dotacraft:item/tango_2"
     },
     {
-      "predicate": {"fullness": 1.0},
+      "predicate": {
+        "fullness": 1.0
+      },
       "model": "dotacraft:item/tango_3"
     }
   ]
