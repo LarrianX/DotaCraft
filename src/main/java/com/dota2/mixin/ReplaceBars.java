@@ -74,7 +74,7 @@ public class ReplaceBars {
 
     @Unique
     private void drawManaBar(DrawContext context, int mana, int max_mana, MinecraftClient client) {
-        int x = context.getScaledWindowWidth() / 2;
+        int x = context.getScaledWindowWidth() / 2 + 1;
         int y = context.getScaledWindowHeight() - 39;
         int pixels = calculatePixels(mana, max_mana);
 
