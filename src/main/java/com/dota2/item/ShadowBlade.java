@@ -1,21 +1,29 @@
 package com.dota2.item;
 
+import com.dota2.components.HeroAttributes;
+import com.dota2.components.ModComponents;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class ShadowBlade extends Item implements CustomItem {
+import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+
+public class ShadowBlade extends SwordItem implements CustomItem {
     private static final String ID = "shadowblade";
+    private static final int DAMAGE = 10;
 
     public ShadowBlade() {
-        super(new FabricItemSettings().maxCount(1));
+        super(DotaMaterial.INSTANCE, DAMAGE, 2.0f , new FabricItemSettings().maxCount(1));
     }
 
     @Override
@@ -42,6 +50,16 @@ public class ShadowBlade extends Item implements CustomItem {
         );
 
         user.addStatusEffect(invisibilityEffect);
+    }
+
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (target instanceof PlayerEntity player) {
+            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
+
+            component.setHealth(component.getHealth() - DAMAGE);
+        }
+        return super.postHit(stack, target, attacker);
     }
 
     @Override

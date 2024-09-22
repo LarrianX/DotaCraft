@@ -27,4 +27,13 @@ public interface HeroAttributes extends ComponentV3, ServerTickingComponent {
     void setMaxMana(int maxMana);
 
     boolean isNotFullMana();
+
+    // поля, отвечающие за старые значения
+    int getOldHealth();
+
+    void setOldHealth(int oldHealth);
+
+    int getOldMaxHealth();
+
+    void setOldMaxHealth(int oldMaxHealth);
 }

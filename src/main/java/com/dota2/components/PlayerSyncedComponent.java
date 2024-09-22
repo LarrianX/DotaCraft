@@ -1,5 +1,6 @@
 package com.dota2.components;
 
+import com.dota2.commands.BecomeHero;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -11,6 +12,8 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     private int maxHealth;
     private int mana;
     private int maxMana;
+    private int oldHealth;
+    private int oldMaxHealth;
 
     public PlayerSyncedComponent(PlayerEntity provider) {
         this.provider = provider;
@@ -86,6 +89,30 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     }
 
     @Override
+    public void setOldHealth(int oldHealth) {
+        this.oldHealth = oldHealth;
+        // не нуждается в синхронизации с клиентом.
+        // по хорошему надо бы это поместить в PlayerNonSyncedComponent
+        // но это надо разделять HeroAttributes на два компонента... хз
+        // пока будет так
+    }
+
+    @Override
+    public int getOldHealth() {
+        return this.oldHealth;
+    }
+
+    @Override
+    public void setOldMaxHealth(int oldMaxHealth) {
+        this.oldMaxHealth = oldMaxHealth;
+    }
+
+    @Override
+    public int getOldMaxHealth() {
+        return this.oldMaxHealth;
+    }
+
+    @Override
     public void serverTick() {
         if (this.maxHealth < 0)
             this.maxHealth = 0;
@@ -106,6 +133,8 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
             this.mana = 0;
         else if (this.mana > this.maxMana)
             this.mana = this.maxMana;
+
+        provider.setHealth(BecomeHero.HEALTH);
     }
 
     @Override
@@ -115,6 +144,8 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
         this.maxHealth = tag.getInt("MaxHealth");
         this.mana = tag.getInt("Mana");
         this.maxMana = tag.getInt("MaxMana");
+        this.oldHealth = tag.getInt("OldHealth");
+        this.oldMaxHealth = tag.getInt("OldMaxHealth");
     }
 
     @Override
@@ -124,5 +155,7 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
         tag.putInt("MaxHealth", this.maxHealth);
         tag.putInt("Mana", this.mana);
         tag.putInt("MaxMana", this.maxMana);
+        tag.putInt("OldHealth", this.oldHealth);
+        tag.putInt("OldMaxHealth", this.oldMaxHealth);
     }
 }

@@ -3,6 +3,8 @@ package com.dota2.commands;
 import com.dota2.components.HeroAttributes;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,7 +24,14 @@ public class Undo {
 
         if (player != null) {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            component.setHero(false);
+            EntityAttributeInstance attribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
+
+            if (attribute != null) {
+                player.setHealth(component.getOldHealth());
+                attribute.setBaseValue(component.getOldMaxHealth());
+
+                component.setHero(false);
+            }
         }
 
         return 1;
