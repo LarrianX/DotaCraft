@@ -14,15 +14,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class Tango extends Item implements CustomItem, HasPredicate {
-    private static final String ID = "tango";
-    private static final String FULLNESS_KEY = "fullness";
-    private static final int MAX_FULLNESS = 3;
-    private static final Predicate PREDICATE = new Predicate(FULLNESS_KEY, (stack, world, entity, seed) -> {
-        float value = (float) Tango.getFullness(stack) / Tango.MAX_FULLNESS;
-        // Делим fullness на макс. fullness и получаем float
-        return Math.round(value * 100.0f) / 100.0f; // Округляем до двух чисел после запятой
-    });
+public class Tango extends Item implements CustomItem {
+    protected static final String ID = "tango";
+    protected static final String FULLNESS_KEY = "fullness";
+    protected static final int MAX_FULLNESS = 3;
 
     public Tango() {
         super(new FabricItemSettings().maxCount(8));
@@ -75,12 +70,12 @@ public class Tango extends Item implements CustomItem, HasPredicate {
         return TypedActionResult.success(stack);
     }
 
-    private void applyEffects(PlayerEntity user) {
+    protected void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
     }
 
-    private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
+    protected void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
         if (fullness > 1) {
             nbt.putInt(FULLNESS_KEY, fullness - 1);
         } else {
@@ -99,10 +94,5 @@ public class Tango extends Item implements CustomItem, HasPredicate {
         ItemStack fullTangoStack = new ItemStack(this);
         Tango.setFullness(fullTangoStack, Tango.MAX_FULLNESS);
         return fullTangoStack;
-    }
-
-    @Override
-    public Predicate getPredicate() {
-        return PREDICATE;
     }
 }

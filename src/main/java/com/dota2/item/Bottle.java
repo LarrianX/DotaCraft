@@ -13,14 +13,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class Bottle extends Item implements CustomItem, HasPredicate {
-    private static final String ID = "bottle";
-    private static final String FULLNESS_KEY = "fullness";
-    private static final int MAX_FULLNESS = 3;
-    private static final Predicate PREDICATE = new Predicate(FULLNESS_KEY, (stack, world, entity, seed) -> {
-        float value = (float) Bottle.getFullness(stack) / Bottle.MAX_FULLNESS;
-        return Math.round(value * 100.0f) / 100.0f;
-    });
+public class Bottle extends Item implements CustomItem {
+    protected static final String ID = "bottle";
+    protected static final String FULLNESS_KEY = "fullness";
+    protected static final int MAX_FULLNESS = 3;
 
     public Bottle() {
         super(new FabricItemSettings().maxCount(1));
@@ -74,7 +70,7 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         }
     }
 
-    private void applyEffects(PlayerEntity user) {
+    protected void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
@@ -91,10 +87,5 @@ public class Bottle extends Item implements CustomItem, HasPredicate {
         ItemStack fullBottleStack = new ItemStack(this);
         Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
         return fullBottleStack;
-    }
-
-    @Override
-    public Predicate getPredicate() {
-        return PREDICATE;
     }
 }

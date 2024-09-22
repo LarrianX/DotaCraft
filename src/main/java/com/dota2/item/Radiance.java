@@ -10,9 +10,14 @@ public class Radiance extends Item implements CustomItem {
     public Radiance() {super(new FabricItemSettings().maxCount(1));}
 
     @Override
-    public String getId(){return ID;}
+    public String getId() {
+        return ID;
+    }
 
     @Override
-    public ItemStack getForTabItemGroup(){return new ItemStack(this);}
+    public ItemStack getForTabItemGroup() {
+        return new ItemStack(this);
     }
+
+}
 
