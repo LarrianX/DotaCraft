@@ -16,6 +16,7 @@ public class ModItems {
     public static final BattleFury BATTLE_FURY = new BattleFury();
     public static final TpScroll TPSCROLL = new TpScroll();
     public static final ShadowBlade SHADOWBLADE = new ShadowBlade();
+    public static final Radiance RADIANCE = new Radiance();
     public static final Bottle BOTTLE = new Bottle();
     public static final Tango TANGO = new Tango();
     public static final BootsOfSpeed BOOTSOFSPEED = new BootsOfSpeed();
@@ -32,7 +33,8 @@ public class ModItems {
             BOTTLE,
             TANGO,
             TPSCROLL,
-            SHADOWBLADE
+            SHADOWBLADE,
+            RADIANCE
     };
 
     private static void registerItems() {
