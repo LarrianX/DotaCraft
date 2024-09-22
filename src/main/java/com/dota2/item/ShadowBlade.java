@@ -56,7 +56,7 @@ public class ShadowBlade extends SwordItem implements CustomItem {
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (target instanceof PlayerEntity player) {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-
+            //
             component.setHealth(component.getHealth() - DAMAGE);
         }
         return super.postHit(stack, target, attacker);
