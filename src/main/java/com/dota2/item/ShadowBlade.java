@@ -20,7 +20,7 @@ import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
 
 public class ShadowBlade extends SwordItem implements CustomItem {
     private static final String ID = "shadowblade";
-    private static final int DAMAGE = 10;
+    private static final int DAMAGE = 100;
 
     public ShadowBlade() {
         super(DotaMaterial.INSTANCE, DAMAGE, 2.0f , new FabricItemSettings().maxCount(1));
