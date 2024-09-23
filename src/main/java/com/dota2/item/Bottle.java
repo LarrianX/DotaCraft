@@ -14,9 +14,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class Bottle extends Item implements CustomItem {
-    protected static final String ID = "bottle";
-    protected static final String FULLNESS_KEY = "fullness";
-    protected static final int MAX_FULLNESS = 3;
+    private static final String ID = "bottle";
+    public static final String FULLNESS_KEY = "fullness";
+    public static final int MAX_FULLNESS = 3;
 
     public Bottle() {
         super(new FabricItemSettings().maxCount(1));
@@ -70,7 +70,7 @@ public class Bottle extends Item implements CustomItem {
         }
     }
 
-    protected void applyEffects(PlayerEntity user) {
+    private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);

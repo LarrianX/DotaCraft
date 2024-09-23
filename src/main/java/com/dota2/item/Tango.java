@@ -15,9 +15,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class Tango extends Item implements CustomItem {
-    protected static final String ID = "tango";
-    protected static final String FULLNESS_KEY = "fullness";
-    protected static final int MAX_FULLNESS = 3;
+    private static final String ID = "tango";
+    public static final String FULLNESS_KEY = "fullness";
+    public static final int MAX_FULLNESS = 3;
 
     public Tango() {
         super(new FabricItemSettings().maxCount(8));
@@ -70,12 +70,12 @@ public class Tango extends Item implements CustomItem {
         return TypedActionResult.success(stack);
     }
 
-    protected void applyEffects(PlayerEntity user) {
+    private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
     }
 
-    protected void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
+    private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
         if (fullness > 1) {
             nbt.putInt(FULLNESS_KEY, fullness - 1);
         } else {

@@ -10,27 +10,26 @@ public class DotaCraftClient implements ClientModInitializer {
     private static final Logger LOGGER = DotaCraft.LOGGER;
 
     public static final BottlePredicate BOTTLE_PREDICATE = new BottlePredicate();
-//    public static final TangoPredicate TANGO_PREDICATE = new TangoPredicate();
+    public static final TangoPredicate TANGO_PREDICATE = new TangoPredicate();
 //
-//    public static final Item[] PREDICATES = {
-//            BOTTLE_PREDICATE,
-//            TANGO_PREDICATE
-//    };
+    public static final Predicate[] PREDICATES = {
+        BOTTLE_PREDICATE,
+        TANGO_PREDICATE
+    };
 
 
     @Override
     public void onInitializeClient() {
-//        for (Item item : PREDICATES) {
-//            if (item instanceof CustomItem && item instanceof HasPredicate) {
-//                Predicate predicate = ((HasPredicate) item).getPredicate();
-//                ModelPredicateProviderRegistry.register(
-//                        item,
-//                        predicate.getId(),
-//                        predicate.getProvider()
-//                );
-//
-//                LOGGER.info("Registered predicate for {}", ((CustomItem) item).getId());
-//            }
-//        }
+        for (Predicate predicate : PREDICATES) {
+            if (predicate.getItem() instanceof CustomItem) {
+                ModelPredicateProviderRegistry.register(
+                        predicate.getItem(),
+                        predicate.getId(),
+                        predicate.getProvider()
+                );
+
+                LOGGER.info("Registered predicate for {}", ((CustomItem) predicate.getItem()).getId());
+            }
+        }
     }
 }
