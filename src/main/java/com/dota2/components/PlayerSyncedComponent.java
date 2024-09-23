@@ -134,7 +134,10 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
         else if (this.mana > this.maxMana)
             this.mana = this.maxMana;
 
-        provider.setHealth(BecomeHero.HEALTH);
+        if (this.health == 0)
+            provider.setHealth(0);
+        else
+            provider.setHealth(BecomeHero.HEALTH);
     }
 
     @Override

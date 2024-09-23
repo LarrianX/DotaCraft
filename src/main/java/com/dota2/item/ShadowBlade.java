@@ -57,7 +57,10 @@ public class ShadowBlade extends SwordItem implements CustomItem {
         if (target instanceof PlayerEntity player) {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
 
-            component.setHealth(component.getHealth() - DAMAGE);
+            if (component.getHealth() >= DAMAGE)
+                component.setHealth(component.getHealth() - DAMAGE);
+            else
+                component.setHealth(0);
         }
         return super.postHit(stack, target, attacker);
     }

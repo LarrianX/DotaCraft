@@ -27,7 +27,7 @@ public class Mango extends Item implements CustomItem {
         // Если человек не в креативе - уменьшаем стак на один
         if (!user.isCreative()) {
             stack.decrement(1);
-            user.getItemCooldownManager().set(this, 10);
+//            user.getItemCooldownManager().set(this, 10);
         }
         // Успех
         return TypedActionResult.success(stack);
