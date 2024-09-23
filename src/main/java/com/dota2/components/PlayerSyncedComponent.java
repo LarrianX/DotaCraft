@@ -135,7 +135,7 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
             this.mana = this.maxMana;
 
         if (this.hero && this.health == 0) {
-            provider.kill();
+//            provider.kill();
             this.health = this.maxHealth;
             sync();
         }
