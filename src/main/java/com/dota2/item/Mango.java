@@ -42,10 +42,7 @@ public class Mango extends Item implements CustomItem {
         HeroAttributes component = user.getComponent(HERO_ATTRIBUTES);
         if (component.isHero()) {
 
-            if ((component.getMana() + REGENERATION) > component.getMaxMana())
-                component.setMana(component.getMaxMana());
-            else
-                component.setMana(component.getMana() + REGENERATION);
+            component.addMana(REGENERATION);
         } else {
             HungerManager hunger = (user.getHungerManager());
             hunger.setFoodLevel(hunger.getFoodLevel() + 6);

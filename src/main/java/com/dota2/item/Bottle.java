@@ -73,8 +73,8 @@ public class Bottle extends Item implements CustomItem {
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA, 50, 94), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA,   50, 0), null);
     }
 
     @Override

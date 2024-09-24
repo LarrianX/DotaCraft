@@ -32,7 +32,7 @@ public class BecomeHero {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
             EntityAttributeInstance attribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
 
-            if (attribute != null) {
+            if (attribute != null && !component.isHero()) {
                 component.setOldHealth((int) player.getHealth());
                 component.setOldMaxHealth((int) attribute.getBaseValue());
 
@@ -46,29 +46,19 @@ public class BecomeHero {
     }
 
     private static int execute_with_attributes(CommandContext<ServerCommandSource> context) {
+        execute(context);
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
             HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            EntityAttributeInstance attribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
 
-            if (attribute != null) {
-                int maxHealth = IntegerArgumentType.getInteger(context, "max health");
-                int maxMana = IntegerArgumentType.getInteger(context, "max mana");
+            int maxHealth = IntegerArgumentType.getInteger(context, "max health");
+            int maxMana = IntegerArgumentType.getInteger(context, "max mana");
 
-                component.setOldHealth((int) player.getHealth());
-                component.setOldMaxHealth((int) attribute.getBaseValue());
-
-                player.setHealth(HEALTH);
-                attribute.setBaseValue(HEALTH);
-
-                component.setHealth(maxHealth);
-                component.setMaxHealth(maxHealth);
-                component.setMana(maxMana);
-                component.setMaxMana(maxMana);
-
-                component.setHero(true);
-            }
+            component.setHealth(maxHealth);
+            component.setMaxHealth(maxHealth);
+            component.setMana(maxMana);
+            component.setMaxMana(maxMana);
         }
         return 1;
     }

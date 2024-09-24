@@ -6,6 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponent {
+    private static final int LIMIT = 30000;
+    private static NbtCompound CACHE = new NbtCompound();
     private final PlayerEntity provider;  // or World, or whatever you are attaching to
     private boolean hero;
     private int health;
@@ -31,7 +33,6 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     @Override
     public void setHero(boolean hero) {
         this.hero = hero;
-        sync();
     }
 
     @Override
@@ -42,7 +43,13 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     @Override
     public void setHealth(int health) {
         this.health = health;
-        sync();
+    }
+
+    @Override
+    public void addHealth(int health) {
+        this.health += health;
+        if (this.health > this.maxHealth)
+            this.health = this.maxHealth;
     }
 
     @Override
@@ -53,7 +60,6 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     @Override
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
-        sync();
     }
 
     @Override
@@ -69,7 +75,13 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     @Override
     public void setMana(int mana) {
         this.mana = mana;
-        sync();
+    }
+
+    @Override
+    public void addMana(int mana) {
+        this.mana += mana;
+        if (this.mana > this.maxMana)
+            this.mana = this.maxMana;
     }
 
     @Override
@@ -80,7 +92,6 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     @Override
     public void setMaxMana(int maxMana) {
         this.maxMana = maxMana;
-        sync();
     }
 
     @Override
@@ -91,10 +102,6 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
     @Override
     public void setOldHealth(int oldHealth) {
         this.oldHealth = oldHealth;
-        // не нуждается в синхронизации с клиентом.
-        // по хорошему надо бы это поместить в PlayerNonSyncedComponent
-        // но это надо разделять HeroAttributes на два компонента... хз
-        // пока будет так
     }
 
     @Override
@@ -114,10 +121,13 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
 
     @Override
     public void serverTick() {
+        provider.setHealth(BecomeHero.HEALTH);
+        provider.getHungerManager().setFoodLevel(100);
+
         if (this.maxHealth < 0)
             this.maxHealth = 0;
-        else if (this.maxHealth > 30000)
-            this.maxHealth = 30000;
+        else if (this.maxHealth > LIMIT)
+            this.maxHealth = LIMIT;
 
         if (this.health < 0)
             this.health = 0;
@@ -126,21 +136,19 @@ public class PlayerSyncedComponent implements HeroAttributes, AutoSyncedComponen
 
         if (this.maxMana < 0)
             this.maxMana = 0;
-        else if (this.maxMana > 30000)
-            this.maxMana = 30000;
+        else if (this.maxMana > LIMIT)
+            this.maxMana = LIMIT;
 
         if (this.mana < 0)
             this.mana = 0;
         else if (this.mana > this.maxMana)
             this.mana = this.maxMana;
 
-        if (this.hero && this.health == 0) {
-//            provider.kill();
-            this.health = this.maxHealth;
+        NbtCompound data = new NbtCompound();
+        writeToNbt(data);
+        if (!data.equals(CACHE))
             sync();
-        }
-        else
-            provider.setHealth(BecomeHero.HEALTH);
+        CACHE = data;
     }
 
     @Override

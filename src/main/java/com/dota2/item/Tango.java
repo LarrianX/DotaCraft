@@ -72,7 +72,7 @@ public class Tango extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 94), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 0), null);
     }
 
     private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
