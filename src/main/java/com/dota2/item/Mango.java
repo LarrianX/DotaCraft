@@ -40,16 +40,17 @@ public class Mango extends Item implements CustomItem {
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         HeroAttributes component = user.getComponent(HERO_ATTRIBUTES);
-        int regeneration = component.getMana() + REGENERATION;
+        if (component.isHero()) {
 
-        if ((component.getMaxMana() - component.getMana()) < regeneration)
-            component.setMana(component.getMaxMana());
-        else
-            component.setMana(regeneration);
-
+            if ((component.getMana() + REGENERATION) > component.getMaxMana())
+                component.setMana(component.getMaxMana());
+            else
+                component.setMana(component.getMana() + REGENERATION);
+        } else {
+            HungerManager hunger = (user.getHungerManager());
+            hunger.setFoodLevel(hunger.getFoodLevel() + 6);
+        }
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-        HungerManager hunger = (user.getHungerManager());
-        hunger.setFoodLevel(hunger.getFoodLevel() + 6);
     }
 
     @Override
