@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.components.HeroAttributes;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,8 +11,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+
 public class Mango extends Item implements CustomItem {
     private static final String ID = "mango";
+    private static final int REGENERATION = 100;
 
     public Mango() {
         super(new FabricItemSettings().maxCount(3)
@@ -35,6 +39,14 @@ public class Mango extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
+        HeroAttributes component = user.getComponent(HERO_ATTRIBUTES);
+        int regeneration = component.getMana() + REGENERATION;
+
+        if ((component.getMaxMana() - component.getMana()) < regeneration)
+            component.setMana(component.getMaxMana());
+        else
+            component.setMana(regeneration);
+
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
         HungerManager hunger = (user.getHungerManager());
         hunger.setFoodLevel(hunger.getFoodLevel() + 6);
