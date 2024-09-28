@@ -6,10 +6,10 @@ import net.minecraft.nbt.NbtCompound;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NonSyncedEffectAmplifiersComponent implements EffectComponent {
+public class NonSyncedEffectComponent implements EffectComponent {
     private final Map<String, Double> amplifiers;
 
-    public NonSyncedEffectAmplifiersComponent(PlayerEntity provider) {
+    public NonSyncedEffectComponent(PlayerEntity provider) {
         this.amplifiers = new HashMap<String, Double>();
     }
 

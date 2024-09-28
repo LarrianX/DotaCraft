@@ -22,8 +22,7 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent, 
     @Override
     public void serverTick() {
         if (this.hero) {
-            if (provider.getHealth() != HEALTH)
-                provider.setHealth(HEALTH);
+            provider.setHealth(HEALTH);
             provider.getHungerManager().setFoodLevel(100);
         }
     }
