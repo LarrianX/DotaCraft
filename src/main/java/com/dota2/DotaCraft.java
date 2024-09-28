@@ -6,7 +6,6 @@ import com.dota2.effects.ModEffects;
 import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.server.SaveLoading;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

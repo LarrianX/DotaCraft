@@ -1,18 +1,21 @@
 package com.dota2.effects;
 
-import com.dota2.components.HeroAttributes;
+import com.dota2.components.EffectComponent;
+import com.dota2.components.HeroComponents.ValuesComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import java.util.Map;
+
+import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.components.ModComponents.VALUES_COMPONENT;
 
 
 public class RegenerationMana extends StatusEffect implements CustomEffect {
     private static final String ID = "regeneration_mana";
-    private static final int REGENERATION = 2;
 
     protected RegenerationMana() {
         // category: StatusEffectCategory - describes if the effect is helpful (BENEFICIAL), harmful (HARMFUL) or useless (NEUTRAL)
@@ -26,12 +29,16 @@ public class RegenerationMana extends StatusEffect implements CustomEffect {
         return true;
     }
 
-    // Called when the effect is applied.
+    private double getAmplifier(Map<String, Double> amplifiers, int amplifier) {
+        return amplifiers.getOrDefault(ID, (double) amplifier + 1);
+    }
+
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity instanceof PlayerEntity player) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            component.addMana(REGENERATION * (amplifier + 1));
+            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
+            EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
+            valuesComponent.addMana(this.getAmplifier(effectComponent.getAmplifiers(), amplifier));
         }
 
         super.applyUpdateEffect(entity, amplifier);
@@ -39,10 +46,10 @@ public class RegenerationMana extends StatusEffect implements CustomEffect {
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-//        if (entity instanceof PlayerEntity player) {
-//            EffectAttributes effect_component = player.getComponent(EFFECT_ATTRIBUTES);
-//            effect_component.setTickMana(0);
-//        }
+        if (entity instanceof PlayerEntity player) {
+            EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
+            effectComponent.getAmplifiers().remove(ID);
+        }
 
         super.onRemoved(entity, attributes, amplifier);
     }

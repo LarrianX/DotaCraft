@@ -7,7 +7,9 @@ import net.minecraft.item.ItemStack;
 public class Radiance extends Item implements CustomItem {
     public static final String ID = "radiance";
 
-    public Radiance() {super(new FabricItemSettings().maxCount(1));}
+    public Radiance() {
+        super(new FabricItemSettings().maxCount(1));
+    }
 
     @Override
     public String getId() {

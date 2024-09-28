@@ -41,8 +41,11 @@
   },
   "custom": {
     "cardinal-components": [
-      "dotacraft:hero_attributes",
-      "dotacraft:effect_attributes"
+      "dotacraft:effect",
+      "dotacraft:hero",
+      "dotacraft:values",
+      "dotacraft:max_values",
+      "dotacraft:old_values"
     ]
   }
 }

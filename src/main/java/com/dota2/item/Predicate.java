@@ -6,7 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 public interface Predicate {
-    public Item getItem();
-    public Identifier getId();
-    public ClampedModelPredicateProvider getProvider();
+    Item getItem();
+
+    Identifier getId();
+
+    ClampedModelPredicateProvider getProvider();
 }

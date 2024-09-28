@@ -1,6 +1,7 @@
 package com.dota2.components;
 
 import com.dota2.DotaCraft;
+import com.dota2.components.HeroComponents.*;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -8,13 +9,26 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.minecraft.util.Identifier;
 
+
 public final class ModComponents implements EntityComponentInitializer {
-    public static final ComponentKey<HeroAttributes> HERO_ATTRIBUTES =
-            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "hero_attributes"), HeroAttributes.class);
+    public static final ComponentKey<EffectComponent> EFFECT_COMPONENT =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "effect"), EffectComponent.class);
+    // Hero components
+    public static final ComponentKey<HeroComponent> HERO_COMPONENT =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "hero"), HeroComponent.class);
+    public static final ComponentKey<ValuesComponent> VALUES_COMPONENT =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "values"), ValuesComponent.class);
+    public static final ComponentKey<MaxValuesComponent> MAX_VALUES_COMPONENT =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "max_values"), MaxValuesComponent.class);
+    public static final ComponentKey<OldValuesComponent> OLD_VALUES_COMPONENT =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "old_values"), OldValuesComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        // Add the component to every PlayerEntity instance, and copy it on respawn with keepInventory
-        registry.registerForPlayers(HERO_ATTRIBUTES, PlayerSyncedComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(EFFECT_COMPONENT, NonSyncedEffectAmplifiersComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(HERO_COMPONENT, SyncedHeroComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(MAX_VALUES_COMPONENT, SyncedMaxValuesComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(VALUES_COMPONENT, SyncedValuesComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(OLD_VALUES_COMPONENT, NonSyncedOldValuesComponent::new, RespawnCopyStrategy.INVENTORY);
     }
 }

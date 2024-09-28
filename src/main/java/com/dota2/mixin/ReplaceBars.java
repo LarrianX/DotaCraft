@@ -1,16 +1,20 @@
 package com.dota2.mixin;
 
 import com.dota2.DotaCraft;
-import com.dota2.components.HeroAttributes;
+import com.dota2.components.HeroComponents.HeroComponent;
+import com.dota2.components.HeroComponents.MaxValuesComponent;
+import com.dota2.components.HeroComponents.ValuesComponent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,7 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import static com.dota2.components.ModComponents.*;
+
 
 @Mixin(InGameHud.class)
 public class ReplaceBars {
@@ -30,6 +35,9 @@ public class ReplaceBars {
     private static final int MAX_PIXELS = 88;
     @Unique
     private static final DecimalFormat outputFormat = new DecimalFormat("000");
+    @Shadow
+    @Final
+    private PlayerListHud playerListHud;
 
     @Unique
     private int calculatePixels(int value, int max_value) {
@@ -102,18 +110,21 @@ public class ReplaceBars {
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;ceil(F)I"), cancellable = true)
     private void onRenderStatusBars(DrawContext context, CallbackInfo ci, @Local PlayerEntity playerEntity) {
         if (playerEntity != null) {
-            HeroAttributes component = playerEntity.getComponent(HERO_ATTRIBUTES);
-            if (component.isHero()) {
+            HeroComponent heroComponent = playerEntity.getComponent(HERO_COMPONENT);
+            if (heroComponent.isHero()) {
                 ci.cancel();
 
-                int health = component.getHealth();
-                int max_health = component.getMaxHealth();
-                int mana = component.getMana();
-                int max_mana = component.getMaxMana();
+                ValuesComponent valuesComponent = playerEntity.getComponent(VALUES_COMPONENT);
+                MaxValuesComponent maxValuesComponent = playerEntity.getComponent(MAX_VALUES_COMPONENT);
+
+                int mana = (int) valuesComponent.getMana();
+                int health = (int) valuesComponent.getHealth();
+                int max_mana = maxValuesComponent.getMaxMana();
+                int max_health = maxValuesComponent.getMaxHealth();
                 MinecraftClient client = MinecraftClient.getInstance();
 
-                drawHealthBar(context, health, max_health, client);
                 drawManaBar(context, mana, max_mana, client);
+                drawHealthBar(context, health, max_health, client);
             }
         }
     }

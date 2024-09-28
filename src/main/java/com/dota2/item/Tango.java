@@ -4,7 +4,6 @@ import com.dota2.effects.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,9 +14,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public class Tango extends Item implements CustomItem {
-    private static final String ID = "tango";
     public static final String FULLNESS_KEY = "fullness";
     public static final int MAX_FULLNESS = 3;
+    private static final String ID = "tango";
 
     public Tango() {
         super(new FabricItemSettings().maxCount(8));

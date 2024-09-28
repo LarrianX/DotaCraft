@@ -1,11 +1,8 @@
 package com.dota2.item;
 
-import com.dota2.components.HeroAttributes;
-import com.dota2.components.ModComponents;
+import com.dota2.components.HeroComponents.ValuesComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,14 +13,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import static com.dota2.components.ModComponents.VALUES_COMPONENT;
+
 
 public class ShadowBlade extends SwordItem implements CustomItem {
     private static final String ID = "shadowblade";
     private static final int DAMAGE = 25;
 
     public ShadowBlade() {
-        super(DotaMaterial.INSTANCE, DAMAGE, 2.0f , new FabricItemSettings().maxCount(1));
+        super(DotaMaterial.INSTANCE, DAMAGE, 2.0f, new FabricItemSettings().maxCount(1));
     }
 
     @Override
@@ -55,7 +53,7 @@ public class ShadowBlade extends SwordItem implements CustomItem {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (target instanceof PlayerEntity player) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
+            ValuesComponent component = player.getComponent(VALUES_COMPONENT);
 
             if (component.getHealth() >= DAMAGE)
                 component.setHealth(component.getHealth() - DAMAGE);

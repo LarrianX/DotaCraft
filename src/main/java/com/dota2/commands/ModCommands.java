@@ -10,6 +10,7 @@ public class ModCommands {
         BecomeHero.register(dispatcher);
         Undo.register(dispatcher);
         SetAttributes.register(dispatcher);
+        SetEffects.register(dispatcher);
     }
 
     public static void registerModCommands() {

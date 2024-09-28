@@ -13,10 +13,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import java.util.Map;
+
+import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
+
 public class Bottle extends Item implements CustomItem {
-    private static final String ID = "bottle";
     public static final String FULLNESS_KEY = "fullness";
     public static final int MAX_FULLNESS = 3;
+    private static final String ID = "bottle";
 
     public Bottle() {
         super(new FabricItemSettings().maxCount(1));
@@ -72,9 +76,13 @@ public class Bottle extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
+        Map<String, Double> effects = user.getComponent(EFFECT_COMPONENT).getAmplifiers();
+        effects.put(ModEffects.REGENERATION_HEALTH.getId(), (double) 110 / 54);
+        effects.put(ModEffects.REGENERATION_MANA.getId(), (double) 60 / 54 );
+
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 0), null);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA,   50, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 54, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA, 54, 0), null);
     }
 
     @Override

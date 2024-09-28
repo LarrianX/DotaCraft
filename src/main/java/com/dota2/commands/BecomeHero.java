@@ -1,6 +1,6 @@
 package com.dota2.commands;
 
-import com.dota2.components.HeroAttributes;
+import com.dota2.components.HeroComponents.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -10,17 +10,16 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import static com.dota2.components.HeroComponents.SyncedHeroComponent.HEALTH;
+import static com.dota2.components.ModComponents.*;
 
 public class BecomeHero {
-    public static final int HEALTH = 100;
-
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("become_hero")
                         .executes(BecomeHero::execute)
-                        .then(CommandManager.argument("max health", IntegerArgumentType.integer(1, 30000))
-                                .then(CommandManager.argument("max mana", IntegerArgumentType.integer(0, 30000))
+                        .then(CommandManager.argument("max health", IntegerArgumentType.integer(1, SyncedMaxValuesComponent.LIMIT))
+                                .then(CommandManager.argument("max mana", IntegerArgumentType.integer(0, SyncedMaxValuesComponent.LIMIT))
                                         .executes(BecomeHero::execute_with_attributes)))
         );
     }
@@ -29,17 +28,18 @@ public class BecomeHero {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
+            HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
+            OldValuesComponent oldValuesComponent = player.getComponent(OLD_VALUES_COMPONENT);
             EntityAttributeInstance attribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
 
-            if (attribute != null && !component.isHero()) {
-                component.setOldHealth((int) player.getHealth());
-                component.setOldMaxHealth((int) attribute.getBaseValue());
+            if (attribute != null && !heroComponent.isHero()) {
+                oldValuesComponent.setOldHealth((int) player.getHealth());
+                oldValuesComponent.setOldMaxHealth((int) attribute.getBaseValue());
 
                 player.setHealth(HEALTH);
                 attribute.setBaseValue(HEALTH);
 
-                component.setHero(true);
+                heroComponent.setHero(true);
             }
         }
         return 1;
@@ -50,15 +50,16 @@ public class BecomeHero {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
+            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
+            MaxValuesComponent maxValuesComponent = player.getComponent(MAX_VALUES_COMPONENT);
 
             int maxHealth = IntegerArgumentType.getInteger(context, "max health");
             int maxMana = IntegerArgumentType.getInteger(context, "max mana");
 
-            component.setHealth(maxHealth);
-            component.setMaxHealth(maxHealth);
-            component.setMana(maxMana);
-            component.setMaxMana(maxMana);
+            valuesComponent.setHealth(maxHealth);
+            valuesComponent.setMana(maxMana);
+            maxValuesComponent.setMaxHealth(maxHealth);
+            maxValuesComponent.setMaxMana(maxMana);
         }
         return 1;
     }
