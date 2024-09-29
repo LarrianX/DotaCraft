@@ -23,6 +23,7 @@ public class RegenerationMana extends CustomEffect {
             ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
             EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
             valuesComponent.addMana(this.getAmplifier(effectComponent.getAmplifiers(), amplifier));
+            valuesComponent.sync();
         }
 
         super.applyUpdateEffect(entity, amplifier);

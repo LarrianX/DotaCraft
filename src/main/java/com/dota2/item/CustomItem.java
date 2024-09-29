@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public interface CustomItem {
+    double ERROR = 0.00000000001;
     String getId();
 
     default ItemStack getForTabItemGroup() {

@@ -40,6 +40,7 @@ public class BecomeHero {
                 attribute.setBaseValue(HEALTH);
 
                 heroComponent.setHero(true);
+                heroComponent.sync();
             }
         }
         return 1;
@@ -56,10 +57,12 @@ public class BecomeHero {
             int maxHealth = IntegerArgumentType.getInteger(context, "max health");
             int maxMana = IntegerArgumentType.getInteger(context, "max mana");
 
-            valuesComponent.setHealth(maxHealth);
-            valuesComponent.setMana(maxMana);
             maxValuesComponent.setMaxHealth(maxHealth);
             maxValuesComponent.setMaxMana(maxMana);
+            maxValuesComponent.sync();
+            valuesComponent.setHealth(maxHealth);
+            valuesComponent.setMana(maxMana);
+            valuesComponent.sync();
         }
         return 1;
     }

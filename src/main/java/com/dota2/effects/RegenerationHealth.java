@@ -24,9 +24,10 @@ public class RegenerationHealth extends CustomEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity instanceof PlayerEntity player) {
-            ValuesComponent heroComponent = player.getComponent(VALUES_COMPONENT);
+            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
             EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
-            heroComponent.addHealth(this.getAmplifier(effectComponent.getAmplifiers(), amplifier));
+            valuesComponent.addHealth(this.getAmplifier(effectComponent.getAmplifiers(), amplifier));
+            valuesComponent.sync();
         }
 
         super.applyUpdateEffect(entity, amplifier);

@@ -29,6 +29,7 @@ public class SetAttributes {
             ValuesComponent component = player.getComponent(VALUES_COMPONENT);
             int health = IntegerArgumentType.getInteger(context, "health");
             component.setHealth(health);
+            component.sync();
         }
 
         return 1;
@@ -43,6 +44,7 @@ public class SetAttributes {
             int mana = IntegerArgumentType.getInteger(context, "mana");
             component.setHealth(health);
             component.setMana(mana);
+            component.sync();
         }
 
         return 1;
