@@ -76,12 +76,13 @@ Tango extends Item implements CustomItem {
     }
 
     private void applyEffects(PlayerEntity user) {
+        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
+
+
         EffectComponent component = user.getComponent(EFFECT_COMPONENT);
         component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), 0.35 + ERROR);
         component.sync();
-
-        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
     }
 
 
