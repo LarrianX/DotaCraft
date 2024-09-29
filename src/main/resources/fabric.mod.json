@@ -10,8 +10,7 @@
     "Nuklon"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/LarrianX/DotaCraft"
   },
   "license": "MIT",
   "icon": "assets/dotacraft/icon.png",
@@ -37,7 +36,6 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "another-mod": "*"
   },
   "custom": {
     "cardinal-components": [

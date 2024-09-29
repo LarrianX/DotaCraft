@@ -19,7 +19,7 @@ public class ModItemGroups {
     public static final ItemGroup DOTA_GROUP = Registry.register(Registries.ITEM_GROUP,
             new Identifier(DotaCraft.MOD_ID, "dota"),
             FabricItemGroup.builder().displayName(Text.translatable("itemgroup.dota"))
-                    .icon(() -> new ItemStack(ModItems.BOTTLE)).entries(((displayContext, entries) -> {
+                    .icon(ModItems.BOTTLE::getForTabItemGroup).entries(((displayContext, entries) -> {
                         for (Item item : ITEMS) {
                             if (item instanceof CustomItem) {
                                 entries.add(((CustomItem) item).getForTabItemGroup());

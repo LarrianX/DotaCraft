@@ -17,7 +17,8 @@ public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedC
         this.cache = new NbtCompound();
     }
 
-    private void sync() {
+    @Override
+    public void sync() {
         NbtCompound data = new NbtCompound();
         writeToNbt(data);
         if (!data.equals(this.cache)) {
@@ -34,7 +35,6 @@ public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedC
     @Override
     public void setMaxMana(int maxMana) {
         this.maxMana = Math.max(Math.min(maxMana, LIMIT), 0);
-        sync();
     }
 
     @Override
@@ -45,7 +45,6 @@ public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedC
     @Override
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = Math.max(Math.min(maxHealth, LIMIT), 0);
-        sync();
     }
 
     @Override

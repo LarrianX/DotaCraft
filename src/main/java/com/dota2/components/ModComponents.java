@@ -25,10 +25,10 @@ public final class ModComponents implements EntityComponentInitializer {
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
-        registry.registerForPlayers(EFFECT_COMPONENT, NonSyncedEffectComponent::new, RespawnCopyStrategy.INVENTORY);
-        registry.registerForPlayers(HERO_COMPONENT, SyncedHeroComponent::new, RespawnCopyStrategy.INVENTORY);
-        registry.registerForPlayers(MAX_VALUES_COMPONENT, SyncedMaxValuesComponent::new, RespawnCopyStrategy.INVENTORY);
-        registry.registerForPlayers(VALUES_COMPONENT, SyncedValuesComponent::new, RespawnCopyStrategy.INVENTORY);
-        registry.registerForPlayers(OLD_VALUES_COMPONENT, NonSyncedOldValuesComponent::new, RespawnCopyStrategy.INVENTORY);
+        registry.registerForPlayers(EFFECT_COMPONENT, NonSyncedEffectComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(OLD_VALUES_COMPONENT, NonSyncedOldValuesComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
+        registry.registerForPlayers(HERO_COMPONENT, SyncedHeroComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(MAX_VALUES_COMPONENT, SyncedMaxValuesComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(VALUES_COMPONENT, SyncedValuesComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
     }
 }

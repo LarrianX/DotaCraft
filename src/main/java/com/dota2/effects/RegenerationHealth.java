@@ -14,7 +14,7 @@ import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
 import static com.dota2.components.ModComponents.VALUES_COMPONENT;
 
 
-public class RegenerationHealth extends StatusEffect implements CustomEffect {
+public class RegenerationHealth extends CustomEffect {
     private static final String ID = "regeneration_health";
 
     protected RegenerationHealth() {
@@ -22,33 +22,15 @@ public class RegenerationHealth extends StatusEffect implements CustomEffect {
     }
 
     @Override
-    public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
-    }
-
-    private double getAmplifier(Map<String, Double> amplifiers, int amplifier) {
-        return amplifiers.getOrDefault(ID, (double) amplifier + 1);
-    }
-
-    @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity instanceof PlayerEntity player) {
-            ValuesComponent heroComponent = player.getComponent(VALUES_COMPONENT);
+            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
             EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
-            heroComponent.addHealth(this.getAmplifier(effectComponent.getAmplifiers(), amplifier));
+            valuesComponent.addHealth(this.getAmplifier(effectComponent.getAmplifiers(), amplifier));
+            valuesComponent.sync();
         }
 
         super.applyUpdateEffect(entity, amplifier);
-    }
-
-    @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        if (entity instanceof PlayerEntity player) {
-            EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
-            effectComponent.getAmplifiers().remove(ID);
-        }
-
-        super.onRemoved(entity, attributes, amplifier);
     }
 
     @Override

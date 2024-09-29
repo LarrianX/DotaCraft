@@ -6,7 +6,7 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent, ServerTickingComponent {
+public class SyncedHeroComponent implements HeroComponent, ServerTickingComponent, AutoSyncedComponent {
     public static final int HEALTH = 100;
     private final PlayerEntity provider;
     private boolean hero;
@@ -15,7 +15,8 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent, 
         this.provider = provider;
     }
 
-    private void sync() {
+    @Override
+    public void sync() {
         ModComponents.HERO_COMPONENT.sync(this.provider);
     }
 
@@ -34,10 +35,7 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent, 
 
     @Override
     public void setHero(boolean hero) {
-        if (this.hero != hero) {
-            this.hero = hero;
-            sync();
-        }
+        this.hero = hero;
     }
 
     @Override

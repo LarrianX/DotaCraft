@@ -46,6 +46,7 @@ public class Mango extends Item implements CustomItem {
         if (heroComponent.isHero()) {
             ValuesComponent valuesComponent = user.getComponent(VALUES_COMPONENT);
             valuesComponent.addMana(REGENERATION);
+            valuesComponent.sync();
         } else {
             HungerManager hunger = (user.getHungerManager());
             hunger.setFoodLevel(hunger.getFoodLevel() + 6);
@@ -57,10 +58,4 @@ public class Mango extends Item implements CustomItem {
     public String getId() {
         return ID;
     }
-
-    @Override
-    public ItemStack getForTabItemGroup() {
-        return new ItemStack(this);
-    }
-
 }

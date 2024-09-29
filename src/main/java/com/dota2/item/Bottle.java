@@ -77,8 +77,8 @@ public class Bottle extends Item implements CustomItem {
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         Map<String, Double> effects = user.getComponent(EFFECT_COMPONENT).getAmplifiers();
-        effects.put(ModEffects.REGENERATION_HEALTH.getId(), (double) 110 / 54);
-        effects.put(ModEffects.REGENERATION_MANA.getId(), (double) 60 / 54 );
+        effects.put(ModEffects.REGENERATION_HEALTH.getId(), ((double) 110 / 54) + ERROR); // погрешность
+        effects.put(ModEffects.REGENERATION_MANA.getId(), ((double) 60 / 54) + ERROR);
 
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 54, 0), null);

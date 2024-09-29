@@ -5,23 +5,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 public class NonSyncedOldValuesComponent implements OldValuesComponent {
-    private final PlayerEntity provider;
     private int oldHealth;
     private int oldMaxHealth;
-    private NbtCompound cache;
 
     public NonSyncedOldValuesComponent(PlayerEntity provider) {
-        this.provider = provider;
-        this.cache = new NbtCompound();
-    }
-
-    private void sync() {
-        NbtCompound data = new NbtCompound();
-        writeToNbt(data);
-        if (!data.equals(this.cache)) {
-            ModComponents.OLD_VALUES_COMPONENT.sync(this.provider);
-        }
-        this.cache = data;
     }
 
     @Override
