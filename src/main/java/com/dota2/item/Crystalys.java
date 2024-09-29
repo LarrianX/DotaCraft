@@ -1,14 +1,11 @@
 package com.dota2.item;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
-public class Crystalys extends Item implements CustomItem {
-    public static final String ID = "crystalys";
+public class Crystalys extends CustomSword implements CustomItem {
+    private static final String ID = "crystalys";
+    private static final int DAMAGE = 25;
 
     public Crystalys() {
-        super(new FabricItemSettings().maxCount(1));
+        super(DAMAGE);
     }
 
     @Override
@@ -17,7 +14,7 @@ public class Crystalys extends Item implements CustomItem {
     }
 
     @Override
-    public ItemStack getForTabItemGroup() {
-        return new ItemStack(this);
+    public int getDamage() {
+        return DAMAGE;
     }
 }

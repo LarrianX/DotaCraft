@@ -57,10 +57,4 @@ public class Mango extends Item implements CustomItem {
     public String getId() {
         return ID;
     }
-
-    @Override
-    public ItemStack getForTabItemGroup() {
-        return new ItemStack(this);
-    }
-
 }
