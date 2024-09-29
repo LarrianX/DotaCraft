@@ -3,7 +3,7 @@ package com.dota2.command;
 import com.dota2.component.HeroComponent.SyncedMaxValuesComponent;
 import com.dota2.component.HeroComponent.ValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -15,9 +15,9 @@ public class SetAttributes {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("set")
-                        .then(CommandManager.argument("health", IntegerArgumentType.integer(0, SyncedMaxValuesComponent.LIMIT))
+                        .then(CommandManager.argument("health", DoubleArgumentType.doubleArg(0, SyncedMaxValuesComponent.LIMIT))
                                 .executes(SetAttributes::setHealth)
-                                .then(CommandManager.argument("mana", IntegerArgumentType.integer(0, SyncedMaxValuesComponent.LIMIT))
+                                .then(CommandManager.argument("mana", DoubleArgumentType.doubleArg(0, SyncedMaxValuesComponent.LIMIT))
                                         .executes(SetAttributes::setHealthAndMana)))
         );
     }
@@ -27,7 +27,7 @@ public class SetAttributes {
 
         if (player != null) {
             ValuesComponent component = player.getComponent(VALUES_COMPONENT);
-            int health = IntegerArgumentType.getInteger(context, "health");
+            double health = DoubleArgumentType.getDouble(context, "health");
             component.setHealth(health);
             component.sync();
         }
@@ -40,8 +40,8 @@ public class SetAttributes {
 
         if (player != null) {
             ValuesComponent component = player.getComponent(VALUES_COMPONENT);
-            int health = IntegerArgumentType.getInteger(context, "health");
-            int mana = IntegerArgumentType.getInteger(context, "mana");
+            double health = DoubleArgumentType.getDouble(context, "health");
+            double mana = DoubleArgumentType.getDouble(context, "mana");
             component.setHealth(health);
             component.setMana(mana);
             component.sync();

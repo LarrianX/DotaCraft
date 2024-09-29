@@ -22,6 +22,7 @@ public abstract class CustomSword extends SwordItem {
             ValuesComponent component = player.getComponent(VALUES_COMPONENT);
 
             component.addHealth(-getDamage());
+            component.sync();
         }
         return super.postHit(stack, target, attacker);
     }

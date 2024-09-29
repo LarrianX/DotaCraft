@@ -69,7 +69,6 @@ Tango extends Item implements CustomItem {
         // Проверяем режим игры игрока и обновляем стак
         if (!user.isCreative()) {
             updateStack(stack, nbt, fullness);
-            user.getItemCooldownManager().set(this, 10);
         }
 
         return TypedActionResult.success(stack);
@@ -78,7 +77,6 @@ Tango extends Item implements CustomItem {
     private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
-
 
         EffectComponent component = user.getComponent(EFFECT_COMPONENT);
         component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), 0.35 + ERROR);
