@@ -1,6 +1,6 @@
-package com.dota2.effects;
+package com.dota2.effect;
 
-import com.dota2.components.EffectComponent;
+import com.dota2.component.EffectComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.Map;
 
-import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
 public abstract class CustomEffect extends StatusEffect {
     protected CustomEffect(StatusEffectCategory category, int color) {

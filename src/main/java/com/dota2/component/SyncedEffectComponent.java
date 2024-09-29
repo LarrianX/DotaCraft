@@ -1,16 +1,23 @@
-package com.dota2.components;
+package com.dota2.component;
 
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class NonSyncedEffectComponent implements EffectComponent {
+public class SyncedEffectComponent implements EffectComponent, AutoSyncedComponent {
     private final Map<String, Double> amplifiers;
+    private final PlayerEntity provider;
 
-    public NonSyncedEffectComponent(PlayerEntity provider) {
+    public SyncedEffectComponent(PlayerEntity provider) {
+        this.provider = provider;
         this.amplifiers = new HashMap<String, Double>();
+    }
+
+    public void sync() {
+        ModComponents.EFFECT_COMPONENT.sync(this.provider);
     }
 
     @Override

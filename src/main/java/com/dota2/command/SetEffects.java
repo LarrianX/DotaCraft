@@ -1,6 +1,6 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.EffectComponent;
+import com.dota2.component.EffectComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -16,7 +16,7 @@ import net.minecraft.text.Text;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
 public class SetEffects {
 
@@ -59,6 +59,7 @@ public class SetEffects {
 
             EffectComponent component = player.getComponent(EFFECT_COMPONENT);
             component.getAmplifiers().put(name, value);
+            component.sync();
         }
 
         return 1;

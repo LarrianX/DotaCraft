@@ -1,4 +1,4 @@
-package com.dota2.commands;
+package com.dota2.command;
 
 import com.dota2.DotaCraft;
 import com.mojang.brigadier.CommandDispatcher;

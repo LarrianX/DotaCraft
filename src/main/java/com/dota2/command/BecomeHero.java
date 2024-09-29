@@ -1,6 +1,6 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.HeroComponents.*;
+import com.dota2.component.HeroComponent.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -10,8 +10,8 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.HeroComponents.SyncedHeroComponent.HEALTH;
-import static com.dota2.components.ModComponents.*;
+import static com.dota2.component.HeroComponent.SyncedHeroComponent.HEALTH;
+import static com.dota2.component.ModComponents.*;
 
 public class BecomeHero {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

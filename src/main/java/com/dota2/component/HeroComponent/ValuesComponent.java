@@ -1,4 +1,4 @@
-package com.dota2.components.HeroComponents;
+package com.dota2.component.HeroComponent;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 

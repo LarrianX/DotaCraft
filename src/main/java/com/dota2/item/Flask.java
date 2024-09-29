@@ -1,6 +1,6 @@
 package com.dota2.item;
 
-import com.dota2.effects.ModEffects;
+import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;

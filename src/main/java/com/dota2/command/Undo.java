@@ -1,7 +1,7 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.HeroComponents.HeroComponent;
-import com.dota2.components.HeroComponents.OldValuesComponent;
+import com.dota2.component.HeroComponent.HeroComponent;
+import com.dota2.component.HeroComponent.OldValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -10,8 +10,8 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.ModComponents.HERO_COMPONENT;
-import static com.dota2.components.ModComponents.OLD_VALUES_COMPONENT;
+import static com.dota2.component.ModComponents.HERO_COMPONENT;
+import static com.dota2.component.ModComponents.OLD_VALUES_COMPONENT;
 
 public class Undo {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

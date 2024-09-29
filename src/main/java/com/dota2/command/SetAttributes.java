@@ -1,7 +1,7 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.HeroComponents.SyncedMaxValuesComponent;
-import com.dota2.components.HeroComponents.ValuesComponent;
+import com.dota2.component.HeroComponent.SyncedMaxValuesComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -9,7 +9,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.ModComponents.VALUES_COMPONENT;
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public class SetAttributes {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

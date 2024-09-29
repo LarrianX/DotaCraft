@@ -1,9 +1,9 @@
 package com.dota2.mixin;
 
 import com.dota2.DotaCraft;
-import com.dota2.components.HeroComponents.HeroComponent;
-import com.dota2.components.HeroComponents.MaxValuesComponent;
-import com.dota2.components.HeroComponents.ValuesComponent;
+import com.dota2.component.HeroComponent.HeroComponent;
+import com.dota2.component.HeroComponent.MaxValuesComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
 
-import static com.dota2.components.ModComponents.*;
+import static com.dota2.component.ModComponents.*;
 
 
 @Mixin(InGameHud.class)

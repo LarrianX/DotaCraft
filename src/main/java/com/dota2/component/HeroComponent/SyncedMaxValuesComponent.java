@@ -1,6 +1,6 @@
-package com.dota2.components.HeroComponents;
+package com.dota2.component.HeroComponent;
 
-import com.dota2.components.ModComponents;
+import com.dota2.component.ModComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;

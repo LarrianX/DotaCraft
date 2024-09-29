@@ -1,8 +1,8 @@
 package com.dota2;
 
 import com.dota2.block.ModBlocks;
-import com.dota2.commands.ModCommands;
-import com.dota2.effects.ModEffects;
+import com.dota2.command.ModCommands;
+import com.dota2.effect.ModEffects;
 import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
 import net.fabricmc.api.ModInitializer;

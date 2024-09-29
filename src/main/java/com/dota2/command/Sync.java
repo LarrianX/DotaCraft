@@ -1,18 +1,12 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.HeroComponents.HeroComponent;
-import com.dota2.components.HeroComponents.OldValuesComponent;
-import com.dota2.components.ModComponents;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import com.terraformersmc.modmenu.util.mod.Mod;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.ModComponents.*;
+import static com.dota2.component.ModComponents.*;
 
 public class Sync {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

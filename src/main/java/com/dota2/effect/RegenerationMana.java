@@ -1,13 +1,13 @@
-package com.dota2.effects;
+package com.dota2.effect;
 
-import com.dota2.components.EffectComponent;
-import com.dota2.components.HeroComponents.ValuesComponent;
+import com.dota2.component.EffectComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
-import static com.dota2.components.ModComponents.VALUES_COMPONENT;
+import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 
 public class RegenerationMana extends CustomEffect {

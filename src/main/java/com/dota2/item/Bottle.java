@@ -1,6 +1,7 @@
 package com.dota2.item;
 
-import com.dota2.effects.ModEffects;
+import com.dota2.component.EffectComponent;
+import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
-import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
 public class Bottle extends Item implements CustomItem {
     public static final String FULLNESS_KEY = "fullness";
@@ -76,9 +77,10 @@ public class Bottle extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
-        Map<String, Double> effects = user.getComponent(EFFECT_COMPONENT).getAmplifiers();
-        effects.put(ModEffects.REGENERATION_HEALTH.getId(), ((double) 110 / 54) + ERROR); // погрешность
-        effects.put(ModEffects.REGENERATION_MANA.getId(), ((double) 60 / 54) + ERROR);
+        EffectComponent component = user.getComponent(EFFECT_COMPONENT);
+        component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), ((double) 110 / 54) + ERROR); // погрешность
+        component.getAmplifiers().put(ModEffects.REGENERATION_MANA.getId(), ((double) 60 / 54) + ERROR);
+        component.sync();
 
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 54, 0), null);

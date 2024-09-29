@@ -1,7 +1,7 @@
 package com.dota2.item;
 
-import com.dota2.components.HeroComponents.HeroComponent;
-import com.dota2.components.HeroComponents.ValuesComponent;
+import com.dota2.component.HeroComponent.HeroComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,8 +12,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.dota2.components.ModComponents.HERO_COMPONENT;
-import static com.dota2.components.ModComponents.VALUES_COMPONENT;
+import static com.dota2.component.ModComponents.HERO_COMPONENT;
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public class Mango extends Item implements CustomItem {
     private static final String ID = "mango";
