@@ -13,6 +13,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import java.util.Map;
+
+import static com.dota2.components.ModComponents.EFFECT_COMPONENT;
+
 public class Tango extends Item implements CustomItem {
     public static final String FULLNESS_KEY = "fullness";
     public static final int MAX_FULLNESS = 3;
@@ -70,9 +74,13 @@ public class Tango extends Item implements CustomItem {
     }
 
     private void applyEffects(PlayerEntity user) {
+        Map<String, Double> effects = user.getComponent(EFFECT_COMPONENT).getAmplifiers();
+        effects.put(ModEffects.REGENERATION_HEALTH.getId(), 0.350000001);
+
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 50, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
     }
+
 
     private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
         if (fullness > 1) {
