@@ -10,7 +10,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 
-public class ShadowBlade extends CustomSword implements CustomItem {
+public class ShadowBlade extends Weapon implements CustomItem {
     private static final String ID = "shadowblade";
     private static final int DAMAGE = 25;
 

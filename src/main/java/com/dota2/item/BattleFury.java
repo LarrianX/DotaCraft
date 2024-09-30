@@ -1,6 +1,6 @@
 package com.dota2.item;
 
-public class BattleFury extends CustomSword implements CustomItem {
+public class BattleFury extends Weapon implements CustomItem {
     private static final String ID = "battle_fury";
     private static final int DAMAGE = 25;
 

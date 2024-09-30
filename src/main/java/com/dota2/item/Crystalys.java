@@ -1,6 +1,6 @@
 package com.dota2.item;
 
-public class Crystalys extends CustomSword implements CustomItem {
+public class Crystalys extends Weapon implements CustomItem {
     private static final String ID = "crystalys";
     private static final int DAMAGE = 25;
 

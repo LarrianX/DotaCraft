@@ -23,6 +23,8 @@ import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 public class Tango extends Item implements CustomItem {
     public static final String FULLNESS_KEY = "fullness";
     public static final int MAX_FULLNESS = 3;
+    public static final String TIMER_KEY = "timer";
+    public static final int TIMER_TIME = 300;
     private static final String ID = "tango";
 
     public Tango() {
@@ -39,12 +41,32 @@ public class Tango extends Item implements CustomItem {
         nbt.putInt(FULLNESS_KEY, fullness);
     }
 
+    public static int getTimer(ItemStack stack) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        return nbt.getInt(TIMER_KEY);
+    }
+
+    public static void setTimer(ItemStack stack, int time) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putInt(TIMER_KEY, time);
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
         NbtCompound nbt = stack.getOrCreateNbt();
+
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
-            nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
+            setFullness(stack, MAX_FULLNESS);
+        }
+
+        if (!nbt.contains(TIMER_KEY)) {
+            setTimer(stack, TIMER_TIME);
+        } else if (getTimer(stack) == 0) {
+            setTimer(stack, TIMER_TIME);
+            updateStack(stack);
+        } else {
+            setTimer(stack, getTimer(stack) - 1);
         }
     }
 
@@ -68,7 +90,7 @@ public class Tango extends Item implements CustomItem {
             applyEffects(user);
 
             if (!user.isCreative()) {
-                updateStack(stack, nbt, fullness);
+                updateStack(stack);
             }
 
             return TypedActionResult.success(stack);
@@ -99,11 +121,12 @@ public class Tango extends Item implements CustomItem {
         component.sync();
     }
 
-    private void updateStack(ItemStack stack, NbtCompound nbt, int fullness) {
+    private void updateStack(ItemStack stack) {
+        int fullness = getFullness(stack);
         if (fullness > 1) {
-            nbt.putInt(FULLNESS_KEY, fullness - 1);
+            setFullness(stack, fullness - 1);
         } else {
-            nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
+            setFullness(stack, MAX_FULLNESS);
             stack.decrement(1);
         }
     }
