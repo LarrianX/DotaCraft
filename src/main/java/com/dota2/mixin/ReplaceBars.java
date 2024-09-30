@@ -1,6 +1,7 @@
 package com.dota2.mixin;
 
 import com.dota2.DotaCraft;
+import com.dota2.component.EffectComponent;
 import com.dota2.component.HeroComponent.HeroComponent;
 import com.dota2.component.HeroComponent.MaxValuesComponent;
 import com.dota2.component.HeroComponent.ValuesComponent;
@@ -21,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 
 import static com.dota2.component.ModComponents.*;
 
@@ -107,6 +109,18 @@ public class ReplaceBars {
         context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
     }
 
+    @Unique
+    private void drawAmplifiers(DrawContext context, Map<String, Double> amplifiers, MinecraftClient client) {
+        int x = context.getScaledWindowWidth() / 2 + 100;
+        int y = context.getScaledWindowHeight() - 50;
+
+        for (Map.Entry<String, Double> entry : amplifiers.entrySet()) {
+            context.drawTextWithShadow(client.textRenderer, entry.getKey(), x, y, 16777215);
+            context.drawTextWithShadow(client.textRenderer, entry.getValue().toString(), x + 132, y, 16777215);
+            y -= 10;
+        }
+    }
+
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;ceil(F)I"), cancellable = true)
     private void onRenderStatusBars(DrawContext context, CallbackInfo ci, @Local PlayerEntity playerEntity) {
         if (playerEntity != null) {
@@ -116,15 +130,18 @@ public class ReplaceBars {
 
                 ValuesComponent valuesComponent = playerEntity.getComponent(VALUES_COMPONENT);
                 MaxValuesComponent maxValuesComponent = playerEntity.getComponent(MAX_VALUES_COMPONENT);
+                EffectComponent effectComponent = playerEntity.getComponent(EFFECT_COMPONENT);
 
                 int mana = (int) valuesComponent.getMana();
                 int health = (int) valuesComponent.getHealth();
                 int max_mana = maxValuesComponent.getMaxMana();
                 int max_health = maxValuesComponent.getMaxHealth();
+                Map<String, Double> amplifiers = effectComponent.getAmplifiers();
                 MinecraftClient client = MinecraftClient.getInstance();
 
                 drawManaBar(context, mana, max_mana, client);
                 drawHealthBar(context, health, max_health, client);
+                drawAmplifiers(context, amplifiers, client);
             }
         }
     }

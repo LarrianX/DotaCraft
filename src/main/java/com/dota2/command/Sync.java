@@ -1,5 +1,6 @@
 package com.dota2.command;
 
+import com.dota2.component.EffectComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
@@ -18,6 +19,7 @@ public class Sync {
 
     private static int execute(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
+        EFFECT_COMPONENT.sync(player);
         HERO_COMPONENT.sync(player);
         VALUES_COMPONENT.sync(player);
         MAX_VALUES_COMPONENT.sync(player);

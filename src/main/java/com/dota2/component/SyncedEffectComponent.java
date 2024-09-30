@@ -27,6 +27,7 @@ public class SyncedEffectComponent implements EffectComponent, AutoSyncedCompone
 
     @Override
     public void readFromNbt(NbtCompound tag) {
+        amplifiers.clear();
         for (String name : tag.getKeys()) {
             amplifiers.put(name, tag.getDouble(name));
         }
@@ -34,8 +35,8 @@ public class SyncedEffectComponent implements EffectComponent, AutoSyncedCompone
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        for (String name : this.amplifiers.keySet()) {
-            tag.putDouble(name, this.amplifiers.get(name));
+        for (Map.Entry<String, Double> entry : amplifiers.entrySet()) {
+            tag.putDouble(entry.getKey(), entry.getValue());
         }
     }
 }

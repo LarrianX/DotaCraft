@@ -11,11 +11,13 @@ import static com.dota2.component.ModComponents.MAX_VALUES_COMPONENT;
 
 public class SyncedValuesComponent implements ValuesComponent, AutoSyncedComponent {
     private final PlayerEntity provider;
+    private final NbtCompound cache;
     private double mana;
     private double health;
 
     public SyncedValuesComponent(PlayerEntity provider) {
         this.provider = provider;
+        this.cache = new NbtCompound();
     }
 
     private MaxValuesComponent getMaxValuesComponent() {
@@ -24,18 +26,14 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public void sync() {
-        ModComponents.VALUES_COMPONENT.sync(this.provider, this);
-    }
-
-    public void writeSyncPacket(PacketByteBuf buf, ServerPlayerEntity player) {
-        buf.writeVarInt((int) this.mana);
-        buf.writeVarInt((int) this.health);
-    }
-
-    @Override
-    public void applySyncPacket(PacketByteBuf buf) {
-        this.mana = buf.readVarInt();
-        this.health = buf.readVarInt();
+        if (
+                this.cache.isEmpty() ||
+                (int) this.cache.getDouble("mana") != this.mana ||
+                (int) this.cache.getDouble("health") != this.health
+        ) {
+            ModComponents.VALUES_COMPONENT.sync(this.provider);
+            writeToNbt(this.cache);
+        }
     }
 
     @Override
@@ -80,15 +78,13 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-//        this.mana =   Math.max(Math.min(tag.getDouble("mana"), getMaxValuesComponent().getMaxMana()), 0);
-//        this.health = Math.max(Math.min(tag.getDouble("health"), getMaxValuesComponent().getMaxHealth()), 0);
-        this.mana = tag.getInt("mana");
-        this.health = tag.getInt("health");
+        this.mana = tag.getDouble("mana");
+        this.health = tag.getDouble("health");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putInt("mana", (int) this.mana);
-        tag.putInt("health", (int) this.health);
+        tag.putDouble("mana", this.mana);
+        tag.putDouble("health", this.health);
     }
 }

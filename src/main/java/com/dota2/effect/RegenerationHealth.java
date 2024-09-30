@@ -24,7 +24,7 @@ public class RegenerationHealth extends CustomEffect {
             EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
             double toAdd = this.getAmplifier(effectComponent.getAmplifiers(), amplifier);
             valuesComponent.addHealth(toAdd);
-            valuesComponent.sync();
+//            valuesComponent.sync();
         }
 
         super.applyUpdateEffect(entity, amplifier);
