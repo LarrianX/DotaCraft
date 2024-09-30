@@ -52,7 +52,6 @@ public class SyncedHeroComponent implements HeroComponent, ServerTickingComponen
             if (heroComponent.isHero()) {
                 ValuesComponent valuesComponent = playerTarget.getComponent(VALUES_COMPONENT);
                 valuesComponent.addHealth(-50);
-                valuesComponent.sync();
                 return ActionResult.SUCCESS;
             }
         }
