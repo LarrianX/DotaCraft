@@ -2,6 +2,7 @@ package com.dota2;
 
 import com.dota2.block.ModBlocks;
 import com.dota2.command.ModCommands;
+import com.dota2.component.EffectComponent;
 import com.dota2.component.HeroComponent.HeroComponent;
 import com.dota2.component.HeroComponent.ValuesComponent;
 import com.dota2.effect.ModEffects;
@@ -24,8 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
-import static com.dota2.component.ModComponents.HERO_COMPONENT;
-import static com.dota2.component.ModComponents.VALUES_COMPONENT;
+import static com.dota2.component.ModComponents.*;
+import static com.dota2.item.CustomItem.ERROR;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
@@ -61,6 +62,12 @@ public class DotaCraft implements ModInitializer {
                 valuesComponentTarget.sync();
                 // Убирание эффекта невидимости если есть
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
+                //
+                EffectComponent effectComponentTarget = playerTarget.getComponent(EFFECT_COMPONENT);
+                Double amplifier = effectComponentTarget.getAmplifiers().get(ModEffects.REGENERATION_HEALTH);
+                if (amplifier != null && amplifier == ((double) 390 / 260) + ERROR) {
+                    playerTarget.removeStatusEffect(ModEffects.REGENERATION_HEALTH);
+                }
                 return ActionResult.SUCCESS;
             }
         }

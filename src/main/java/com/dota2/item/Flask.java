@@ -38,11 +38,15 @@ public class Flask extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 600, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 260, 0), null);
         EffectComponent component = user.getComponent(EFFECT_COMPONENT);
-        component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), ((double) 390 / 600) + ERROR); // погрешность
+        component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), ((double) 390 / 260) + ERROR); // погрешность
         component.sync();
     }
+
+
+
+
 
     @Override
     public String getId() {
