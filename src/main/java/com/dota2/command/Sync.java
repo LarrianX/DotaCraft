@@ -1,29 +1,28 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.HeroAttributes;
+import com.dota2.component.EffectComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import static com.dota2.component.ModComponents.*;
 
-public class Undo {
+public class Sync {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
-                CommandManager.literal("undo")
-                        .executes(Undo::execute)
+                CommandManager.literal("sync")
+                        .executes(Sync::execute)
         );
     }
 
     private static int execute(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            component.setHero(false);
-        }
+        EFFECT_COMPONENT.sync(player);
+        HERO_COMPONENT.sync(player);
+        VALUES_COMPONENT.sync(player);
+        MAX_VALUES_COMPONENT.sync(player);
 
         return 1;
     }

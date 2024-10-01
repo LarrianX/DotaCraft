@@ -1,21 +1,25 @@
 package com.dota2.item;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import com.dota2.component.EffectComponent;
+import com.dota2.effect.ModEffects;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-public class ShadowBlade extends Item implements CustomItem {
+import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
+
+
+public class ShadowBlade extends Weapon implements CustomItem {
     private static final String ID = "shadowblade";
+    private static final int DAMAGE = 25;
 
     public ShadowBlade() {
-        super(new FabricItemSettings().maxCount(1));
+        super(DAMAGE);
     }
 
     @Override
@@ -40,7 +44,6 @@ public class ShadowBlade extends Item implements CustomItem {
         StatusEffectInstance invisibilityEffect = new StatusEffectInstance(
                 StatusEffects.INVISIBILITY, 340, 0, false, false
         );
-
         user.addStatusEffect(invisibilityEffect);
     }
 
@@ -50,7 +53,7 @@ public class ShadowBlade extends Item implements CustomItem {
     }
 
     @Override
-    public ItemStack getForTabItemGroup() {
-        return new ItemStack(this);
+    public int getDamage() {
+        return DAMAGE;
     }
 }

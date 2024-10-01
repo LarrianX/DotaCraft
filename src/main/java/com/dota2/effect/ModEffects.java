@@ -1,4 +1,4 @@
-package com.dota2.effects;
+package com.dota2.effect;
 
 import com.dota2.DotaCraft;
 import net.minecraft.entity.effect.StatusEffect;

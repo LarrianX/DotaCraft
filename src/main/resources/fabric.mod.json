@@ -10,8 +10,7 @@
     "Nuklon"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/LarrianX/DotaCraft"
   },
   "license": "MIT",
   "icon": "assets/dotacraft/icon.png",
@@ -24,7 +23,7 @@
       "com.dota2.DotaCraftClient"
     ],
     "cardinal-components": [
-      "com.dota2.components.ModComponents"
+      "com.dota2.component.ModComponents"
     ]
   },
   "mixins": [
@@ -37,12 +36,14 @@
     "fabric-api": "*"
   },
   "suggests": {
-    "another-mod": "*"
   },
   "custom": {
     "cardinal-components": [
-      "dotacraft:hero_attributes",
-      "dotacraft:effect_attributes"
+      "dotacraft:effect",
+      "dotacraft:hero",
+      "dotacraft:values",
+      "dotacraft:max_values",
+      "dotacraft:old_values"
     ]
   }
 }

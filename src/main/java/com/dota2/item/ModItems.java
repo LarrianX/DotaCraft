@@ -19,7 +19,7 @@ public class ModItems {
     public static final Radiance RADIANCE = new Radiance();
     public static final Bottle BOTTLE = new Bottle();
     public static final Tango TANGO = new Tango();
-    public static final BootsOfSpeed BOOTSOFSPEED = new BootsOfSpeed();
+    public static final BootsOfSpeed BOOTS_OF_SPEED = new BootsOfSpeed();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -29,7 +29,7 @@ public class ModItems {
             DAEDALUS,
             SCEPTER,
             BATTLE_FURY,
-            BOOTSOFSPEED,
+            BOOTS_OF_SPEED,
             BOTTLE,
             TANGO,
             TPSCROLL,

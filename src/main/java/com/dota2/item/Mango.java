@@ -1,5 +1,7 @@
 package com.dota2.item;
 
+import com.dota2.component.HeroComponent.HeroComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,8 +12,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import static com.dota2.component.ModComponents.HERO_COMPONENT;
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
+
 public class Mango extends Item implements CustomItem {
     private static final String ID = "mango";
+    private static final int REGENERATION = 100;
 
     public Mango() {
         super(new FabricItemSettings().maxCount(3)
@@ -27,7 +33,7 @@ public class Mango extends Item implements CustomItem {
         // Если человек не в креативе - уменьшаем стак на один
         if (!user.isCreative()) {
             stack.decrement(1);
-            user.getItemCooldownManager().set(this, 10);
+//            user.getItemCooldownManager().set(this, 10);
         }
         // Успех
         return TypedActionResult.success(stack);
@@ -35,19 +41,21 @@ public class Mango extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
+        HeroComponent heroComponent = user.getComponent(HERO_COMPONENT);
+
+        if (heroComponent.isHero()) {
+            ValuesComponent valuesComponent = user.getComponent(VALUES_COMPONENT);
+            valuesComponent.addMana(REGENERATION);
+            valuesComponent.sync();
+        } else {
+            HungerManager hunger = (user.getHungerManager());
+            hunger.setFoodLevel(hunger.getFoodLevel() + 6);
+        }
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-        HungerManager hunger = (user.getHungerManager());
-        hunger.setFoodLevel(hunger.getFoodLevel() + 6);
     }
 
     @Override
     public String getId() {
         return ID;
     }
-
-    @Override
-    public ItemStack getForTabItemGroup() {
-        return new ItemStack(this);
-    }
-
 }

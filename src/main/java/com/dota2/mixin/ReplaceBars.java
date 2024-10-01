@@ -1,24 +1,31 @@
 package com.dota2.mixin;
 
 import com.dota2.DotaCraft;
-import com.dota2.components.HeroAttributes;
+import com.dota2.component.EffectComponent;
+import com.dota2.component.HeroComponent.HeroComponent;
+import com.dota2.component.HeroComponent.MaxValuesComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.hud.PlayerListHud;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import static com.dota2.component.ModComponents.*;
+
 
 @Mixin(InGameHud.class)
 public class ReplaceBars {
@@ -30,6 +37,9 @@ public class ReplaceBars {
     private static final int MAX_PIXELS = 88;
     @Unique
     private static final DecimalFormat outputFormat = new DecimalFormat("000");
+    @Shadow
+    @Final
+    private PlayerListHud playerListHud;
 
     @Unique
     private int calculatePixels(int value, int max_value) {
@@ -99,21 +109,39 @@ public class ReplaceBars {
         context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
     }
 
+    @Unique
+    private void drawAmplifiers(DrawContext context, Map<String, Double> amplifiers, MinecraftClient client) {
+        int x = context.getScaledWindowWidth() / 2 + 100;
+        int y = context.getScaledWindowHeight() - 50;
+
+        for (Map.Entry<String, Double> entry : amplifiers.entrySet()) {
+            context.drawTextWithShadow(client.textRenderer, entry.getKey(), x, y, 16777215);
+            context.drawTextWithShadow(client.textRenderer, entry.getValue().toString(), x + 132, y, 16777215);
+            y -= 10;
+        }
+    }
+
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;ceil(F)I"), cancellable = true)
     private void onRenderStatusBars(DrawContext context, CallbackInfo ci, @Local PlayerEntity playerEntity) {
         if (playerEntity != null) {
-            HeroAttributes component = playerEntity.getComponent(HERO_ATTRIBUTES);
-            if (component.isHero()) {
+            HeroComponent heroComponent = playerEntity.getComponent(HERO_COMPONENT);
+            if (heroComponent.isHero()) {
                 ci.cancel();
 
-                int health = component.getHealth();
-                int max_health = component.getMaxHealth();
-                int mana = component.getMana();
-                int max_mana = component.getMaxMana();
+                ValuesComponent valuesComponent = playerEntity.getComponent(VALUES_COMPONENT);
+                MaxValuesComponent maxValuesComponent = playerEntity.getComponent(MAX_VALUES_COMPONENT);
+                EffectComponent effectComponent = playerEntity.getComponent(EFFECT_COMPONENT);
+
+                int mana = (int) valuesComponent.getMana();
+                int health = (int) valuesComponent.getHealth();
+                int max_mana = maxValuesComponent.getMaxMana();
+                int max_health = maxValuesComponent.getMaxHealth();
+                Map<String, Double> amplifiers = effectComponent.getAmplifiers();
                 MinecraftClient client = MinecraftClient.getInstance();
 
-                drawHealthBar(context, health, max_health, client);
                 drawManaBar(context, mana, max_mana, client);
+                drawHealthBar(context, health, max_health, client);
+                drawAmplifiers(context, amplifiers, client);
             }
         }
     }

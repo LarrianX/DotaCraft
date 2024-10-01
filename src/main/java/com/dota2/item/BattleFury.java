@@ -1,14 +1,11 @@
 package com.dota2.item;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
-public class BattleFury extends Item implements CustomItem {
-    public static final String ID = "battle_fury";
+public class BattleFury extends Weapon implements CustomItem {
+    private static final String ID = "battle_fury";
+    private static final int DAMAGE = 25;
 
     public BattleFury() {
-        super(new FabricItemSettings().maxCount(1));
+        super(DAMAGE);
     }
 
     @Override
@@ -17,7 +14,7 @@ public class BattleFury extends Item implements CustomItem {
     }
 
     @Override
-    public ItemStack getForTabItemGroup() {
-        return new ItemStack(this);
+    public int getDamage() {
+        return DAMAGE;
     }
 }

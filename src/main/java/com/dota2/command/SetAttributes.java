@@ -1,22 +1,23 @@
-package com.dota2.commands;
+package com.dota2.command;
 
-import com.dota2.components.HeroAttributes;
+import com.dota2.component.HeroComponent.SyncedMaxValuesComponent;
+import com.dota2.component.HeroComponent.ValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.dota2.components.ModComponents.HERO_ATTRIBUTES;
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public class SetAttributes {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("set")
-                        .then(CommandManager.argument("health", IntegerArgumentType.integer(0, 30000))
+                        .then(CommandManager.argument("health", DoubleArgumentType.doubleArg(0, SyncedMaxValuesComponent.LIMIT))
                                 .executes(SetAttributes::setHealth)
-                                .then(CommandManager.argument("mana", IntegerArgumentType.integer(0, 30000))
+                                .then(CommandManager.argument("mana", DoubleArgumentType.doubleArg(0, SyncedMaxValuesComponent.LIMIT))
                                         .executes(SetAttributes::setHealthAndMana)))
         );
     }
@@ -25,9 +26,10 @@ public class SetAttributes {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            int health = IntegerArgumentType.getInteger(context, "health");
+            ValuesComponent component = player.getComponent(VALUES_COMPONENT);
+            double health = DoubleArgumentType.getDouble(context, "health");
             component.setHealth(health);
+            component.sync();
         }
 
         return 1;
@@ -37,11 +39,12 @@ public class SetAttributes {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            HeroAttributes component = player.getComponent(HERO_ATTRIBUTES);
-            int health = IntegerArgumentType.getInteger(context, "health");
-            int mana = IntegerArgumentType.getInteger(context, "mana");
+            ValuesComponent component = player.getComponent(VALUES_COMPONENT);
+            double health = DoubleArgumentType.getDouble(context, "health");
+            double mana = DoubleArgumentType.getDouble(context, "mana");
             component.setHealth(health);
             component.setMana(mana);
+            component.sync();
         }
 
         return 1;
