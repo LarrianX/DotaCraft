@@ -66,7 +66,7 @@ public class Tango extends Item implements CustomItem {
             setTimer(stack, TIMER_TIME);
             updateStack(stack);
         } else {
-            setTimer(stack, getTimer(stack) - 1);
+//            setTimer(stack, getTimer(stack) - 1);
         }
     }
 
