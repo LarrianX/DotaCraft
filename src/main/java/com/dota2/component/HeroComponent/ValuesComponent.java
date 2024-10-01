@@ -13,5 +13,8 @@ public interface ValuesComponent extends ComponentV3 {
     void addMana(double mana);
     boolean isNotFullMana();
 
+    double getCrit();
+    void setCrit(double crit);
+
     void sync();
 }

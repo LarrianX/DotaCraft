@@ -24,12 +24,15 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Random;
+
 import static com.dota2.component.ModComponents.HERO_COMPONENT;
 import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    private static final Random random = new Random();
 
     @Override
     public void onInitialize() {
@@ -63,8 +66,11 @@ public class DotaCraft implements ModInitializer {
             HeroComponent heroComponentTarget = playerTarget.getComponent(HERO_COMPONENT);
             if (heroComponentTarget.isHero() && heroComponentSource.isHero()) {
                 // Уменьшение хп
-                ValuesComponent valuesComponent = playerTarget.getComponent(VALUES_COMPONENT);
-                valuesComponent.addHealth(-damage);
+                ValuesComponent valuesComponentSource = playerSource.getComponent(VALUES_COMPONENT);
+                ValuesComponent valuesComponentTarget = playerTarget.getComponent(VALUES_COMPONENT);
+                double randomValue = damage + (damage * ((valuesComponentSource.getCrit() / 100) * random.nextDouble()));
+                valuesComponentTarget.addHealth(-randomValue);
+                valuesComponentTarget.sync();
                 // Убирание эффекта невидимости если есть
                 playerTarget.removeStatusEffect(StatusEffects.INVISIBILITY);
                 return ActionResult.SUCCESS;
