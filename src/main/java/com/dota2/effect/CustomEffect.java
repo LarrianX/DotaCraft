@@ -1,6 +1,5 @@
 package com.dota2.effect;
 
-import com.dota2.DotaCraft;
 import com.dota2.component.EffectComponent;
 import com.dota2.component.HeroComponent.ValuesComponent;
 import net.minecraft.entity.LivingEntity;

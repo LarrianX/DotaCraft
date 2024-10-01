@@ -4,16 +4,16 @@ import com.dota2.component.ModComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 import static com.dota2.component.ModComponents.MAX_VALUES_COMPONENT;
 
 public class SyncedValuesComponent implements ValuesComponent, AutoSyncedComponent {
+    public static final double LIMIT_CRIT = 100;
     private final PlayerEntity provider;
     private final NbtCompound cache;
     private double mana;
     private double health;
+    private double critChance;
 
     public SyncedValuesComponent(PlayerEntity provider) {
         this.provider = provider;
@@ -28,8 +28,9 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     public void sync() {
         if (
                 this.cache.isEmpty() ||
-                (int) this.cache.getDouble("mana") != this.mana ||
-                (int) this.cache.getDouble("health") != this.health
+                        this.cache.getDouble("mana") != this.mana ||
+                        this.cache.getDouble("health") != this.health ||
+                        this.cache.getDouble("crit") != this.critChance
         ) {
             ModComponents.VALUES_COMPONENT.sync(this.provider);
             writeToNbt(this.cache);
@@ -77,14 +78,26 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     }
 
     @Override
+    public double getCrit() {
+        return critChance;
+    }
+
+    @Override
+    public void setCrit(double critChance) {
+        this.critChance = Math.max(Math.min(critChance, LIMIT_CRIT), 0);
+    }
+
+    @Override
     public void readFromNbt(NbtCompound tag) {
         this.mana = tag.getDouble("mana");
         this.health = tag.getDouble("health");
+        this.critChance = tag.getDouble("crit");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
         tag.putDouble("mana", this.mana);
         tag.putDouble("health", this.health);
+        tag.putDouble("crit", this.critChance);
     }
 }
