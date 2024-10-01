@@ -14,8 +14,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import java.util.Map;
-
 import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
 public class Bottle extends Item implements CustomItem {

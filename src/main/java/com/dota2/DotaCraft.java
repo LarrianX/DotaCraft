@@ -3,7 +3,6 @@ package com.dota2;
 import com.dota2.block.ModBlocks;
 import com.dota2.command.ModCommands;
 import com.dota2.component.HeroComponent.HeroComponent;
-import com.dota2.component.HeroComponent.SyncedHeroComponent;
 import com.dota2.component.HeroComponent.ValuesComponent;
 import com.dota2.effect.ModEffects;
 import com.dota2.item.ModItemGroups;
@@ -15,7 +14,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
@@ -33,16 +31,6 @@ public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     private static final Random random = new Random();
-
-    @Override
-    public void onInitialize() {
-        ModItems.registerModItems();
-        ModBlocks.registerModBlocks();
-        ModItemGroups.registerItemGroups();
-        ModEffects.registerModEffects();
-        ModCommands.registerModCommands();
-        AttackEntityCallback.EVENT.register(DotaCraft::onAttackEntity);
-    }
 
     private static int calculateDamage(PlayerEntity provider) {
         int totalDamage = 0;
@@ -72,10 +60,20 @@ public class DotaCraft implements ModInitializer {
                 valuesComponentTarget.addHealth(-randomValue);
                 valuesComponentTarget.sync();
                 // Убирание эффекта невидимости если есть
-                playerTarget.removeStatusEffect(StatusEffects.INVISIBILITY);
+                playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
                 return ActionResult.SUCCESS;
             }
         }
         return ActionResult.FAIL;
+    }
+
+    @Override
+    public void onInitialize() {
+        ModItems.registerModItems();
+        ModBlocks.registerModBlocks();
+        ModItemGroups.registerItemGroups();
+        ModEffects.registerModEffects();
+        ModCommands.registerModCommands();
+        AttackEntityCallback.EVENT.register(DotaCraft::onAttackEntity);
     }
 }

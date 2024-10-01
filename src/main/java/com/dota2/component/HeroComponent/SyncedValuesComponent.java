@@ -28,9 +28,9 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     public void sync() {
         if (
                 this.cache.isEmpty() ||
-                this.cache.getDouble("mana") != this.mana ||
-                this.cache.getDouble("health") != this.health ||
-                this.cache.getDouble("crit") != this.critChance
+                        this.cache.getDouble("mana") != this.mana ||
+                        this.cache.getDouble("health") != this.health ||
+                        this.cache.getDouble("crit") != this.critChance
         ) {
             ModComponents.VALUES_COMPONENT.sync(this.provider);
             writeToNbt(this.cache);

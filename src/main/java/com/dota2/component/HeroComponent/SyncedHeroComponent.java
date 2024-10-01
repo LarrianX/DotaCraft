@@ -1,22 +1,11 @@
 package com.dota2.component.HeroComponent;
 
-import com.dota2.item.Weapon;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import static com.dota2.component.ModComponents.HERO_COMPONENT;
-import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public class SyncedHeroComponent implements HeroComponent, ServerTickingComponent, AutoSyncedComponent {
     public static final int HEALTH = 100;

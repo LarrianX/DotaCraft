@@ -1,6 +1,5 @@
 package com.dota2.command;
 
-import com.dota2.component.EffectComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;

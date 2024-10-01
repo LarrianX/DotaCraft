@@ -27,6 +27,7 @@ public class SetAttributes {
                                                 .executes(SetAttributes::setAll)
                                         ))));
     }
+
     private static int setMax(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
