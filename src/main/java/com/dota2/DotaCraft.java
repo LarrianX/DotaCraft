@@ -64,9 +64,13 @@ public class DotaCraft implements ModInitializer {
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
                 //
                 EffectComponent effectComponentTarget = playerTarget.getComponent(EFFECT_COMPONENT);
-                Double amplifier = effectComponentTarget.getAmplifiers().get(ModEffects.REGENERATION_HEALTH);
-                if (amplifier != null && amplifier == ((double) 390 / 260) + ERROR) {
+                Double amplifierHealth = effectComponentTarget.getAmplifiers().get(ModEffects.REGENERATION_HEALTH.getId());
+                if (amplifierHealth != null && amplifierHealth == ((double) 390 / 260) + ERROR) {
                     playerTarget.removeStatusEffect(ModEffects.REGENERATION_HEALTH);
+                }
+                Double amplifierMana = effectComponentTarget.getAmplifiers().get(ModEffects.REGENERATION_MANA.getId());
+                if (amplifierMana != null && amplifierMana == ((double) 150 / 500) + ERROR) {
+                    playerTarget.removeStatusEffect(ModEffects.REGENERATION_MANA);
                 }
                 return ActionResult.SUCCESS;
             }
