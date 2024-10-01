@@ -12,6 +12,7 @@ import com.dota2.item.Weapon;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -61,8 +62,11 @@ public class DotaCraft implements ModInitializer {
         if (entity instanceof PlayerEntity playerTarget) {
             HeroComponent heroComponentTarget = playerTarget.getComponent(HERO_COMPONENT);
             if (heroComponentTarget.isHero() && heroComponentSource.isHero()) {
+                // Уменьшение хп
                 ValuesComponent valuesComponent = playerTarget.getComponent(VALUES_COMPONENT);
                 valuesComponent.addHealth(-damage);
+                // Убирание эффекта невидимости если есть
+                playerTarget.removeStatusEffect(StatusEffects.INVISIBILITY);
                 return ActionResult.SUCCESS;
             }
         }

@@ -1,5 +1,7 @@
 package com.dota2.item;
 
+import com.dota2.component.EffectComponent;
+import com.dota2.effect.ModEffects;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +10,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+
+import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
 
 public class ShadowBlade extends Weapon implements CustomItem {
@@ -40,7 +44,6 @@ public class ShadowBlade extends Weapon implements CustomItem {
         StatusEffectInstance invisibilityEffect = new StatusEffectInstance(
                 StatusEffects.INVISIBILITY, 340, 0, false, false
         );
-
         user.addStatusEffect(invisibilityEffect);
     }
 
