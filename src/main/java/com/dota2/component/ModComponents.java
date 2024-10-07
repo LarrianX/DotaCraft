@@ -1,7 +1,7 @@
 package com.dota2.component;
 
 import com.dota2.DotaCraft;
-import com.dota2.component.HeroComponent.*;
+import com.dota2.component.hero.*;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;

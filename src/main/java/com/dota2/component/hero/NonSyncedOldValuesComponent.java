@@ -1,4 +1,4 @@
-package com.dota2.component.HeroComponent;
+package com.dota2.component.hero;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;

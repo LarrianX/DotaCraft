@@ -16,5 +16,6 @@
   "block.dotacraft.portal": "Portal",
   "block.dotacraft.pressure_plate": "Pressure Plate",
   "effect.dotacraft.regeneration_mana": "Regeneration of mana",
-  "effect.dotacraft.regeneration_health": "Regeneration of health"
+  "effect.dotacraft.regeneration_health": "Regeneration of health",
+  "attribute.name.generic.crit_chance": "Chance of critical damage"
 }

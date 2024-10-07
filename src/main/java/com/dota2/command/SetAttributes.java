@@ -1,16 +1,18 @@
 package com.dota2.command;
 
-import com.dota2.component.HeroComponent.MaxValuesComponent;
-import com.dota2.component.HeroComponent.SyncedMaxValuesComponent;
-import com.dota2.component.HeroComponent.SyncedValuesComponent;
-import com.dota2.component.HeroComponent.ValuesComponent;
+import com.dota2.attributes.CritChance;
+import com.dota2.component.hero.MaxValuesComponent;
+import com.dota2.component.hero.SyncedMaxValuesComponent;
+import com.dota2.component.hero.ValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import static com.dota2.attributes.ModAttributes.CRIT_CHANCE;
 import static com.dota2.component.ModComponents.MAX_VALUES_COMPONENT;
 import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
@@ -19,11 +21,11 @@ public class SetAttributes {
         dispatcher.register(
                 CommandManager.literal("set")
                         .executes(SetAttributes::setMax)
-                        .then(CommandManager.argument("health", DoubleArgumentType.doubleArg(0, SyncedMaxValuesComponent.LIMIT))
+                        .then(CommandManager.argument("health", DoubleArgumentType.doubleArg(SyncedMaxValuesComponent.MIN, SyncedMaxValuesComponent.MAX))
                                 .executes(SetAttributes::setHealth)
-                                .then(CommandManager.argument("mana", DoubleArgumentType.doubleArg(0, SyncedMaxValuesComponent.LIMIT))
+                                .then(CommandManager.argument("mana", DoubleArgumentType.doubleArg(SyncedMaxValuesComponent.MIN, SyncedMaxValuesComponent.MAX))
                                         .executes(SetAttributes::setHealthAndMana)
-                                        .then(CommandManager.argument("crit chance", DoubleArgumentType.doubleArg(0, SyncedValuesComponent.LIMIT_CRIT))
+                                        .then(CommandManager.argument("crit chance", DoubleArgumentType.doubleArg(CritChance.MIN, CritChance.MAX))
                                                 .executes(SetAttributes::setAll)
                                         ))));
     }
@@ -74,10 +76,11 @@ public class SetAttributes {
 
         if (player != null) {
             setHealthAndMana(context);
-            ValuesComponent component = player.getComponent(VALUES_COMPONENT);
-            double critChance = DoubleArgumentType.getDouble(context, "crit chance");
-            component.setCrit(critChance);
-            component.sync();
+            EntityAttributeInstance attribute = player.getAttributeInstance(CRIT_CHANCE);
+            if (attribute != null) {
+                double critChance = DoubleArgumentType.getDouble(context, "crit chance");
+                attribute.setBaseValue(critChance);
+            }
         }
 
         return 1;

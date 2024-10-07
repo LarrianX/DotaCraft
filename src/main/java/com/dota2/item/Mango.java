@@ -1,7 +1,7 @@
 package com.dota2.item;
 
-import com.dota2.component.HeroComponent.HeroComponent;
-import com.dota2.component.HeroComponent.ValuesComponent;
+import com.dota2.component.hero.HeroComponent;
+import com.dota2.component.hero.ValuesComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;

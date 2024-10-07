@@ -1,10 +1,11 @@
 package com.dota2;
 
+import com.dota2.attributes.ModAttributes;
 import com.dota2.block.ModBlocks;
 import com.dota2.command.ModCommands;
 import com.dota2.component.EffectComponent;
-import com.dota2.component.HeroComponent.HeroComponent;
-import com.dota2.component.HeroComponent.ValuesComponent;
+import com.dota2.component.hero.HeroComponent;
+import com.dota2.component.hero.ValuesComponent;
 import com.dota2.effect.ModEffects;
 import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
@@ -12,6 +13,7 @@ import com.dota2.item.Weapon;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Random;
 
+import static com.dota2.attributes.ModAttributes.CRIT_CHANCE;
 import static com.dota2.component.ModComponents.*;
 import static com.dota2.item.CustomItem.ERROR;
 
@@ -55,11 +58,12 @@ public class DotaCraft implements ModInitializer {
             HeroComponent heroComponentTarget = playerTarget.getComponent(HERO_COMPONENT);
             if (heroComponentTarget.isHero() && heroComponentSource.isHero()) {
                 // Уменьшение хп
-                ValuesComponent valuesComponentSource = playerSource.getComponent(VALUES_COMPONENT);
-                ValuesComponent valuesComponentTarget = playerTarget.getComponent(VALUES_COMPONENT);
-                double randomValue = damage + (damage * ((valuesComponentSource.getCrit() / 100) * random.nextDouble()));
-                valuesComponentTarget.addHealth(-randomValue);
-                valuesComponentTarget.sync();
+                EntityAttributeInstance critAttribute = playerSource.getAttributeInstance(CRIT_CHANCE);
+                if (critAttribute != null) {
+                    ValuesComponent valuesComponentTarget = playerTarget.getComponent(VALUES_COMPONENT);
+                    valuesComponentTarget.addHealth(-damage);
+                    valuesComponentTarget.sync();
+                }
                 // Убирание эффекта невидимости если есть
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
                 //
@@ -78,6 +82,14 @@ public class DotaCraft implements ModInitializer {
         return ActionResult.FAIL;
     }
 
+//    public static (entityType, entityAttributes, uuid) -> {
+//        // Добавляем атрибут, только если сущность является игроком
+//        if (entityType == Registries.ENTITY_TYPE.get(Registries.ENTITY_TYPE.getId(PlayerEntity.TYPE))) {
+//            // Добавляем атрибут критического удара
+//            entityAttributes.put(ModAttributes.CRIT_CHANCE, ModAttributes.CRIT_CHANCE.createDefaultValue());
+//        }
+//    }
+
     @Override
     public void onInitialize() {
         ModItems.registerModItems();
@@ -85,6 +97,8 @@ public class DotaCraft implements ModInitializer {
         ModItemGroups.registerItemGroups();
         ModEffects.registerModEffects();
         ModCommands.registerModCommands();
+        ModAttributes.registerModAttributes();
         AttackEntityCallback.EVENT.register(DotaCraft::onAttackEntity);
     }
+
 }

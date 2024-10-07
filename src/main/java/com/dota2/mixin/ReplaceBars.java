@@ -2,9 +2,9 @@ package com.dota2.mixin;
 
 import com.dota2.DotaCraft;
 import com.dota2.component.EffectComponent;
-import com.dota2.component.HeroComponent.HeroComponent;
-import com.dota2.component.HeroComponent.MaxValuesComponent;
-import com.dota2.component.HeroComponent.ValuesComponent;
+import com.dota2.component.hero.HeroComponent;
+import com.dota2.component.hero.MaxValuesComponent;
+import com.dota2.component.hero.ValuesComponent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -46,7 +46,7 @@ public class ReplaceBars {
         if (max_value == 0) {
             return 0;
         }
-        return (int) (MAX_PIXELS * ((double) value / (double) max_value));
+        return (int) Math.min(MAX_PIXELS * ((double) value / (double) max_value), MAX_PIXELS);
     }
 
     @Unique
@@ -124,8 +124,8 @@ public class ReplaceBars {
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;ceil(F)I"), cancellable = true)
     private void onRenderStatusBars(DrawContext context, CallbackInfo ci, @Local PlayerEntity playerEntity) {
         if (playerEntity != null) {
-            HeroComponent heroComponent = playerEntity.getComponent(HERO_COMPONENT);
-            if (heroComponent.isHero()) {
+            HeroComponent hero = playerEntity.getComponent(HERO_COMPONENT);
+            if (hero.isHero()) {
                 ci.cancel();
 
                 ValuesComponent valuesComponent = playerEntity.getComponent(VALUES_COMPONENT);
@@ -134,8 +134,8 @@ public class ReplaceBars {
 
                 int mana = (int) valuesComponent.getMana();
                 int health = (int) valuesComponent.getHealth();
-                int max_mana = maxValuesComponent.getMaxMana();
-                int max_health = maxValuesComponent.getMaxHealth();
+                int max_mana = (int) maxValuesComponent.getMaxMana();
+                int max_health = (int) maxValuesComponent.getMaxHealth();
                 Map<String, Double> amplifiers = effectComponent.getAmplifiers();
                 MinecraftClient client = MinecraftClient.getInstance();
 
