@@ -1,5 +1,6 @@
 package com.dota2.block;
 
+import com.dota2.Custom;
 import com.dota2.DotaCraft;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
@@ -20,8 +21,8 @@ public class ModBlocks {
 
     private static void registerBlocks() {
         for (Block block : BLOCKS) {
-            if (block instanceof CustomBlock) {
-                registerBlock(((CustomBlock) block).getId(), block);
+            if (block instanceof Custom) {
+                registerBlock(((Custom) block).getId(), block);
             }
         }
     }

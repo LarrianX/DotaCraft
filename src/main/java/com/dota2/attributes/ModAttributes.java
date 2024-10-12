@@ -1,5 +1,6 @@
 package com.dota2.attributes;
 
+import com.dota2.Custom;
 import com.dota2.DotaCraft;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -16,8 +17,8 @@ public class ModAttributes {
 
     private static void registerAttributes() {
         for (EntityAttribute attributes : ATTRIBUTES) {
-            if (attributes instanceof CustomAttribute) {
-                registerAttribute(((CustomAttribute) attributes).getId(), attributes);
+            if (attributes instanceof Custom) {
+                registerAttribute(((Custom) attributes).getId(), attributes);
             }
         }
     }

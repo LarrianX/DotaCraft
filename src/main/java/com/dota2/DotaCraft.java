@@ -11,13 +11,18 @@ import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
 import com.dota2.item.Weapon;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.scoreboard.Team;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
@@ -61,7 +66,7 @@ public class DotaCraft implements ModInitializer {
                 EntityAttributeInstance critAttribute = playerSource.getAttributeInstance(CRIT_CHANCE);
                 if (critAttribute != null) {
                     ValuesComponent valuesComponentTarget = playerTarget.getComponent(VALUES_COMPONENT);
-                    valuesComponentTarget.addHealth(-damage);
+                    valuesComponentTarget.addHealth(-damage); // TODO: доделать крит удар
                     valuesComponentTarget.sync();
                 }
                 // Убирание эффекта невидимости если есть
@@ -82,13 +87,22 @@ public class DotaCraft implements ModInitializer {
         return ActionResult.FAIL;
     }
 
-//    public static (entityType, entityAttributes, uuid) -> {
-//        // Добавляем атрибут, только если сущность является игроком
-//        if (entityType == Registries.ENTITY_TYPE.get(Registries.ENTITY_TYPE.getId(PlayerEntity.TYPE))) {
-//            // Добавляем атрибут критического удара
-//            entityAttributes.put(ModAttributes.CRIT_CHANCE, ModAttributes.CRIT_CHANCE.createDefaultValue());
-//        }
-//    }
+    private Team createTeam(MinecraftServer server, String teamName) {
+        Scoreboard scoreboard = server.getScoreboard();
+        Team team = scoreboard.getTeam(teamName);
+        if (team == null) {
+            team = scoreboard.addTeam(teamName);
+            team.setFriendlyFireAllowed(false);
+        }
+        return team;
+    }
+
+    private void createTeams(MinecraftServer server) {
+        Team light = createTeam(server, "light");
+        light.setColor(Formatting.WHITE);
+        Team black = createTeam(server, "black");
+        black.setColor(Formatting.BLACK);
+    }
 
     @Override
     public void onInitialize() {
@@ -99,6 +113,6 @@ public class DotaCraft implements ModInitializer {
         ModCommands.registerModCommands();
         ModAttributes.registerModAttributes();
         AttackEntityCallback.EVENT.register(DotaCraft::onAttackEntity);
+        ServerLifecycleEvents.SERVER_STARTED.register(this::createTeams);
     }
-
 }
