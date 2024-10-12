@@ -37,9 +37,7 @@ public class ReplaceBars {
     private static final int MAX_PIXELS = 88;
     @Unique
     private static final DecimalFormat outputFormat = new DecimalFormat("000");
-    @Shadow
-    @Final
-    private PlayerListHud playerListHud;
+
 
     @Unique
     private int calculatePixels(int value, int max_value) {

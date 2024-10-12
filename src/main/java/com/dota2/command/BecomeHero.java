@@ -21,7 +21,8 @@ public class BecomeHero {
                         .executes(BecomeHero::execute)
                         .then(CommandManager.argument("max health", DoubleArgumentType.doubleArg(SyncedMaxValuesComponent.MIN, SyncedMaxValuesComponent.MAX))
                                 .then(CommandManager.argument("max mana", DoubleArgumentType.doubleArg(SyncedMaxValuesComponent.MIN, SyncedMaxValuesComponent.MAX))
-                                        .executes(BecomeHero::executeWithAttributes)))
+                                        .then(CommandManager.argument("team", IntegerArgumentType.integer(0, 1)))
+                                            .executes(BecomeHero::executeWithAttributes)))
         );
     }
 
