@@ -1,4 +1,4 @@
-package com.dota2.component.HeroComponent;
+package com.dota2.component.hero;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 
@@ -18,10 +18,6 @@ public interface ValuesComponent extends ComponentV3 {
     void addMana(double mana);
 
     boolean isNotFullMana();
-
-    double getCrit();
-
-    void setCrit(double crit);
 
     void sync();
 }

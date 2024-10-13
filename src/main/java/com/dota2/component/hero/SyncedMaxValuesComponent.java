@@ -1,4 +1,4 @@
-package com.dota2.component.HeroComponent;
+package com.dota2.component.hero;
 
 import com.dota2.component.ModComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -6,10 +6,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedComponent {
-    public static final int LIMIT = 30000;
+    public static final double MIN = 1;
+    public static final double MAX = 30000;
     private final PlayerEntity provider;
-    private int maxMana;
-    private int maxHealth;
+    private double maxMana;
+    private double maxHealth;
     private NbtCompound cache;
 
     public SyncedMaxValuesComponent(PlayerEntity provider) {
@@ -28,34 +29,34 @@ public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedC
     }
 
     @Override
-    public int getMaxMana() {
+    public double getMaxMana() {
         return this.maxMana;
     }
 
     @Override
-    public void setMaxMana(int maxMana) {
-        this.maxMana = Math.max(Math.min(maxMana, LIMIT), 0);
+    public void setMaxMana(double maxMana) {
+        this.maxMana = Math.max(Math.min(maxMana, MAX), MIN);
     }
 
     @Override
-    public int getMaxHealth() {
+    public double getMaxHealth() {
         return this.maxHealth;
     }
 
     @Override
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = Math.max(Math.min(maxHealth, LIMIT), 0);
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = Math.max(Math.min(maxHealth, MAX), MIN);
     }
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        this.maxMana = Math.max(Math.min(tag.getInt("maxMana"), LIMIT), 0);
-        this.maxHealth = Math.max(Math.min(tag.getInt("maxHealth"), LIMIT), 0);
+        this.maxMana = Math.max(Math.min(tag.getDouble("maxMana"), MAX), MIN);
+        this.maxHealth = Math.max(Math.min(tag.getDouble("maxHealth"), MAX), MIN);
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putInt("maxMana", this.maxMana);
-        tag.putInt("maxHealth", this.maxHealth);
+        tag.putDouble("maxMana", this.maxMana);
+        tag.putDouble("maxHealth", this.maxHealth);
     }
 }

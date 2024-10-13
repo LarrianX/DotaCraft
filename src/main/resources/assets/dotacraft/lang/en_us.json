@@ -12,9 +12,12 @@
   "item.dotacraft.tpscroll": "Teleport Scroll",
   "item.dotacraft.shadowblade": "Shadow Blade",
   "item.dotacraft.boots_of_speed": "Boots of Speed",
+  "item.dotacraft.rec_daedalus": "Recipe of Daedalus",
+  "item.dotacraft.demonedge": "Demon Edge",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Portal",
   "block.dotacraft.pressure_plate": "Pressure Plate",
   "effect.dotacraft.regeneration_mana": "Regeneration of mana",
-  "effect.dotacraft.regeneration_health": "Regeneration of health"
+  "effect.dotacraft.regeneration_health": "Regeneration of health",
+  "attribute.name.generic.crit_chance": "Chance of critical damage"
 }

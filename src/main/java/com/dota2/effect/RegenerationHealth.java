@@ -1,7 +1,7 @@
 package com.dota2.effect;
 
 import com.dota2.component.EffectComponent;
-import com.dota2.component.HeroComponent.ValuesComponent;
+import com.dota2.component.hero.ValuesComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;

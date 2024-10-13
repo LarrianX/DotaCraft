@@ -21,7 +21,6 @@ public class Sync {
         EFFECT_COMPONENT.sync(player);
         HERO_COMPONENT.sync(player);
         VALUES_COMPONENT.sync(player);
-        MAX_VALUES_COMPONENT.sync(player);
 
         return 1;
     }

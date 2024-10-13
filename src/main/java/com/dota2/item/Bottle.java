@@ -35,7 +35,6 @@ public class Bottle extends Item implements CustomItem {
         nbt.putInt(FULLNESS_KEY, fullness);
     }
 
-    // Отключено в целях оптимизации
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
         // inventoryTick - функция вызывается каждый тик в инвентаре

@@ -1,4 +1,4 @@
-package com.dota2.component.HeroComponent;
+package com.dota2.component.hero;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 
@@ -10,4 +10,6 @@ public interface OldValuesComponent extends ComponentV3 {
     int getOldMaxHealth();
 
     void setOldMaxHealth(int oldMaxHealth);
+
+    void sync();
 }

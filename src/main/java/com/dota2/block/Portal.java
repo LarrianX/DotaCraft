@@ -4,8 +4,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.sound.BlockSoundGroup;
+import com.dota2.Custom;
 
-public class Portal extends Block implements CustomBlock {
+public class Portal extends Block implements Custom {
     private static final String ID = "portal";
 
     public Portal() {

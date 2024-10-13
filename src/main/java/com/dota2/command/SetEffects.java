@@ -1,5 +1,6 @@
 package com.dota2.command;
 
+import com.dota2.Custom;
 import com.dota2.component.EffectComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -8,27 +9,31 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.effect.ModEffects.EFFECTS;
 
 public class SetEffects {
+    private static final List<String> IDS;
+    static {
+        IDS = new ArrayList<>();
+        for (StatusEffect effect : EFFECTS) {
+            if (effect instanceof Custom) {
+                IDS.add(((Custom) effect).getId());
+            }
+        }
+    }
 
-    // Список доступных эффектов
-    private static final List<String> ALLOWED_EFFECTS = Arrays.asList(
-            "regeneration_health",
-            "regeneration_mana"
-    );
-
-    // Создаем SuggestionProvider, который будет предоставлять наши эффекты
-    private static final SuggestionProvider<ServerCommandSource> EFFECT_SUGGESTIONS = (context, builder) -> {
-        for (String effect : ALLOWED_EFFECTS) {
+    private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS = (context, builder) -> {
+        for (String effect : IDS) {
             builder.suggest(effect);
         }
         return builder.buildFuture();
@@ -39,7 +44,7 @@ public class SetEffects {
                 CommandManager.literal("set_effect")
                         .then(CommandManager.argument("name", StringArgumentType.string())
                                 // Добавляем подсказки для аргумента "name"
-                                .suggests(EFFECT_SUGGESTIONS)
+                                .suggests(SUGGESTIONS)
                                 .then(CommandManager.argument("value", DoubleArgumentType.doubleArg())
                                         .executes(SetEffects::execute)))
         );
@@ -53,7 +58,7 @@ public class SetEffects {
             double value = DoubleArgumentType.getDouble(context, "value");
 
             // Проверяем, что введенное имя содержится в списке разрешенных эффектов
-            if (!ALLOWED_EFFECTS.contains(name)) {
+            if (!IDS.contains(name)) {
                 throw new SimpleCommandExceptionType(Text.literal("Недопустимый эффект: " + name)).create();
             }
 
