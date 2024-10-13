@@ -98,9 +98,9 @@ public class DotaCraft implements ModInitializer {
     }
 
     private void createTeams(MinecraftServer server) {
-        Team light = createTeam(server, "light");
+        Team light = createTeam(server, "Radiant");
         light.setColor(Formatting.WHITE);
-        Team black = createTeam(server, "black");
+        Team black = createTeam(server, "Dire");
         black.setColor(Formatting.BLACK);
     }
 

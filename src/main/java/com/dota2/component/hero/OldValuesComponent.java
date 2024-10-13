@@ -10,4 +10,6 @@ public interface OldValuesComponent extends ComponentV3 {
     int getOldMaxHealth();
 
     void setOldMaxHealth(int oldMaxHealth);
+
+    void sync();
 }

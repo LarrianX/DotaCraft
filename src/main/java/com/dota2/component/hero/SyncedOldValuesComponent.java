@@ -1,13 +1,28 @@
 package com.dota2.component.hero;
 
+import com.dota2.component.ModComponents;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-public class NonSyncedOldValuesComponent implements OldValuesComponent {
+public class SyncedOldValuesComponent implements OldValuesComponent, AutoSyncedComponent {
+    private final PlayerEntity provider;
     private int oldHealth;
     private int oldMaxHealth;
+    private NbtCompound cache;
 
-    public NonSyncedOldValuesComponent(PlayerEntity provider) {
+    public SyncedOldValuesComponent(PlayerEntity provider) {
+        this.provider = provider;
+    }
+
+    @Override
+    public void sync() {
+        NbtCompound data = new NbtCompound();
+        writeToNbt(data);
+        if (!data.equals(this.cache)) {
+            ModComponents.MAX_VALUES_COMPONENT.sync(this.provider);
+        }
+        this.cache = data;
     }
 
     @Override
