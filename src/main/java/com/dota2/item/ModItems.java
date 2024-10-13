@@ -20,6 +20,8 @@ public class ModItems {
     public static final Bottle BOTTLE = new Bottle();
     public static final Tango TANGO = new Tango();
     public static final BootsOfSpeed BOOTS_OF_SPEED = new BootsOfSpeed();
+    public static final DemonEdge DEMON_EDGE = new DemonEdge();
+    public static final RecDaedalus REC_DAEDALUS = new RecDaedalus();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -34,7 +36,9 @@ public class ModItems {
             TANGO,
             TPSCROLL,
             SHADOWBLADE,
-            RADIANCE
+            RADIANCE,
+            DEMON_EDGE,
+            REC_DAEDALUS
     };
 
     private static void registerItems() {
