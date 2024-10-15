@@ -5,11 +5,15 @@ import com.dota2.component.hero.ValuesComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 import static com.dota2.component.ModComponents.HERO_COMPONENT;
@@ -26,18 +30,29 @@ public class Mango extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Воспроизводим нужные действия
-        applyEffects(user);
-        // Получаем стак, и уменьшаем его на один
+        // Получаем стак, который игрок держит в руке
         ItemStack stack = user.getStackInHand(hand);
-        // Если человек не в креативе - уменьшаем стак на один
-        if (!user.isCreative()) {
-            stack.decrement(1);
-//            user.getItemCooldownManager().set(this, 10);
+
+        // Выполняем поиск сущности, на которую смотрит игрок
+        EntityHitResult entityHitResult = (EntityHitResult) user.raycast(5.0D, 0.0F, false);
+
+        if (entityHitResult != null && entityHitResult.getEntity() instanceof PlayerEntity targetPlayer) {
+            applyEffects(targetPlayer); // Применяем эффекты на игрока, на которого смотрят
+        } else {
+            // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
+            applyEffects(user);
         }
+
+        // Если игрок не в креативе - уменьшаем стак на один
+        if (!user.isCreative()) {
+            user.getItemCooldownManager().set(this, 10);
+            stack.decrement(1);
+        }
+
         // Успех
         return TypedActionResult.success(stack);
     }
+
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты

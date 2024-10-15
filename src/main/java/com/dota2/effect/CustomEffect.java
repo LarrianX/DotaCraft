@@ -34,8 +34,6 @@ public abstract class CustomEffect extends StatusEffect implements Custom {
             EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
             effectComponent.getAmplifiers().remove(getId());
             effectComponent.sync();
-            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
-            valuesComponent.sync();
         }
 
         super.onRemoved(entity, attributes, amplifier);

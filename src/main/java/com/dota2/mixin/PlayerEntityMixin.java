@@ -2,11 +2,8 @@ package com.dota2.mixin;
 
 import com.dota2.attributes.ModAttributes;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
 
 import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
@@ -23,15 +24,25 @@ public class Flask extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Воспроизводим нужные действия
-        applyEffects(user);
-        // Получаем стак
+        // Получаем стак, который игрок держит в руке
         ItemStack stack = user.getStackInHand(hand);
-        // Если человек не в креативе - уменьшаем стак на один
-        if (!user.isCreative()) {
-            stack.decrement(1);
-            user.getItemCooldownManager().set(this, 10);
+
+        // Выполняем поиск сущности, на которую смотрит игрок
+        EntityHitResult entityHitResult = (EntityHitResult) user.raycast(5.0D, 0.0F, false);
+
+        if (entityHitResult != null && entityHitResult.getEntity() instanceof PlayerEntity targetPlayer) {
+            applyEffects(targetPlayer); // Применяем эффекты на игрока, на которого смотрят
+        } else {
+            // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
+            applyEffects(user);
         }
+
+        // Если игрок не в креативе - уменьшаем стак на один
+        if (!user.isCreative()) {
+            user.getItemCooldownManager().set(this, 10);
+            stack.decrement(1);
+        }
+
         // Успех
         return TypedActionResult.success(stack);
     }

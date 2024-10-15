@@ -3,7 +3,6 @@ package com.dota2;
 import com.dota2.attributes.ModAttributes;
 import com.dota2.block.ModBlocks;
 import com.dota2.command.ModCommands;
-import com.dota2.component.EffectComponent;
 import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.ValuesComponent;
 import com.dota2.effect.ModEffects;
@@ -34,7 +33,6 @@ import java.util.Random;
 
 import static com.dota2.attributes.ModAttributes.CRIT_CHANCE;
 import static com.dota2.component.ModComponents.*;
-import static com.dota2.item.CustomItem.ERROR;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
@@ -56,31 +54,23 @@ public class DotaCraft implements ModInitializer {
     }
 
     public static ActionResult onAttackEntity(PlayerEntity playerSource, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
-        int damage = calculateDamage(playerSource);
-
-        HeroComponent heroComponentSource = playerSource.getComponent(HERO_COMPONENT);
         if (entity instanceof PlayerEntity playerTarget) {
+            HeroComponent heroComponentSource = playerSource.getComponent(HERO_COMPONENT);
             HeroComponent heroComponentTarget = playerTarget.getComponent(HERO_COMPONENT);
-            if (heroComponentTarget.isHero() && heroComponentSource.isHero()) {
+            if (heroComponentTarget.isHero() && heroComponentSource.isHero() &&
+                !playerSource.isTeammate(playerTarget)) {
                 // Уменьшение хп
+                int damage = calculateDamage(playerSource);
                 EntityAttributeInstance critAttribute = playerSource.getAttributeInstance(CRIT_CHANCE);
                 if (critAttribute != null) {
                     ValuesComponent valuesComponentTarget = playerTarget.getComponent(VALUES_COMPONENT);
                     valuesComponentTarget.addHealth(-damage); // TODO: доделать крит удар
                     valuesComponentTarget.sync();
                 }
-                // Убирание эффекта невидимости если есть
+                // Убирание эффектов
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
-                //
-                EffectComponent effectComponentTarget = playerTarget.getComponent(EFFECT_COMPONENT);
-                Double amplifierHealth = effectComponentTarget.getAmplifiers().get(ModEffects.REGENERATION_HEALTH.getId());
-                if (amplifierHealth != null && amplifierHealth == ((double) 390 / 260) + ERROR) {
-                    playerTarget.removeStatusEffect(ModEffects.REGENERATION_HEALTH);
-                }
-                Double amplifierMana = effectComponentTarget.getAmplifiers().get(ModEffects.REGENERATION_MANA.getId());
-                if (amplifierMana != null && amplifierMana == ((double) 150 / 500) + ERROR) {
-                    playerTarget.removeStatusEffect(ModEffects.REGENERATION_MANA);
-                }
+                playerTarget.removeStatusEffect(ModEffects.REGENERATION_HEALTH);
+                playerTarget.removeStatusEffect(ModEffects.REGENERATION_MANA);
                 return ActionResult.SUCCESS;
             }
         }
