@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -34,10 +35,10 @@ public class Mango extends Item implements CustomItem {
         ItemStack stack = user.getStackInHand(hand);
 
         // Выполняем поиск сущности, на которую смотрит игрок
-        EntityHitResult entityHitResult = (EntityHitResult) user.raycast(5.0D, 0.0F, false);
+        HitResult HitResult = user.raycast(5.0D, 0.0F, false);
 
-        if (entityHitResult != null && entityHitResult.getEntity() instanceof PlayerEntity targetPlayer) {
-            applyEffects(targetPlayer); // Применяем эффекты на игрока, на которого смотрят
+        if (HitResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof PlayerEntity playerTarget) {
+            applyEffects(playerTarget); // Применяем эффекты на игрока, на которого смотрят
         } else {
             // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
             applyEffects(user);
