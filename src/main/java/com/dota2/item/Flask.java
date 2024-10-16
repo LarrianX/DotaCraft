@@ -3,6 +3,7 @@ package com.dota2.item;
 import com.dota2.component.EffectComponent;
 import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -12,7 +13,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Optional;
 
 import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
@@ -28,14 +34,34 @@ public class Flask extends Item implements CustomItem {
         // Получаем стак, который игрок держит в руке
         ItemStack stack = user.getStackInHand(hand);
 
-        // Выполняем поиск сущности, на которую смотрит игрок
-        HitResult HitResult = user.raycast(5.0D, 0.0F, false);
+        // Максимальная дистанция, на которую игрок может взаимодействовать с сущностями
+        double reachDistance = 5.0D;
 
-        if (HitResult instanceof EntityHitResult entityHitResult && entityHitResult.getEntity() instanceof PlayerEntity playerTarget) {
-            applyEffects(playerTarget); // Применяем эффекты на игрока, на которого смотрят
+        // Выполняем raycast (луч) для поиска объекта, на который смотрит игрок
+        Vec3d cameraPos = user.getCameraPosVec(1.0F);
+        Vec3d lookVec = user.getRotationVec(1.0F);
+        Vec3d reachVec = cameraPos.add(lookVec.multiply(reachDistance));
+
+        // Поиск ближайшей сущности в пределах досягаемости
+        Entity targetedEntity = null;
+        List<Entity> entities = world.getEntitiesByClass(Entity.class, user.getBoundingBox().stretch(lookVec.multiply(reachDistance)).expand(1.0D), e -> e != user);
+
+        for (Entity entity : entities) {
+            Box entityBox = entity.getBoundingBox().expand(entity.getTargetingMargin());
+            Optional<Vec3d> optional = entityBox.raycast(cameraPos, reachVec);
+
+            if (entityBox.contains(cameraPos) || optional.isPresent()) {
+                targetedEntity = entity;
+                break;
+            }
+        }
+
+        if (targetedEntity instanceof PlayerEntity playerTarget) {
+            // Применяем эффекты на игрока, на которого смотрят
+            applyEffects(playerTarget, 0.5);
         } else {
             // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
-            applyEffects(user);
+            applyEffects(user, 1.0);
         }
 
         // Если игрок не в креативе - уменьшаем стак на один
@@ -48,17 +74,13 @@ public class Flask extends Item implements CustomItem {
         return TypedActionResult.success(stack);
     }
 
-    private void applyEffects(PlayerEntity user) {
+    private void applyEffects(PlayerEntity user, double multiplier) {
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 260, 0), null);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, (int) (260 * multiplier), 0), null);
         EffectComponent component = user.getComponent(EFFECT_COMPONENT);
         component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), ((double) 390 / 260) + ERROR); // погрешность
         component.sync();
     }
-
-
-
-
 
     @Override
     public String getId() {
