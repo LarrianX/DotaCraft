@@ -2,7 +2,8 @@
   "credit": "Made with Blockbench",
   "texture_size": [64, 64],
   "textures": {
-    "0": "dotacraft:item/demonedge"
+    "0": "dotacraft:item/demonedge",
+    "particle": "dotacraft:item/demonedge"
   },
   "elements": [
     {
@@ -1486,8 +1487,8 @@
       "scale": [0.8, 0.8, 0.8]
     },
     "gui": {
-      "rotation": [90, -45, 90],
-      "translation": [3.75, -3.75, 0],
+      "rotation": [90, -135, 90],
+      "translation": [-3.75, -3.75, 0],
       "scale": [0.64453, 0.64453, 0.64453]
     },
     "head": {
