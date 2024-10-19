@@ -5,7 +5,6 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.scoreboard.AbstractTeam;
-import net.minecraft.scoreboard.Team;
 
 import static com.dota2.component.ModComponents.HERO_COMPONENT;
 

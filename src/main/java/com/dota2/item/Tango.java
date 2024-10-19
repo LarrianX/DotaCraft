@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.DotaCraft;
 import com.dota2.component.EffectComponent;
 import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -19,12 +20,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.item.ModItems.TANGO_TF;
 
 public class Tango extends Item implements CustomItem {
     public static final String FULLNESS_KEY = "fullness";
     public static final int MAX_FULLNESS = 3;
-    public static final String TIMER_KEY = "timer";
-    public static final int TIMER_TIME = 300;
     private static final String ID = "tango";
 
     public Tango() {
@@ -41,14 +41,26 @@ public class Tango extends Item implements CustomItem {
         nbt.putInt(FULLNESS_KEY, fullness);
     }
 
-    public static int getTimer(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(TIMER_KEY);
+    public static void removeTree(World world, BlockPos pos) {
+        // Проверка, является ли блок древесиной
+        if (world.getBlockState(pos).getBlock() == Blocks.OAK_LOG || world.getBlockState(pos).getBlock() == Blocks.OAK_LEAVES) {
+            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+
+            // Рекурсивный вызов для проверки всех соседних блоков
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = pos.offset(direction);
+                removeTree(world, neighborPos);
+            }
+        }
     }
 
-    public static void setTimer(ItemStack stack, int time) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(TIMER_KEY, time);
+    public static void applyEffects(PlayerEntity user) {
+        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
+        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
+
+        EffectComponent component = user.getComponent(EFFECT_COMPONENT);
+        component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), 0.35 + ERROR);
+        component.sync();
     }
 
     @Override
@@ -58,15 +70,6 @@ public class Tango extends Item implements CustomItem {
 
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
             setFullness(stack, MAX_FULLNESS);
-        }
-
-        if (!nbt.contains(TIMER_KEY)) {
-            setTimer(stack, TIMER_TIME);
-        } else if (getTimer(stack) == 0) {
-            setTimer(stack, TIMER_TIME);
-            updateStack(stack);
-        } else {
-//            setTimer(stack, getTimer(stack) - 1);
         }
     }
 
@@ -80,45 +83,26 @@ public class Tango extends Item implements CustomItem {
             return TypedActionResult.fail(stack);
         }
 
-        // Проверка, на что нацелился игрок (дерево)
-        BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);
-        if (hitResult.getType() == BlockHitResult.Type.BLOCK && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.OAK_LOG) {
+        // Проверка, на что нацелился игрок
+        Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
+        if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
+            playerTarget.giveItemStack(new ItemStack(TANGO_TF, TANGO_TF.getMaxCount()));
+            updateStack(stack);
+        } else {
+            BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);
+            if (hitResult.getType() == BlockHitResult.Type.BLOCK && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.OAK_LOG) {
+                removeTree(world, hitResult.getBlockPos());
+                applyEffects(user);
 
-            // Удаление всего дерева
-            removeTree(world, hitResult.getBlockPos());
+                if (!user.isCreative()) {
+                    updateStack(stack);
+                }
 
-            applyEffects(user);
-
-            if (!user.isCreative()) {
-                updateStack(stack);
+                return TypedActionResult.success(stack);
             }
-
-            return TypedActionResult.success(stack);
         }
 
         return TypedActionResult.fail(stack);
-    }
-
-    private void removeTree(World world, BlockPos pos) {
-        // Проверка, является ли блок древесиной
-        if (world.getBlockState(pos).getBlock() == Blocks.OAK_LOG || world.getBlockState(pos).getBlock() == Blocks.OAK_LEAVES) {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-
-            // Рекурсивный вызов для проверки всех соседних блоков
-            for (Direction direction : Direction.values()) {
-                BlockPos neighborPos = pos.offset(direction);
-                removeTree(world, neighborPos);
-            }
-        }
-    }
-
-    private void applyEffects(PlayerEntity user) {
-        user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
-
-        EffectComponent component = user.getComponent(EFFECT_COMPONENT);
-        component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), 0.35 + ERROR);
-        component.sync();
     }
 
     private void updateStack(ItemStack stack) {

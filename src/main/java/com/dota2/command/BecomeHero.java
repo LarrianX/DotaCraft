@@ -98,7 +98,7 @@ public class BecomeHero {
                 // Временно: показ в amplifiers к какой команде вы принадлежите
                 EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
                 effectComponent.getAmplifiers().put(teamName, 1.0);
-                effectComponent.sync();;
+                effectComponent.sync();
             }
         }
         return 1;

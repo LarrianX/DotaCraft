@@ -31,7 +31,6 @@ public class SetEffects {
             }
         }
     }
-
     private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS = (context, builder) -> {
         for (String effect : IDS) {
             builder.suggest(effect);

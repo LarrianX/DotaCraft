@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.DotaCraft;
 import com.dota2.component.EffectComponent;
 import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -11,14 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.List;
-import java.util.Optional;
 
 import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
 
@@ -35,28 +29,9 @@ public class Flask extends Item implements CustomItem {
         ItemStack stack = user.getStackInHand(hand);
 
         // Максимальная дистанция, на которую игрок может взаимодействовать с сущностями
-        double reachDistance = 5.0D;
+        Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
 
-        // Выполняем raycast (луч) для поиска объекта, на который смотрит игрок
-        Vec3d cameraPos = user.getCameraPosVec(1.0F);
-        Vec3d lookVec = user.getRotationVec(1.0F);
-        Vec3d reachVec = cameraPos.add(lookVec.multiply(reachDistance));
-
-        // Поиск ближайшей сущности в пределах досягаемости
-        Entity targetedEntity = null;
-        List<Entity> entities = world.getEntitiesByClass(Entity.class, user.getBoundingBox().stretch(lookVec.multiply(reachDistance)).expand(1.0D), e -> e != user);
-
-        for (Entity entity : entities) {
-            Box entityBox = entity.getBoundingBox().expand(entity.getTargetingMargin());
-            Optional<Vec3d> optional = entityBox.raycast(cameraPos, reachVec);
-
-            if (entityBox.contains(cameraPos) || optional.isPresent()) {
-                targetedEntity = entity;
-                break;
-            }
-        }
-
-        if (targetedEntity instanceof PlayerEntity playerTarget) {
+        if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
             // Применяем эффекты на игрока, на которого смотрят
             applyEffects(playerTarget, 0.5);
         } else {
