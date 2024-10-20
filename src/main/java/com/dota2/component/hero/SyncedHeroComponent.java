@@ -19,7 +19,7 @@ public class SyncedHeroComponent implements HeroComponent, ServerTickingComponen
 
     @Override
     public void sync() {
-        HERO_COMPONENT.sync(this.provider);
+        provider.syncComponent(HERO_COMPONENT);
     }
 
     @Override

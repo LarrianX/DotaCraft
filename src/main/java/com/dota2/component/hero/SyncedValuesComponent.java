@@ -1,11 +1,11 @@
 package com.dota2.component.hero;
 
-import com.dota2.component.ModComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
 import static com.dota2.component.ModComponents.MAX_VALUES_COMPONENT;
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public class SyncedValuesComponent implements ValuesComponent, AutoSyncedComponent {
     private final PlayerEntity provider;
@@ -26,10 +26,10 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     public void sync() {
         if (
                 this.cache.isEmpty() ||
-                        this.cache.getDouble("mana") != this.mana ||
-                        this.cache.getDouble("health") != this.health
+                this.cache.getDouble("mana") != this.mana ||
+                this.cache.getDouble("health") != this.health
         ) {
-            ModComponents.VALUES_COMPONENT.sync(this.provider);
+            provider.syncComponent(VALUES_COMPONENT);
             writeToNbt(this.cache);
         }
     }
