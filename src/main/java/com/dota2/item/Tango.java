@@ -80,7 +80,13 @@ public class Tango extends Item implements CustomItem {
         // Проверка, на что нацелился игрок
         Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
         if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
-            playerTarget.giveItemStack(new ItemStack(TANGO_TF, TANGO_TF.getMaxCount()));
+
+            NbtCompound tgTangoNbt = new NbtCompound();
+            ItemStack tfTango = new ItemStack(TANGO_TF);
+            tgTangoNbt.putLong("time", world.getTime());
+            tfTango.setNbt(tgTangoNbt);
+
+            playerTarget.giveItemStack(tfTango);
             updateStack(stack);
         } else {
             BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);

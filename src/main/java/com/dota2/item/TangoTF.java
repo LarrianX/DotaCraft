@@ -23,30 +23,29 @@ public class TangoTF extends Item implements CustomItem {
         super(new FabricItemSettings().maxCount(1));
     }
 
-//    @Override
-//    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-//        super.inventoryTick(stack, world, entity, slot, selected);
-//
-//        // Получаем текущее время в тиках и записываем его в предмет
-//        long worldTime = stack.getOrCreateNbt().getLong("time");
-//        long newWorldTime = world.getTime();
-//
-//        int tickTime = (int) (newWorldTime - worldTime);
-//        int time = tickTime / 20;
-//
-//        if (entity.isPlayer()) {
-//            PlayerEntity player = (PlayerEntity) entity;
-//            if (player.getStackInHand(player.getActiveHand()) == stack) {
-//                MinecraftClient mc = MinecraftClient.getInstance();
-//                mc.inGameHud.setOverlayMessage(Text.of(String.valueOf(time)), false);
-//            }
-//        }
-//
-//        // Проверяем, прошло ли 20 тиков (1 секунда)
-//        if (tickTime > 800) {
-//            stack.decrement(1);
-//        }
-//    }
+    @Override
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, world, entity, slot, selected);
+
+        //Получаем время и отображаем пользователю
+        long worldTime = stack.getOrCreateNbt().getLong("time");
+
+        int tickTime = (int) (world.getTime() - worldTime);
+        int timeLeft = 40 - (tickTime / 20);
+
+        if (entity.isPlayer()) {
+            PlayerEntity player = (PlayerEntity) entity;
+            if (player.getStackInHand(player.getActiveHand()) == stack) {
+                MinecraftClient mc = MinecraftClient.getInstance();
+                mc.inGameHud.setOverlayMessage(Text.translatable("text.dotacraft.tango_timer", timeLeft), false);
+            }
+        }
+
+        // Проверяем, прошло ли 20 тиков (1 секунда)
+        if (tickTime > 800) {
+            stack.decrement(1);
+        }
+    }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
