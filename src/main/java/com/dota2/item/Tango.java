@@ -30,13 +30,11 @@ public class Tango extends Item implements CustomItem {
     }
 
     public static int getFullness(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(FULLNESS_KEY);
+        return stack.getOrCreateNbt().getInt(FULLNESS_KEY);
     }
 
     public static void setFullness(ItemStack stack, int fullness) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(FULLNESS_KEY, fullness);
+        stack.getOrCreateNbt().putInt(FULLNESS_KEY, fullness);
     }
 
     public static void removeTree(World world, BlockPos pos) {
@@ -80,13 +78,8 @@ public class Tango extends Item implements CustomItem {
         // Проверка, на что нацелился игрок
         Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
         if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
-
-            NbtCompound tgTangoNbt = new NbtCompound();
-            ItemStack tfTango = new ItemStack(TANGO_TF);
-            tgTangoNbt.putLong("time", world.getTime());
-            tfTango.setNbt(tgTangoNbt);
-
-            playerTarget.giveItemStack(tfTango);
+            playerTarget.giveItemStack(new ItemStack(TANGO_TF, 1));
+            user.getItemCooldownManager().set(this, 10);
             updateStack(stack);
         } else {
             BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);
