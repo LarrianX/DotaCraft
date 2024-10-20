@@ -1,26 +1,21 @@
 package com.dota2.effect;
 
 import com.dota2.Custom;
-import com.dota2.component.EffectComponent;
-import com.dota2.component.hero.ValuesComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.player.PlayerEntity;
-
-import java.util.Map;
-
-import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
-import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 public abstract class CustomEffect extends StatusEffect implements Custom {
-    protected CustomEffect(StatusEffectCategory category, int color) {
+    private final boolean persistent;
+
+    protected CustomEffect(StatusEffectCategory category, int color, boolean persistent) {
         super(category, color);
+        this.persistent = persistent;
     }
 
-    protected double getAmplifier(Map<String, Double> amplifiers, int amplifier) {
-        return amplifiers.getOrDefault(getId(), (double) amplifier + 1);
+    public boolean isPersistent() {
+        return persistent;
     }
 
     @Override
@@ -30,14 +25,6 @@ public abstract class CustomEffect extends StatusEffect implements Custom {
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        if (entity instanceof PlayerEntity player) {
-            EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
-            effectComponent.getAmplifiers().remove(getId());
-            effectComponent.sync();
-            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
-            valuesComponent.sync();
-        }
-
         super.onRemoved(entity, attributes, amplifier);
     }
 }

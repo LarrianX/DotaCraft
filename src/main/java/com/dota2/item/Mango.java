@@ -1,8 +1,10 @@
 package com.dota2.item;
 
+import com.dota2.DotaCraft;
 import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.ValuesComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -26,18 +28,30 @@ public class Mango extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Воспроизводим нужные действия
-        applyEffects(user);
-        // Получаем стак, и уменьшаем его на один
+        // Получаем стак, который игрок держит в руке
         ItemStack stack = user.getStackInHand(hand);
-        // Если человек не в креативе - уменьшаем стак на один
-        if (!user.isCreative()) {
-            stack.decrement(1);
-//            user.getItemCooldownManager().set(this, 10);
+
+        // Максимальная дистанция, на которую игрок может взаимодействовать с сущностями
+        Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
+
+        if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
+            // Применяем эффекты на игрока, на которого смотрят
+            applyEffects(playerTarget);
+        } else {
+            // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
+            applyEffects(user);
         }
+
+        // Если игрок не в креативе - уменьшаем стак на один
+        if (!user.isCreative()) {
+            user.getItemCooldownManager().set(this, 10);
+            stack.decrement(1);
+        }
+
         // Успех
         return TypedActionResult.success(stack);
     }
+
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты

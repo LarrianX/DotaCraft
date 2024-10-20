@@ -14,10 +14,15 @@
   "item.dotacraft.boots_of_speed": "Boots of Speed",
   "item.dotacraft.rec_daedalus": "Recipe of Daedalus",
   "item.dotacraft.demonedge": "Demon Edge",
+  "item.dotacraft.tango_tf": "Tango(transferred)",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Portal",
   "block.dotacraft.pressure_plate": "Pressure Plate",
-  "effect.dotacraft.regeneration_mana": "Regeneration of mana",
-  "effect.dotacraft.regeneration_health": "Regeneration of health",
-  "attribute.name.generic.crit_chance": "Chance of critical damage"
+  "effect.dotacraft.bottle_regeneration_mana": "Regeneration of mana",
+  "effect.dotacraft.clarity_regeneration_mana": "Regeneration of mana",
+  "effect.dotacraft.bottle_regeneration_health": "Regeneration of health",
+  "effect.dotacraft.flask_regeneration_health": "Regeneration of health",
+  "effect.dotacraft.tango_regeneration_health": "Regeneration of health",
+  "attribute.name.generic.crit_chance": "Chance of critical damage",
+  "text.dotacraft.tango_timer": "%d left"
 }
