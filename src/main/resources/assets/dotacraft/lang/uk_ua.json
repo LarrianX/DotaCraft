@@ -23,6 +23,6 @@
   "effect.dotacraft.bottle_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.flask_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.tango_regeneration_health": "Регенерація здоров'я",
-  "attribute.name.generic.crit_chance": "Шанс критического удара",
+  "attribute.name.generic.crit_chance": "Шанс критичного удару",
   "text.dotacraft.tango_timer": "Залишилося %d"
 }
