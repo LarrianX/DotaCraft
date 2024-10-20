@@ -25,24 +25,20 @@ public class Bottle extends Item implements CustomItem {
     }
 
     public static int getFullness(ItemStack stack) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        return nbt.getInt(FULLNESS_KEY);
+        return stack.getOrCreateNbt().getInt(FULLNESS_KEY);
     }
 
     public static void setFullness(ItemStack stack, int fullness) {
-        NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putInt(FULLNESS_KEY, fullness);
+        stack.getOrCreateNbt().putInt(FULLNESS_KEY, fullness);
     }
 
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
-        // inventoryTick - функция вызывается каждый тик в инвентаре
         super.inventoryTick(stack, world, entity, slot, selected);
-        // Получаем nbt из стака
         NbtCompound nbt = stack.getOrCreateNbt();
-        // Если у предмета нет в nbt нашего fullness - создаём fullness и ставим максимум
+
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
-            nbt.putInt(FULLNESS_KEY, MAX_FULLNESS);
+            setFullness(stack, MAX_FULLNESS);
         }
     }
 

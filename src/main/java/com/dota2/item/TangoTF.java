@@ -15,34 +15,46 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
 public class TangoTF extends Item implements CustomItem {
-
     private static final String ID = "tango_tf";
-
+    private static final String TIME_KEY = "time";
+    private static final int TIME = 800;
 
     public TangoTF() {
         super(new FabricItemSettings().maxCount(1));
     }
 
+    public long getTime(ItemStack stack) {
+        return stack.getOrCreateNbt().getLong(TIME_KEY);
+    }
+
+    public void setTime(ItemStack stack, long time) {
+        stack.getOrCreateNbt().putLong(TIME_KEY, time);
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
+        NbtCompound nbt = stack.getOrCreateNbt();
 
-        //Получаем время и отображаем пользователю
-        long worldTime = stack.getOrCreateNbt().getLong("time");
+        long worldTime = world.getTime();
+        if (!nbt.contains(TIME_KEY)) {
+            setTime(stack, worldTime);
+        }
+        long startTime = getTime(stack);
 
-        int tickTime = (int) (world.getTime() - worldTime);
-        int timeLeft = 40 - (tickTime / 20);
+        int tickPassed = (int) (world.getTime() - startTime);
+        int secondsLeft = (TIME / 20) - (tickPassed / 20);
 
         if (entity.isPlayer()) {
             PlayerEntity player = (PlayerEntity) entity;
             if (player.getStackInHand(player.getActiveHand()) == stack) {
                 MinecraftClient mc = MinecraftClient.getInstance();
-                mc.inGameHud.setOverlayMessage(Text.translatable("text.dotacraft.tango_timer", timeLeft), false);
+                mc.inGameHud.setOverlayMessage(Text.translatable("text.dotacraft.tango_timer", secondsLeft), false);
             }
         }
 
         // Проверяем, прошло ли 20 тиков (1 секунда)
-        if (tickTime > 800) {
+        if (tickPassed > TIME) {
             stack.decrement(1);
         }
     }
