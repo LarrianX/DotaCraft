@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.util.InventoryUtils;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -46,17 +47,17 @@ public class TangoTF extends Item implements CustomItem {
             stack.decrement(1);
         }
     }
-
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
 
         // Проверка, на что нацелился игрок (дерево)
-        BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);
+        BlockHitResult hitResult = (BlockHitResult) player.raycast(5.0D, 0.0F, false);
         if (hitResult.getType() == BlockHitResult.Type.BLOCK && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.OAK_LOG) {
 
             Tango.removeTree(world, hitResult.getBlockPos());
-            Tango.applyEffects(user);
+            Tango.applyEffects(player);
+            player.getInventory().removeStack(InventoryUtils.getFirstInventoryIndex(player.getInventory(), ModItems.TANGO_TF));
 
             return TypedActionResult.success(stack);
         }

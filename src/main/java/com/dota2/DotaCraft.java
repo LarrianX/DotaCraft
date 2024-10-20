@@ -7,6 +7,7 @@ import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.ValuesComponent;
 import com.dota2.effect.CustomEffect;
 import com.dota2.effect.ModEffects;
+import com.dota2.event.ModEvents;
 import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
 import com.dota2.item.Weapon;
@@ -147,6 +148,7 @@ public class DotaCraft implements ModInitializer {
     public void onInitialize() {
         ModItems.registerModItems();
         ModBlocks.registerModBlocks();
+        ModEvents.AllowDamage();
         ModItemGroups.registerItemGroups();
         ModEffects.registerModEffects();
         ModCommands.registerModCommands();
