@@ -77,8 +77,6 @@ public class DotaCraft implements ModInitializer {
                 }
                 // Убирание эффектов
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
-                playerTarget.removeStatusEffect(ModEffects.REGENERATION_HEALTH);
-                playerTarget.removeStatusEffect(ModEffects.REGENERATION_MANA);
                 return ActionResult.SUCCESS;
             }
         }

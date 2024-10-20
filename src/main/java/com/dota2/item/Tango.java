@@ -1,8 +1,6 @@
 package com.dota2.item;
 
 import com.dota2.DotaCraft;
-import com.dota2.component.EffectComponent;
-import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -19,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.effect.ModEffects.TANGO_REGENERATION_HEALTH;
 import static com.dota2.item.ModItems.TANGO_TF;
 
 public class Tango extends Item implements CustomItem {
@@ -56,11 +54,7 @@ public class Tango extends Item implements CustomItem {
 
     public static void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_GRASS_BREAK, 1.0F, 1.0F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_HEALTH, 320, 0), null);
-
-        EffectComponent component = user.getComponent(EFFECT_COMPONENT);
-        component.getAmplifiers().put(ModEffects.REGENERATION_HEALTH.getId(), 0.35 + ERROR);
-        component.sync();
+        user.setStatusEffect(new StatusEffectInstance(TANGO_REGENERATION_HEALTH, 320, 0), null);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     public void sync() {
         if (
                 this.cache.isEmpty() ||
-                this.cache.getDouble("mana") != this.mana ||
-                this.cache.getDouble("health") != this.health
+                        this.cache.getDouble("mana") != this.mana ||
+                        this.cache.getDouble("health") != this.health
         ) {
             provider.syncComponent(VALUES_COMPONENT);
             writeToNbt(this.cache);
