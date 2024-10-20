@@ -18,7 +18,10 @@
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Порталъ",
   "block.dotacraft.pressure_plate": "Нажимная плита",
-  "effect.dotacraft.regeneration_mana": "Регенерація маны",
-  "effect.dotacraft.regeneration_health": "Регенерація здоровья",
+  "effect.dotacraft.bottle_regeneration_mana":  "Регенерація маны",
+  "effect.dotacraft.clarity_regeneration_mana": "Регенерація маны",
+  "effect.dotacraft.bottle_regeneration_health": "Регенерація здоровья",
+  "effect.dotacraft.flask_regeneration_health":  "Регенерація здоровья",
+  "effect.dotacraft.tango_regeneration_health":  "Регенерація здоровья",
   "attribute.name.generic.crit_chance": "Шансъ критическаго удара"
 }

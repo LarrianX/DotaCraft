@@ -1,18 +1,25 @@
 package com.dota2.effect;
 
 import com.dota2.DotaCraft;
+import com.dota2.effect.item.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEffects {
-    public static final RegenerationMana REGENERATION_MANA = new RegenerationMana();
-    public static final RegenerationHealth REGENERATION_HEALTH = new RegenerationHealth();
+    public static final StatusEffect BOTTLE_REGENERATION_HEALTH = new BottleRegenerationHealth();
+    public static final StatusEffect BOTTLE_REGENERATION_MANA = new BottleRegenerationMana();
+    public static final StatusEffect CLARITY_REGENERATION_MANA = new ClarityRegenerationMana();
+    public static final StatusEffect FLASK_REGENERATION_HEALTH = new FlaskRegenerationHealth();
+    public static final StatusEffect TANGO_REGENERATION_HEALTH = new TangoRegenerationHealth();
 
     public static final StatusEffect[] EFFECTS = {
-            REGENERATION_MANA,
-            REGENERATION_HEALTH
+            BOTTLE_REGENERATION_HEALTH,
+            BOTTLE_REGENERATION_MANA,
+            CLARITY_REGENERATION_MANA,
+            FLASK_REGENERATION_HEALTH,
+            TANGO_REGENERATION_HEALTH
     };
 
     private static void registerEffects() {

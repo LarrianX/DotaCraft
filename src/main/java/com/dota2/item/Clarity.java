@@ -1,8 +1,6 @@
 package com.dota2.item;
 
 import com.dota2.DotaCraft;
-import com.dota2.component.EffectComponent;
-import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -14,7 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.dota2.component.ModComponents.EFFECT_COMPONENT;
+import static com.dota2.effect.ModEffects.CLARITY_REGENERATION_MANA;
 
 public class Clarity extends Item implements CustomItem {
     private static final String ID = "clarity";
@@ -51,10 +49,7 @@ public class Clarity extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-        user.setStatusEffect(new StatusEffectInstance(ModEffects.REGENERATION_MANA, 500, 0), null);
-        EffectComponent component = user.getComponent(EFFECT_COMPONENT);
-        component.getAmplifiers().put(ModEffects.REGENERATION_MANA.getId(), ((double) 150 / 500) + ERROR); // погрешность
-        component.sync();
+        user.setStatusEffect(new StatusEffectInstance(CLARITY_REGENERATION_MANA, 500, 0), null);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.dota2.block.ModBlocks;
 import com.dota2.command.ModCommands;
 import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.ValuesComponent;
+import com.dota2.effect.CustomEffect;
 import com.dota2.effect.ModEffects;
 import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
@@ -16,6 +17,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -34,6 +37,7 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -77,8 +81,13 @@ public class DotaCraft implements ModInitializer {
                 }
                 // Убирание эффектов
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
-                playerTarget.removeStatusEffect(ModEffects.REGENERATION_HEALTH);
-                playerTarget.removeStatusEffect(ModEffects.REGENERATION_MANA);
+                Collection<StatusEffectInstance> effects = playerTarget.getStatusEffects();
+                for (StatusEffectInstance effectInstance : effects) {
+                    if (effectInstance.getEffectType() instanceof CustomEffect effect &&
+                        !effect.isPersistent()) {
+                        playerTarget.removeStatusEffect(effect);
+                    }
+                }
                 return ActionResult.SUCCESS;
             }
         }
