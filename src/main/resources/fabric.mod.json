@@ -5,9 +5,10 @@
   "name": "DotaCraft",
   "description": "Мод переносящий Dota 2 в Minecraft",
   "authors": [
-    "LarrianX",
-    "Youlday",
-    "Nuklon"
+    "LarrianX - code",
+    "MrTime4ik - code",
+    "Youlday - idea",
+    "Nuklon - sprite artist"
   ],
   "contact": {
     "sources": "https://github.com/LarrianX/DotaCraft"
