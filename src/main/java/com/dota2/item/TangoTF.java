@@ -59,6 +59,7 @@ public class TangoTF extends Item implements CustomItem {
             stack.decrement(1);
         }
     }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
