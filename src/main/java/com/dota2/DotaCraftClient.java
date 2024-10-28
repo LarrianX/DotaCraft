@@ -5,7 +5,11 @@ import com.dota2.item.CustomItem;
 import com.dota2.item.Predicate;
 import com.dota2.item.TangoPredicate;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.player.PlayerEntity;
 import org.slf4j.Logger;
 
 public class DotaCraftClient implements ClientModInitializer {
