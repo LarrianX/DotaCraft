@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.component.hero.ValuesComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,10 +10,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import static com.dota2.component.ModComponents.VALUES_COMPONENT;
+
 
 public class ShadowBlade extends Weapon implements CustomItem {
     private static final String ID = "shadowblade";
     private static final int DAMAGE = 25;
+    private static final int MINUS_MANA = 75;
 
     public ShadowBlade() {
         super(DAMAGE);
@@ -22,20 +26,22 @@ public class ShadowBlade extends Weapon implements CustomItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
-        // Применяем эффекты
-        applyEffects(user);
-
-        // Устанавливаем кулдаун на 25 секунд для выживача (500 тиков)
-        if (!user.isCreative()) {
-            user.getItemCooldownManager().set(this, 500);
+        ValuesComponent valuesComponent = user.getComponent(VALUES_COMPONENT);
+        if (valuesComponent.getMana() >= MINUS_MANA || user.isCreative()) {
+            if (!user.isCreative()) {
+                valuesComponent.addMana(-MINUS_MANA);
+                user.getItemCooldownManager().set(this, 500);
+            }
+            // Применяем эффекты
+            applyEffects(user);
+            return TypedActionResult.success(stack);
+        } else {
+            return TypedActionResult.fail(stack);
         }
-
-        return TypedActionResult.success(stack);
     }
 
     private void applyEffects(PlayerEntity user) {
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-
         // Создаем эффект невидимости без частиц
         StatusEffectInstance invisibilityEffect = new StatusEffectInstance(
                 StatusEffects.INVISIBILITY, 340, 0, false, false
