@@ -9,11 +9,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.OverlayMessageS2CPacket;
+import net.minecraft.server.command.TitleCommand;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.text.Texts;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
+
+import java.util.function.Function;
 
 public class TangoTF extends Item implements CustomItem {
     private static final String ID = "tango_tf";
@@ -46,11 +53,10 @@ public class TangoTF extends Item implements CustomItem {
         int tickPassed = (int) (world.getTime() - startTime);
         int secondsLeft = (TIME / 20) - (tickPassed / 20);
 
-        if (entity.isPlayer()) {
-            PlayerEntity player = (PlayerEntity) entity;
+        if (!world.isClient && entity instanceof ServerPlayerEntity player) {
+            // Проверяем, что игрок держит предмет в руке
             if (player.getStackInHand(player.getActiveHand()) == stack) {
-                MinecraftClient mc = MinecraftClient.getInstance();
-                mc.inGameHud.setOverlayMessage(Text.translatable("text.dotacraft.tango_timer", secondsLeft), false);
+                player.networkHandler.sendPacket(new OverlayMessageS2CPacket(Text.translatable("text.dotacraft.tango_timer", secondsLeft)));
             }
         }
 

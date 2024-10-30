@@ -18,18 +18,6 @@ public class InventoryUtils {
         return -1;
     }
 
-    public static int calculateDamage(PlayerEntity provider) {
-        int totalDamage = 0;
 
-        for (int i = 0; i < provider.getInventory().size(); i++) {
-            ItemStack stack = provider.getInventory().getStack(i);
-
-            if (stack.getItem() instanceof Weapon weapon) {
-                totalDamage += weapon.getDamage();
-            }
-        }
-
-        return totalDamage;
-    }
 
 }
