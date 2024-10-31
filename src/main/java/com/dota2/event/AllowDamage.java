@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import static com.dota2.component.ModComponents.HERO_COMPONENT;
 
 public class AllowDamage {
-    public static boolean allowDamage(LivingEntity entity, DamageSource source, float amount) {
+    public static boolean event(LivingEntity entity, DamageSource source, float amount) {
         if (entity instanceof PlayerEntity player && player.getComponent(HERO_COMPONENT).isHero()) {
             player.setHealth(20);
             player.setFireTicks(0);

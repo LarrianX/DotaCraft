@@ -4,7 +4,6 @@ import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.ValuesComponent;
 import com.dota2.effect.CustomEffect;
 import com.dota2.item.Weapon;
-import com.dota2.util.InventoryUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -38,7 +37,7 @@ public class AttackEntity {
         return totalDamage;
     }
 
-    public static ActionResult onAttackEntity(PlayerEntity playerSource, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
+    public static ActionResult event(PlayerEntity playerSource, World world, Hand hand, Entity entity, @Nullable EntityHitResult entityHitResult) {
         if (entity instanceof PlayerEntity playerTarget) {
             HeroComponent heroComponentSource = playerSource.getComponent(HERO_COMPONENT);
             HeroComponent heroComponentTarget = playerTarget.getComponent(HERO_COMPONENT);

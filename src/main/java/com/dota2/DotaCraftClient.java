@@ -1,21 +1,19 @@
 package com.dota2;
 
+import com.dota2.event.ModEvents;
 import com.dota2.item.BottlePredicate;
 import com.dota2.item.CustomItem;
 import com.dota2.item.Predicate;
 import com.dota2.item.TangoPredicate;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
 import org.slf4j.Logger;
 
 public class DotaCraftClient implements ClientModInitializer {
     public static final BottlePredicate BOTTLE_PREDICATE = new BottlePredicate();
     public static final TangoPredicate TANGO_PREDICATE = new TangoPredicate();
-    //
+    public static boolean wasRightClickPressedLastTick = false;
+
     public static final Predicate[] PREDICATES = {
             BOTTLE_PREDICATE,
             TANGO_PREDICATE
@@ -35,5 +33,6 @@ public class DotaCraftClient implements ClientModInitializer {
                 LOGGER.info("Registered predicate for {}", ((CustomItem) predicate.getItem()).getId());
             }
         }
+        ModEvents.registerClient();
     }
 }

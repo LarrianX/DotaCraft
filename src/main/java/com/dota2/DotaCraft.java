@@ -90,7 +90,7 @@ public class DotaCraft implements ModInitializer {
         ModEffects.registerModEffects();
         ModCommands.registerModCommands();
         ModAttributes.registerModAttributes();
-        ModEvents.registerEvents();
+        ModEvents.register();
         ServerLifecycleEvents.SERVER_STARTED.register(this::serverStarted);
     }
 }

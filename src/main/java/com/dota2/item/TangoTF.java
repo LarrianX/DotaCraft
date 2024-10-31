@@ -1,6 +1,5 @@
 package com.dota2.item;
 
-import com.dota2.util.InventoryUtils;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -76,7 +75,7 @@ public class TangoTF extends Item implements CustomItem {
 
             Tango.removeTree(world, hitResult.getBlockPos());
             Tango.applyEffects(player);
-            player.getInventory().removeStack(InventoryUtils.getFirstInventoryIndex(player.getInventory(), ModItems.TANGO_TF));
+            stack.decrement(1);
 
             return TypedActionResult.success(stack);
         }
