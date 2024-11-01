@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "0": "dotacraft:item/demonedge",
-    "particle": "dotacraft:item/demonedge"
+    "0": "dotacraft:item/demon_edge",
+    "particle": "dotacraft:item/demon_edge"
   },
   "elements": [
     {
