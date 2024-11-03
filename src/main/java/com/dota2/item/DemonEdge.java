@@ -1,7 +1,7 @@
 package com.dota2.item;
 
 public class DemonEdge extends Weapon implements CustomItem {
-    private static final String ID = "demonedge";
+    private static final String ID = "demon_edge";
     private static final int DAMAGE = 40;
 
     public DemonEdge() {
