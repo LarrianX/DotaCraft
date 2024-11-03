@@ -63,6 +63,6 @@ public class AttackEntity {
                 return ActionResult.SUCCESS;
             }
         }
-        return ActionResult.FAIL;
+        return ActionResult.PASS;
     }
 }
