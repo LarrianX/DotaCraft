@@ -5,11 +5,15 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 public class BottlePredicate implements Predicate {
-    private static final String ID = Bottle.FULLNESS_KEY;
+    private static final String ID = "state";
     private static final Item ITEM = ModItems.BOTTLE;
     private static final ClampedModelPredicateProvider PROVIDER = (stack, world, entity, seed) -> {
-        float value = (float) Bottle.getFullness(stack) / Bottle.MAX_FULLNESS;
-        return Math.round(value * 100.0f) / 100.0f;
+        Bottle.RUNE rune = Bottle.getRune(stack);
+        if (rune != null) {
+            return rune.getState();
+        } else {
+            return (float) Bottle.getFullness(stack) / 10;
+        }
     };
 
     @Override

@@ -16,8 +16,23 @@ import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_HEALTH;
 import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_MANA;
 
 public class Bottle extends Item implements CustomItem {
+    public enum RUNE {
+        SPEED(0.4F);
+
+        private final float STATE;
+
+        RUNE(float state) {
+            this.STATE = state;
+        }
+
+        public float getState() {
+            return this.STATE;
+        }
+    }
+
     public static final String FULLNESS_KEY = "fullness";
     public static final int MAX_FULLNESS = 3;
+    public static final String RUNE_KEY = "rune";
     private static final String ID = "bottle";
 
     public Bottle() {
@@ -32,6 +47,20 @@ public class Bottle extends Item implements CustomItem {
         stack.getOrCreateNbt().putInt(FULLNESS_KEY, fullness);
     }
 
+    public static RUNE getRune(ItemStack stack) {
+        String runeName = stack.getOrCreateNbt().getString(RUNE_KEY);
+
+        try {
+            return RUNE.valueOf(runeName);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    public static void setRune(ItemStack stack, RUNE rune) {
+        stack.getOrCreateNbt().putString(RUNE_KEY, rune.name());
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, net.minecraft.world.World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
@@ -39,6 +68,9 @@ public class Bottle extends Item implements CustomItem {
 
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
             setFullness(stack, MAX_FULLNESS);
+        }
+        if (!nbt.getString(RUNE_KEY).isEmpty() && getRune(stack) == null) {
+            nbt.remove(RUNE_KEY);
         }
     }
 
@@ -69,7 +101,6 @@ public class Bottle extends Item implements CustomItem {
 
     private void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
-
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(BOTTLE_REGENERATION_HEALTH, 54, 0), null);
         user.setStatusEffect(new StatusEffectInstance(BOTTLE_REGENERATION_MANA, 54, 0), null);
