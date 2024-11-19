@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -109,9 +108,10 @@ public class Bottle extends Item implements CustomItem {
                 setRune(stack, null);
                 setFullness(stack, MAX_FULLNESS);
                 user.getItemCooldownManager().set(this, 10);
-                return TypedActionResult.success(stack);
 
             }
+            return TypedActionResult.success(stack);
+
         }
         // Проверяем, достаточно ли fullness для выполнения действия
         if (fullness > 0) {
