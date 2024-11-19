@@ -1,5 +1,6 @@
 package com.dota2.item;
 
+import com.dota2.effect.ModEffects;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffect;
@@ -19,7 +20,7 @@ import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_MANA;
 
 public class Bottle extends Item implements CustomItem {
     public enum Rune {
-        SPEED(0.4F, StatusEffects.SPEED, 64);
+        SPEED(0.4F, ModEffects.RUNE_SPEED_EFFECT, 440);
 
         private final float state;
         private final StatusEffect effect;
@@ -44,10 +45,10 @@ public class Bottle extends Item implements CustomItem {
         }
     }
 
-    public static final String FULLNESS_KEY = "fullness";
-    public static final int MAX_FULLNESS = 3;
-    public static final String RUNE_KEY = "rune";
     private static final String ID = "bottle";
+    public static final String FULLNESS_KEY = "fullness";
+    public static final String RUNE_KEY = "rune";
+    public static final int MAX_FULLNESS = 3;
 
     public Bottle() {
         super(new FabricItemSettings().maxCount(1));
@@ -88,8 +89,8 @@ public class Bottle extends Item implements CustomItem {
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
             setFullness(stack, MAX_FULLNESS);
         }
-        if (getRune(stack) == null) {
-            nbt.remove(RUNE_KEY);
+        if (nbt.contains(RUNE_KEY) && getRune(stack) == null) {
+            setRune(stack, null);
         }
     }
 

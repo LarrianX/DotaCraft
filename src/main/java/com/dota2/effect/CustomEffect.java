@@ -22,9 +22,4 @@ public abstract class CustomEffect extends StatusEffect implements Custom {
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;
     }
-
-    @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        super.onRemoved(entity, attributes, amplifier);
-    }
 }
