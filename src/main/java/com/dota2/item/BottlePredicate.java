@@ -8,7 +8,7 @@ public class BottlePredicate implements Predicate {
     private static final String ID = "state";
     private static final Item ITEM = ModItems.BOTTLE;
     private static final ClampedModelPredicateProvider PROVIDER = (stack, world, entity, seed) -> {
-        Bottle.RUNE rune = Bottle.getRune(stack);
+        Bottle.Rune rune = Bottle.getRune(stack);
         if (rune != null) {
             return rune.getState();
         } else {

@@ -2,7 +2,9 @@ package com.dota2.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,17 +18,29 @@ import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_HEALTH;
 import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_MANA;
 
 public class Bottle extends Item implements CustomItem {
-    public enum RUNE {
-        SPEED(0.4F);
+    public enum Rune {
+        SPEED(0.4F, StatusEffects.SPEED, 64);
 
-        private final float STATE;
+        private final float state;
+        private final StatusEffect effect;
+        private final int duration;
 
-        RUNE(float state) {
-            this.STATE = state;
+        Rune(float state, StatusEffect effect, int duration) {
+            this.state = state;
+            this.effect = effect;
+            this.duration = duration;
         }
 
         public float getState() {
-            return this.STATE;
+            return this.state;
+        }
+
+        public StatusEffect getEffect() {
+            return this.effect;
+        }
+
+        public int getDuration() {
+            return this.duration;
         }
     }
 
@@ -47,18 +61,23 @@ public class Bottle extends Item implements CustomItem {
         stack.getOrCreateNbt().putInt(FULLNESS_KEY, fullness);
     }
 
-    public static RUNE getRune(ItemStack stack) {
+    public static Rune getRune(ItemStack stack) {
         String runeName = stack.getOrCreateNbt().getString(RUNE_KEY);
 
         try {
-            return RUNE.valueOf(runeName);
+            return Rune.valueOf(runeName);
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
 
-    public static void setRune(ItemStack stack, RUNE rune) {
-        stack.getOrCreateNbt().putString(RUNE_KEY, rune.name());
+    public static void setRune(ItemStack stack, Rune rune) {
+        NbtCompound nbt = stack.getOrCreateNbt();
+        if (rune != null) {
+            nbt.putString(RUNE_KEY, rune.name());
+        } else {
+            nbt.remove(RUNE_KEY);
+        }
     }
 
     @Override
@@ -69,7 +88,7 @@ public class Bottle extends Item implements CustomItem {
         if (!nbt.contains(FULLNESS_KEY) || nbt.getInt(FULLNESS_KEY) > MAX_FULLNESS) {
             setFullness(stack, MAX_FULLNESS);
         }
-        if (!nbt.getString(RUNE_KEY).isEmpty() && getRune(stack) == null) {
+        if (getRune(stack) == null) {
             nbt.remove(RUNE_KEY);
         }
     }
@@ -78,25 +97,35 @@ public class Bottle extends Item implements CustomItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
-        // Получаем NBT и значение fullness
-        NbtCompound nbt = stack.getOrCreateNbt();
-        int fullness = nbt.getInt(FULLNESS_KEY);
+        // Получаем значения fullness и rune
+        int fullness = getFullness(stack);
+        Rune rune = getRune(stack);
 
+        if (rune != null) {
+            user.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
+
+            if (!user.isCreative()) {
+                setRune(stack, null);
+                setFullness(stack, MAX_FULLNESS);
+                user.getItemCooldownManager().set(this, 10);
+                return TypedActionResult.success(stack);
+
+            }
+        }
         // Проверяем, достаточно ли fullness для выполнения действия
         if (fullness > 0) {
             // Если не в креативе, уменьшаем fullness на 1
             if (!user.isCreative()) {
-                nbt.putInt(FULLNESS_KEY, fullness - 1);
+                setFullness(stack, fullness - 1);
                 user.getItemCooldownManager().set(this, 10);
             }
             // Применяем эффекты
             applyEffects(user);
 
             return TypedActionResult.success(stack);
-        } else {
-            // Если fullness не достаточно, возвращаем неудачный результат
-            return TypedActionResult.fail(stack);
         }
+
+        return TypedActionResult.fail(stack);
     }
 
     private void applyEffects(PlayerEntity user) {
@@ -113,8 +142,8 @@ public class Bottle extends Item implements CustomItem {
 
     @Override
     public ItemStack getForTabItemGroup() {
-        ItemStack fullBottleStack = new ItemStack(this);
-        Bottle.setFullness(fullBottleStack, Bottle.MAX_FULLNESS);
-        return fullBottleStack;
+        ItemStack bottleStack = new ItemStack(this);
+        setFullness(bottleStack, MAX_FULLNESS);
+        return bottleStack;
     }
 }
