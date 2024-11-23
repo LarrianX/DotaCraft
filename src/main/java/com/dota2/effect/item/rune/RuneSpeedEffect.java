@@ -12,7 +12,7 @@ public class RuneSpeedEffect extends CustomEffect {
 
     public RuneSpeedEffect() {
         super(StatusEffectCategory.BENEFICIAL, 3402751, persistent);
-        addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "DDFA971E-9C93-451E-B015-2CCB3A3A4252", 0.02F, EntityAttributeModifier.Operation.MULTIPLY_TOTAL);
+        addAttributeModifier(EntityAttributes.GENERIC_MOVEMENT_SPEED, "DDFA971E-9C93-451E-B015-2CCB3A3A4252", 0.05F, EntityAttributeModifier.Operation.ADDITION);
     }
 
     @Override
