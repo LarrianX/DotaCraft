@@ -1,8 +1,11 @@
 package com.dota2.item;
 
+import com.dota2.DotaCraft;
 import com.dota2.effect.ModEffects;
+import com.dota2.item.rune.RuneItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,14 +21,14 @@ import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_HEALTH;
 import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_MANA;
 
 public class Bottle extends Item implements CustomItem {
-    public enum Rune {
+    public enum Runes {
         SPEED(0.4F, ModEffects.RUNE_SPEED_EFFECT, 440);
 
         private final float state;
         private final StatusEffect effect;
         private final int duration;
 
-        Rune(float state, StatusEffect effect, int duration) {
+        Runes(float state, StatusEffect effect, int duration) {
             this.state = state;
             this.effect = effect;
             this.duration = duration;
@@ -61,17 +64,17 @@ public class Bottle extends Item implements CustomItem {
         stack.getOrCreateNbt().putInt(FULLNESS_KEY, fullness);
     }
 
-    public static Rune getRune(ItemStack stack) {
+    public static Runes getRune(ItemStack stack) {
         String runeName = stack.getOrCreateNbt().getString(RUNE_KEY);
 
         try {
-            return Rune.valueOf(runeName);
+            return Runes.valueOf(runeName);
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
 
-    public static void setRune(ItemStack stack, Rune rune) {
+    public static void setRune(ItemStack stack, Runes rune) {
         NbtCompound nbt = stack.getOrCreateNbt();
         if (rune != null) {
             nbt.putString(RUNE_KEY, rune.name());
@@ -93,13 +96,31 @@ public class Bottle extends Item implements CustomItem {
         }
     }
 
+    private boolean checkRune(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
+        Entity targetedEntity = DotaCraft.getTargetedEntity(world, player, 5.0D);
+
+        if (targetedEntity instanceof ItemEntity itemEntity &&
+                itemEntity.getStack().getItem() instanceof RuneItem rune) {
+            setRune(stack, Runes.valueOf(rune.getType()));
+            itemEntity.kill();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
         // Получаем значения fullness и rune
         int fullness = getFullness(stack);
-        Rune rune = getRune(stack);
+        Runes rune = getRune(stack);
+        // Проверяем, можно ли захватить руну
+        if (rune == null && checkRune(world, user, hand)) {
+            return TypedActionResult.success(stack);
+        }
 
         if (rune != null) {
             user.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);

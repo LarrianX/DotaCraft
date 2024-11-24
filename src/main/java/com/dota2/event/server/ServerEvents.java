@@ -1,6 +1,7 @@
 package com.dota2.event.server;
 
 import com.dota2.DotaCraft;
+import com.dota2.item.rune.RuneItem;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -17,6 +18,7 @@ public class ServerEvents {
 
     public static void register() {
         ServerTickEvents.START_WORLD_TICK.register(DeleteTangoTF::event);
+        ServerTickEvents.START_WORLD_TICK.register(SetPickupDelay::event);
         ServerPlayNetworking.registerGlobalReceiver(REMOVE_ITEM_PACKET, ServerEvents::onRemoveItem);
     }
 
@@ -25,8 +27,11 @@ public class ServerEvents {
         // Получаем ID предмета, который нужно удалить
         int itemId = buf.readInt();
         ItemEntity itemEntity = (ItemEntity) player.getWorld().getEntityById(itemId);
+        ItemStack handStack = player.getInventory().getMainHandStack();
 
-        if (itemEntity != null && itemEntity.distanceTo(player) < 5) {
+        if (itemEntity != null && itemEntity.distanceTo(player) < 5 &&
+                !(handStack.getItem() instanceof RuneItem)) {
+            // подбор предмета
             ItemStack itemStack = itemEntity.getStack();
             boolean added = player.getInventory().insertStack(itemStack);
             if (added) {

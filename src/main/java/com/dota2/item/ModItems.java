@@ -1,6 +1,7 @@
 package com.dota2.item;
 
 import com.dota2.DotaCraft;
+import com.dota2.item.rune.RuneSpeed;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -23,6 +24,7 @@ public class ModItems {
     public static final DemonEdge DEMON_EDGE = new DemonEdge();
     public static final RecDaedalus REC_DAEDALUS = new RecDaedalus();
     public static final TangoTF TANGO_TF = new TangoTF();
+    public static final RuneSpeed RUNE_SPEED = new RuneSpeed();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -40,7 +42,8 @@ public class ModItems {
             RADIANCE,
             DEMON_EDGE,
             REC_DAEDALUS,
-            TANGO_TF
+            TANGO_TF,
+            RUNE_SPEED
     };
 
     private static void registerItems() {
