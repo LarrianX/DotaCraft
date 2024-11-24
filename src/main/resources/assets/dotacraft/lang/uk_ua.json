@@ -15,6 +15,7 @@
   "item.dotacraft.rec_daedalus": "Рецепт Дедала",
   "item.dotacraft.demon_edge": "Клинок демона",
   "item.dotacraft.tango_tf": "Танґо (передане)",
+  "item.dotacraft.rune_of_speed": "Руна поспішності",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Портал",
   "block.dotacraft.pressure_plate": "Натискна плита",
@@ -23,6 +24,7 @@
   "effect.dotacraft.bottle_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.flask_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.tango_regeneration_health": "Регенерація здоров'я",
+  "effect.dotacraft.rune_speed": "Поспішність",
   "attribute.name.generic.crit_chance": "Шанс критичного удару",
   "text.dotacraft.tango_timer": "Залишилося %d"
 }
