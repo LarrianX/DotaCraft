@@ -1,12 +1,12 @@
 package com.dota2.item;
 
 import com.dota2.DotaCraft;
-import com.dota2.effect.ModEffects;
 import com.dota2.item.rune.RuneItem;
+import com.dota2.rune.Rune;
+import com.dota2.rune.Runes;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -21,32 +21,6 @@ import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_HEALTH;
 import static com.dota2.effect.ModEffects.BOTTLE_REGENERATION_MANA;
 
 public class Bottle extends Item implements CustomItem {
-    public enum Runes {
-        SPEED(0.4F, ModEffects.RUNE_SPEED_EFFECT, 440);
-
-        private final float state;
-        private final StatusEffect effect;
-        private final int duration;
-
-        Runes(float state, StatusEffect effect, int duration) {
-            this.state = state;
-            this.effect = effect;
-            this.duration = duration;
-        }
-
-        public float getState() {
-            return this.state;
-        }
-
-        public StatusEffect getEffect() {
-            return this.effect;
-        }
-
-        public int getDuration() {
-            return this.duration;
-        }
-    }
-
     private static final String ID = "bottle";
     public static final String FULLNESS_KEY = "fullness";
     public static final String RUNE_KEY = "rune";
@@ -64,20 +38,20 @@ public class Bottle extends Item implements CustomItem {
         stack.getOrCreateNbt().putInt(FULLNESS_KEY, fullness);
     }
 
-    public static Runes getRune(ItemStack stack) {
+    public static Rune getRune(ItemStack stack) {
         String runeName = stack.getOrCreateNbt().getString(RUNE_KEY);
 
         try {
-            return Runes.valueOf(runeName);
+            return Runes.valueOf(runeName).getRune();
         } catch (IllegalArgumentException e) {
             return null;
         }
     }
 
-    public static void setRune(ItemStack stack, Runes rune) {
+    public static void setRune(ItemStack stack, Rune rune) {
         NbtCompound nbt = stack.getOrCreateNbt();
         if (rune != null) {
-            nbt.putString(RUNE_KEY, rune.name());
+            nbt.putString(RUNE_KEY, rune.getId());
         } else {
             nbt.remove(RUNE_KEY);
         }
@@ -102,7 +76,7 @@ public class Bottle extends Item implements CustomItem {
 
         if (targetedEntity instanceof ItemEntity itemEntity &&
                 itemEntity.getStack().getItem() instanceof RuneItem rune) {
-            setRune(stack, Runes.valueOf(rune.getType()));
+            setRune(stack, rune.getRune());
             itemEntity.kill();
             return true;
         } else {
@@ -116,7 +90,7 @@ public class Bottle extends Item implements CustomItem {
         ItemStack stack = user.getStackInHand(hand);
         // Получаем значения fullness и rune
         int fullness = getFullness(stack);
-        Runes rune = getRune(stack);
+        Rune rune = getRune(stack);
         // Проверяем, можно ли захватить руну
         if (rune == null && checkRune(world, user, hand)) {
             return TypedActionResult.success(stack);

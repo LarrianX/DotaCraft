@@ -2,7 +2,7 @@ package com.dota2.effect;
 
 import com.dota2.DotaCraft;
 import com.dota2.effect.item.*;
-import com.dota2.effect.item.rune.RuneSpeedEffect;
+import com.dota2.effect.rune.RuneSpeedEffect;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

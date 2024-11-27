@@ -3,7 +3,7 @@ package com.dota2.event.client;
 import com.dota2.DotaCraft;
 import com.dota2.DotaCraftClient;
 import com.dota2.event.server.ServerEvents;
-import com.dota2.item.rune.RuneItem;
+import com.dota2.rune.Rune;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -17,7 +17,7 @@ public class ClientClick {
         if (client.world != null && client.player != null) {
             Entity targetedEntity = DotaCraft.getTargetedEntity(client.world, client.player, 5.0D);
             if (targetedEntity instanceof ItemEntity itemEntity &&
-                    !(itemEntity.getStack().getItem() instanceof RuneItem)) {
+                    !(itemEntity.getStack().getItem() instanceof Rune)) {
                 if (client.player.getInventory().getEmptySlot() >= 0) {
                     client.player.sendMessage(Text.literal("ПКМ по предмету: " + itemEntity.getStack().getName().getString()), true);
                     PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());

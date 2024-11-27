@@ -1,10 +1,9 @@
-package com.dota2.effect.item.rune;
+package com.dota2.effect.rune;
 
 import com.dota2.effect.CustomEffect;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffects;
 
 public class RuneSpeedEffect extends CustomEffect {
     private static final String ID = "rune_speed";

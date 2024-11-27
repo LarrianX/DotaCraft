@@ -1,5 +1,7 @@
 package com.dota2.item;
 
+import com.dota2.rune.Rune;
+import com.dota2.rune.Runes;
 import net.minecraft.client.item.ClampedModelPredicateProvider;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -8,9 +10,9 @@ public class BottlePredicate implements Predicate {
     private static final String ID = "state";
     private static final Item ITEM = ModItems.BOTTLE;
     private static final ClampedModelPredicateProvider PROVIDER = (stack, world, entity, seed) -> {
-        Bottle.Runes rune = Bottle.getRune(stack);
+        Rune rune = Bottle.getRune(stack);
         if (rune != null) {
-            return rune.getState();
+            return Runes.valueOf(rune.getId()).getState();
         } else {
             return (float) Bottle.getFullness(stack) / 10;
         }
