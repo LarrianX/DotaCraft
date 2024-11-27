@@ -1,44 +1,52 @@
 package com.dota2.event.client;
 
 import com.dota2.DotaCraft;
-import com.dota2.DotaCraftClient;
 import com.dota2.event.server.ServerEvents;
 import com.dota2.rune.Rune;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
 
+@Environment(EnvType.CLIENT)
 public class ClientClick {
-    private static void handleRightClick(MinecraftClient client) {
+
+    public static void handleRightClick(MinecraftClient client) {
         if (client.world != null && client.player != null) {
-            Entity targetedEntity = DotaCraft.getTargetedEntity(client.world, client.player, 5.0D);
+            ClientPlayerEntity player = client.player;
+
+            // Получаем сущность, на которую смотрит игрок
+            Entity targetedEntity = DotaCraft.getTargetedEntity(client.world, player, 5.0D);
+
+            // Проверяем, что это ItemEntity, и исключаем руну
             if (targetedEntity instanceof ItemEntity itemEntity &&
                     !(itemEntity.getStack().getItem() instanceof Rune)) {
-                if (client.player.getInventory().getEmptySlot() >= 0) {
-                    client.player.sendMessage(Text.literal("ПКМ по предмету: " + itemEntity.getStack().getName().getString()), true);
+
+                // Проверяем, есть ли место в инвентаре
+                if (player.getInventory().getEmptySlot() >= 0) {
+                    // Отправляем сообщение игроку
+                    player.sendMessage(Text.literal("ПКМ по предмету: " + itemEntity.getStack().getName().getString()), true);
+
+                    // Создаем пакет для удаления предмета
                     PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-                    buffer.writeInt(itemEntity.getId()); // Записываем ID предмета
+                    buffer.writeInt(itemEntity.getId());
                     ClientPlayNetworking.send(ServerEvents.REMOVE_ITEM_PACKET, buffer);
+
+                    // Играем анимацию для руки
+                    ClientPlayerInteractionManager interactionManager = client.interactionManager;
+                    if (interactionManager != null) {
+                        interactionManager.interactItem(player, Hand.MAIN_HAND);
+                    }
                 }
             }
         }
-    }
-
-    // on end client tick
-    public static void event(MinecraftClient client) {
-        // Проверяем текущее состояние ПКМ
-        boolean isRightClickPressed = MinecraftClient.getInstance().options.useKey.isPressed();
-
-        // Если ПКМ нажата и раньше не была нажата
-        if (isRightClickPressed && !DotaCraftClient.wasRightClickPressedLastTick) {
-            handleRightClick(client);
-        }
-
-        // Обновляем состояние на предыдущем тике
-        DotaCraftClient.wasRightClickPressedLastTick = isRightClickPressed;
     }
 }
