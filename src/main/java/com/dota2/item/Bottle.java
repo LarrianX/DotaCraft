@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -70,8 +71,26 @@ public class Bottle extends Item implements CustomItem {
         }
     }
 
-    private boolean checkRune(World world, PlayerEntity player, Hand hand) {
+    public static boolean checkRune(World world, PlayerEntity player) {
+        PlayerInventory inventory = player.getInventory();
+        ItemStack targetStack = ModItems.BOTTLE.getDefaultStack();
+        if (inventory.contains(targetStack)) {
+            return checkRune(world, player, inventory.getStack(inventory.getSlotWithStack(targetStack)));
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean checkRune(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
+        if (stack.getItem().equals(ModItems.BOTTLE)) {
+            return checkRune(world, player, stack);
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean checkRune(World world, PlayerEntity player, ItemStack stack) {
         Entity targetedEntity = DotaCraft.getTargetedEntity(world, player, 5.0D);
 
         if (targetedEntity instanceof ItemEntity itemEntity &&
@@ -95,7 +114,7 @@ public class Bottle extends Item implements CustomItem {
         if (rune == null && checkRune(world, user, hand)) {
             return TypedActionResult.success(stack);
         }
-
+        // Использование руны
         if (rune != null) {
             user.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
 
@@ -103,10 +122,9 @@ public class Bottle extends Item implements CustomItem {
                 setRune(stack, null);
                 setFullness(stack, MAX_FULLNESS);
                 user.getItemCooldownManager().set(this, 10);
-
+                user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
             }
             return TypedActionResult.success(stack);
-
         }
         // Проверяем, достаточно ли fullness для выполнения действия
         if (fullness > 0) {
@@ -124,7 +142,7 @@ public class Bottle extends Item implements CustomItem {
         return TypedActionResult.fail(stack);
     }
 
-    private void applyEffects(PlayerEntity user) {
+    private static void applyEffects(PlayerEntity user) {
         // Воспроизводим звуки и эффекты
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
         user.setStatusEffect(new StatusEffectInstance(BOTTLE_REGENERATION_HEALTH, 54, 0), null);

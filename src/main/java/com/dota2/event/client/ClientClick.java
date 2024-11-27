@@ -2,7 +2,6 @@ package com.dota2.event.client;
 
 import com.dota2.DotaCraft;
 import com.dota2.event.server.ServerEvents;
-import com.dota2.rune.Rune;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,8 +26,7 @@ public class ClientClick {
             Entity targetedEntity = DotaCraft.getTargetedEntity(client.world, player, 5.0D);
 
             // Проверяем, что это ItemEntity, и исключаем руну
-            if (targetedEntity instanceof ItemEntity itemEntity &&
-                    !(itemEntity.getStack().getItem() instanceof Rune)) {
+            if (targetedEntity instanceof ItemEntity itemEntity) {
 
                 // Проверяем, есть ли место в инвентаре
                 if (player.getInventory().getEmptySlot() >= 0) {
@@ -38,13 +36,7 @@ public class ClientClick {
                     // Создаем пакет для удаления предмета
                     PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
                     buffer.writeInt(itemEntity.getId());
-                    ClientPlayNetworking.send(ServerEvents.REMOVE_ITEM_PACKET, buffer);
-
-                    // Играем анимацию для руки
-                    ClientPlayerInteractionManager interactionManager = client.interactionManager;
-                    if (interactionManager != null) {
-                        interactionManager.interactItem(player, Hand.MAIN_HAND);
-                    }
+                    ClientPlayNetworking.send(ServerEvents.USE_ITEM_PACKET, buffer);
                 }
             }
         }
