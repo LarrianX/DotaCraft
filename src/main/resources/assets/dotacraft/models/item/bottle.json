@@ -3,27 +3,33 @@
   "overrides": [
     {
       "predicate": {
-        "fullness": 0
+        "state": 0
       },
       "model": "dotacraft:item/bottle_0"
     },
     {
       "predicate": {
-        "fullness": 0.33
+        "state": 0.1
       },
       "model": "dotacraft:item/bottle_1"
     },
     {
       "predicate": {
-        "fullness": 0.67
+        "state": 0.2
       },
       "model": "dotacraft:item/bottle_2"
     },
     {
       "predicate": {
-        "fullness": 1.0
+        "state": 0.3
       },
       "model": "dotacraft:item/bottle_3"
+    },
+    {
+      "predicate": {
+        "state": 0.4
+      },
+      "model": "dotacraft:item/bottle_speed"
     }
   ]
 }

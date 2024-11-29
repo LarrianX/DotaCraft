@@ -31,8 +31,10 @@ public class Undo {
             if (attribute != null) {
                 // Выставление старых значений
                 OldValuesComponent OldValuesComponent = player.getComponent(OLD_VALUES_COMPONENT);
-                player.setHealth((float) OldValuesComponent.getOldHealth());
-                attribute.setBaseValue(OldValuesComponent.getOldMaxHealth());
+                int maxHealth = OldValuesComponent.getOldMaxHealth();
+                attribute.setBaseValue((maxHealth == 0.0) ? 20.0F : maxHealth);
+                float health = OldValuesComponent.getOldHealth();
+                player.setHealth((health == 0.0) ? 20.0F : health);
                 // Удаление amplifier с именем команды
                 AbstractTeam team = player.getScoreboardTeam();
                 if (team != null) {

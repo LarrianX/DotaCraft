@@ -25,7 +25,7 @@ import static com.dota2.component.ModComponents.*;
 
 
 @Mixin(InGameHud.class)
-public class ReplaceBars {
+public class ReplaceBarsMixin {
     @Unique
     private static final Logger LOGGER = DotaCraft.LOGGER;
     @Unique

@@ -5,14 +5,17 @@ import com.dota2.block.ModBlocks;
 import com.dota2.command.ModCommands;
 import com.dota2.effect.ModEffects;
 import com.dota2.event.ModEvents;
+import com.dota2.item.CustomItem;
 import com.dota2.item.ModItemGroups;
 import com.dota2.item.ModItems;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.sun.net.httpserver.Headers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
@@ -24,14 +27,22 @@ import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import static com.dota2.item.ModItems.*;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    private static final Random random = new Random();
+
+    // Константы
+    public static final boolean AUTO_CRAFT = false;  // IN PROGRESS
+
+    public static final HashMap<Item[], Item> RECIPES = new HashMap<>();
+    static {
+        RECIPES.put(new Item[]{DEMON_EDGE, CRYSTALYS, REC_DAEDALUS}, DAEDALUS);
+//        RECIPES.put(new Item[]{DEMON_EDGE}, DEMON_EDGE);
+
+    }
 
     public static Entity getTargetedEntity(World world, PlayerEntity user, double reachDistance) {
         // Выполняем raycast (луч) для поиска объекта, на который смотрит игрок
@@ -90,7 +101,7 @@ public class DotaCraft implements ModInitializer {
         ModEffects.registerModEffects();
         ModCommands.registerModCommands();
         ModAttributes.registerModAttributes();
-        ModEvents.registerEvents();
+        ModEvents.register();
         ServerLifecycleEvents.SERVER_STARTED.register(this::serverStarted);
     }
 }

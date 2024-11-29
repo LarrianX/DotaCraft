@@ -3,12 +3,16 @@
   "package": "com.dota2.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ItemEntityMixin",
     "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "ReplaceBars"
+    "ClientPlayerEntityMixin",
+    "ClientPlayerInteractionManagerMixin",
+    "GameRendererMixin",
+    "ReplaceBarsMixin"
   ]
 }

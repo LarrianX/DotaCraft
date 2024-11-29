@@ -1,7 +1,7 @@
 {
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "dotacraft:item/recdaedalus"
+    "0": "dotacraft:item/rec_daedalus"
   },
   "elements": [
     {

@@ -9,12 +9,13 @@
   "item.dotacraft.battle_fury": "Боевая ярость",
   "item.dotacraft.scepter": "Аганимъ",
   "item.dotacraft.tango": "Танго",
-  "item.dotacraft.tpscroll": "Свитокъ телепортаціи",
+  "item.dotacraft.tp_scroll": "Свитокъ телепортаціи",
   "item.dotacraft.shadowblade": "Тѣневой клинокъ",
   "item.dotacraft.boots_of_speed": "Сапоги-скороходы",
   "item.dotacraft.rec_daedalus": "Рѣцептъ Дедала",
-  "item.dotacraft.demonedge": "Клинокъ демона",
+  "item.dotacraft.demon_edge": "Клинокъ демона",
   "item.dotacraft.tango_tf": "Танго(переданное)",
+  "item.dotacraft.rune_of_speed": "Руна торопливости",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Порталъ",
   "block.dotacraft.pressure_plate": "Нажимная плита",
@@ -23,6 +24,7 @@
   "effect.dotacraft.bottle_regeneration_health": "Регенерація здоровья",
   "effect.dotacraft.flask_regeneration_health": "Регенерація здоровья",
   "effect.dotacraft.tango_regeneration_health": "Регенерація здоровья",
+  "effect.dotacraft.rune_speed": "Торопливость",
   "attribute.name.generic.crit_chance": "Шансъ критическаго удара",
   "text.dotacraft.tango_timer": "%d осталося"
 }
