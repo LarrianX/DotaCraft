@@ -71,30 +71,39 @@ public class Bottle extends Item implements CustomItem {
         }
     }
 
-    public static boolean checkRune(World world, PlayerEntity player) {
-        PlayerInventory inventory = player.getInventory();
-        ItemStack targetStack = ModItems.BOTTLE.getDefaultStack();
-        if (inventory.contains(targetStack)) {
-            return checkRune(world, player, inventory.getStack(inventory.getSlotWithStack(targetStack)));
-        } else {
-            return false;
+    public static ItemStack itemInInventory(PlayerInventory inventory, Item item) {
+        for (ItemStack stack : inventory.main) {
+            if (stack.getItem() == item && stack.getCount() > 0) {
+                return stack;
+            }
         }
+        return null;
     }
 
-    private static boolean checkRune(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (stack.getItem().equals(ModItems.BOTTLE)) {
-            return checkRune(world, player, stack);
+    public static boolean checkRune(Entity entity, PlayerEntity player) {
+        PlayerInventory inventory = player.getInventory();
+        ItemStack stack = itemInInventory(inventory, ModItems.BOTTLE);
+        if (stack != null) {
+            return checkRune(entity, stack);
         } else {
             return false;
         }
     }
 
     private static boolean checkRune(World world, PlayerEntity player, ItemStack stack) {
-        Entity targetedEntity = DotaCraft.getTargetedEntity(world, player, 5.0D);
+        Entity targetedEntity = DotaCraft.getTargetedEntity(world, player, 4.5D);
 
-        if (targetedEntity instanceof ItemEntity itemEntity &&
-                itemEntity.getStack().getItem() instanceof RuneItem rune) {
+        if (stack.getItem().equals(ModItems.BOTTLE)) {
+            return checkRune(targetedEntity, stack);
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean checkRune(Entity entity, ItemStack stack) {
+        if (entity instanceof ItemEntity itemEntity &&
+                itemEntity.getStack().getItem() instanceof RuneItem rune &&
+                getRune(stack) == null) {
             setRune(stack, rune.getRune());
             itemEntity.kill();
             return true;
@@ -111,7 +120,7 @@ public class Bottle extends Item implements CustomItem {
         int fullness = getFullness(stack);
         Rune rune = getRune(stack);
         // Проверяем, можно ли захватить руну
-        if (rune == null && checkRune(world, user, hand)) {
+        if (rune == null && checkRune(world, user, stack)) {
             return TypedActionResult.success(stack);
         }
         // Использование руны

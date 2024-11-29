@@ -22,8 +22,7 @@ public class ServerEvents {
 
     public static void register() {
         ServerTickEvents.START_WORLD_TICK.register(DeleteTangoTF::event);
-        ServerTickEvents.END_WORLD_TICK.register(SetPickupDelay::event);
-        ServerPlayNetworking.registerGlobalReceiver(USE_ITEM_PACKET, ServerEvents::onRemoveItem);
+//        ServerPlayNetworking.registerGlobalReceiver(USE_ITEM_PACKET, ServerEvents::onRemoveItem);
     }
 
     private static void onRemoveItem(MinecraftServer server, ServerPlayerEntity player,
@@ -36,7 +35,7 @@ public class ServerEvents {
             ItemStack itemStack = itemEntity.getStack();
             if (itemStack.getItem() instanceof RuneItem runeItem) {
                 // Применение руны
-                boolean result = Bottle.checkRune(player.getWorld(), player);
+                boolean result = Bottle.checkRune(itemEntity, player);
                 if (!result) {
                     Rune rune = runeItem.getRune();
                     player.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);

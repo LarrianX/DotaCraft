@@ -12,6 +12,7 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 
@@ -29,14 +30,16 @@ public class ClientClick {
             if (targetedEntity instanceof ItemEntity itemEntity) {
 
                 // Проверяем, есть ли место в инвентаре
-                if (player.getInventory().getEmptySlot() >= 0) {
+                if (player.getInventory().getEmptySlot() >= 0 && client.getNetworkHandler() != null) {
                     // Отправляем сообщение игроку
-                    player.sendMessage(Text.literal("ПКМ по предмету: " + itemEntity.getStack().getName().getString()), true);
+//                    player.sendMessage(Text.literal("ПКМ по предмету: " + itemEntity.getStack().getName().getString()), true);
 
                     // Создаем пакет для удаления предмета
-                    PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
-                    buffer.writeInt(itemEntity.getId());
-                    ClientPlayNetworking.send(ServerEvents.USE_ITEM_PACKET, buffer);
+
+//                    client.getNetworkHandler().sendPacket(PlayerInteractEntityC2SPacket.interact(targetedEntity, player.isSneaking(), Hand.MAIN_HAND));
+//                    PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
+//                    buffer.writeInt(itemEntity.getId());
+//                    ClientPlayNetworking.send(ServerEvents.USE_ITEM_PACKET, buffer);
                 }
             }
         }
