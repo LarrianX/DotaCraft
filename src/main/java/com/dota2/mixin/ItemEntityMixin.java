@@ -1,5 +1,6 @@
 package com.dota2.mixin;
 
+import com.dota2.DotaCraft;
 import com.dota2.component.hero.HeroComponent;
 import com.dota2.item.Bottle;
 import com.dota2.item.rune.RuneItem;
@@ -55,7 +56,8 @@ public abstract class ItemEntityMixin extends Entity {
     @Override
     public ActionResult interact(PlayerEntity player, Hand hand) {
         if (!this.getWorld().isClient) {
-            player.sendMessage(Text.literal("Использована сущность предмета"));
+            if (DotaCraft.DEBUG)
+                player.sendMessage(Text.literal("Использована сущность предмета"));
             String name = this.getName().getString();
             ItemStack itemStack = this.getStack();
             Item item = itemStack.getItem();

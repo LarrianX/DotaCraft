@@ -39,6 +39,7 @@ public class DotaCraft implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     // Константы
+    public static final boolean DEBUG = true;
     public static final boolean AUTO_CRAFT = false;  // IN PROGRESS
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();

@@ -105,9 +105,8 @@ public class Bottle extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (!world.isClient) {
+        if (!world.isClient && DotaCraft.DEBUG)
             user.sendMessage(Text.literal("Использован бутыль"));
-        }
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
         // Получаем значения fullness и rune
