@@ -35,12 +35,12 @@ public class ServerEvents {
             ItemStack itemStack = itemEntity.getStack();
             if (itemStack.getItem() instanceof RuneItem runeItem) {
                 // Применение руны
-                boolean result = Bottle.checkRune(itemEntity, player);
-                if (!result) {
+//                boolean result = Bottle.checkRune(itemEntity, player);
+//                if (!result) {
                     Rune rune = runeItem.getRune();
                     player.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
                     itemEntity.kill();
-                }
+//                }
             } else {
                 // подбор предмета
                 boolean added = player.getInventory().insertStack(itemStack);

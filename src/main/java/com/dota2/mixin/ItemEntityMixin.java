@@ -47,8 +47,7 @@ public abstract class ItemEntityMixin extends Entity {
     @Inject(method = "onPlayerCollision", at = @At("HEAD"), cancellable = true)
     private void onPlayerCollision(PlayerEntity player, CallbackInfo ci) {
         // cancel if collision pickup is disabled
-        HeroComponent component = player.getComponent(HERO_COMPONENT);
-        if (component.isHero()) {
+        if (player.getComponent(HERO_COMPONENT).isHero()) {
             ci.cancel();
         }
     }
@@ -56,6 +55,7 @@ public abstract class ItemEntityMixin extends Entity {
     @Override
     public ActionResult interact(PlayerEntity player, Hand hand) {
         if (!this.getWorld().isClient) {
+            player.sendMessage(Text.literal("Использована сущность предмета"));
             String name = this.getName().getString();
             ItemStack itemStack = this.getStack();
             Item item = itemStack.getItem();
@@ -64,8 +64,9 @@ public abstract class ItemEntityMixin extends Entity {
             if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUuid()))) {
                 if (itemStack.getItem() instanceof RuneItem runeItem) {
                     // Применение руны
-                    boolean result = Bottle.checkRune(this, player);
+                    boolean result = Bottle.checkRune(player, this);
                     if (!result) {
+                        // Если в инвентаре нет пустой бутылки - используем руну так
                         Rune rune = runeItem.getRune();
                         player.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
                         kill();

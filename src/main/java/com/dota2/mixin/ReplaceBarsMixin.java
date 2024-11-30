@@ -1,6 +1,5 @@
 package com.dota2.mixin;
 
-import com.dota2.DotaCraft;
 import com.dota2.component.EffectComponent;
 import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.MaxValuesComponent;
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,8 +24,6 @@ import static com.dota2.component.ModComponents.*;
 
 @Mixin(InGameHud.class)
 public class ReplaceBarsMixin {
-    @Unique
-    private static final Logger LOGGER = DotaCraft.LOGGER;
     @Unique
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
     @Unique

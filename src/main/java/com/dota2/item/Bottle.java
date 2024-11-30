@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -71,40 +72,30 @@ public class Bottle extends Item implements CustomItem {
         }
     }
 
-    public static ItemStack itemInInventory(PlayerInventory inventory, Item item) {
+    public static ItemStack emptyBottleInInventory(PlayerInventory inventory) {
         for (ItemStack stack : inventory.main) {
-            if (stack.getItem() == item && stack.getCount() > 0) {
+            if (stack.getItem() == ModItems.BOTTLE && stack.getCount() > 0 && getRune(stack) == null) {
                 return stack;
             }
         }
         return null;
     }
 
-    public static boolean checkRune(Entity entity, PlayerEntity player) {
+    public static boolean checkRune(PlayerEntity player, Entity entity) {
         PlayerInventory inventory = player.getInventory();
-        ItemStack stack = itemInInventory(inventory, ModItems.BOTTLE);
+        ItemStack stack = emptyBottleInInventory(inventory);
         if (stack != null) {
-            return checkRune(entity, stack);
+            return checkRune(player, entity, stack);
         } else {
             return false;
         }
     }
 
-    private static boolean checkRune(World world, PlayerEntity player, ItemStack stack) {
-        Entity targetedEntity = DotaCraft.getTargetedEntity(world, player, 4.5D);
-
-        if (stack.getItem().equals(ModItems.BOTTLE)) {
-            return checkRune(targetedEntity, stack);
-        } else {
-            return false;
-        }
-    }
-
-    private static boolean checkRune(Entity entity, ItemStack stack) {
+    private static boolean checkRune(PlayerEntity player, Entity entity, ItemStack stack) {
         if (entity instanceof ItemEntity itemEntity &&
-                itemEntity.getStack().getItem() instanceof RuneItem rune &&
-                getRune(stack) == null) {
+                itemEntity.getStack().getItem() instanceof RuneItem rune) {
             setRune(stack, rune.getRune());
+            player.getItemCooldownManager().set(stack.getItem(), 10);
             itemEntity.kill();
             return true;
         } else {
@@ -114,24 +105,32 @@ public class Bottle extends Item implements CustomItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (!world.isClient) {
+            user.sendMessage(Text.literal("Использован бутыль"));
+        }
         // Получаем стак
         ItemStack stack = user.getStackInHand(hand);
         // Получаем значения fullness и rune
         int fullness = getFullness(stack);
         Rune rune = getRune(stack);
-        // Проверяем, можно ли захватить руну
-        if (rune == null && checkRune(world, user, stack)) {
-            return TypedActionResult.success(stack);
+        // Если наводимся на руну - использовать нельзя, чтобы исключить вероятность двойного срабатывания
+        if (DotaCraft.getTargetedEntity(world, user, 4.5D) instanceof ItemEntity itemEntity &&
+                itemEntity.getStack().getItem() instanceof RuneItem) {
+            return TypedActionResult.pass(stack);
         }
+        // Проверяем, можно ли захватить руну
+//        if (rune == null && checkRune(world, user, stack)) {
+//            return TypedActionResult.success(stack);
+//        }
         // Использование руны
         if (rune != null) {
             user.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
+            user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
 
             if (!user.isCreative()) {
                 setRune(stack, null);
                 setFullness(stack, MAX_FULLNESS);
                 user.getItemCooldownManager().set(this, 10);
-                user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
             }
             return TypedActionResult.success(stack);
         }
