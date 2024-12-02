@@ -2,7 +2,6 @@ package com.dota2.component.hero;
 
 import com.dota2.DotaCraft;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
@@ -13,7 +12,7 @@ import net.minecraft.scoreboard.AbstractTeam;
 
 import static com.dota2.component.ModComponents.HERO_COMPONENT;
 
-public class SyncedHeroComponent implements HeroComponent, ServerTickingComponent, AutoSyncedComponent {
+public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     public static final int HEALTH = 100;
 
     private final PlayerEntity provider;
@@ -30,29 +29,39 @@ public class SyncedHeroComponent implements HeroComponent, ServerTickingComponen
         provider.syncComponent(HERO_COMPONENT);
     }
 
-    private void autocraft(PlayerInventory inventory) {
-        for (Item[] items : DotaCraft.RECIPES.keySet()) {
+    public static ItemStack itemInInventory(PlayerInventory inventory, Item item) {
+        for (ItemStack stack : inventory.main) {
+            if (stack.getItem() == item && stack.getCount() > 0) {
+                return stack;
+            }
+        }
+        return null;
+    }
+
+    private void autocraft(PlayerEntity player) {
+        PlayerInventory inventory = player.getInventory();
+        for (Item[] recipe : DotaCraft.RECIPES.keySet()) {
             boolean canCraft = true;
-            for (Item item : items) {
-                if (!inventory.contains(new ItemStack(item))) {
+            for (Item recipeItem : recipe) {
+                if (itemInInventory(inventory, recipeItem) == null) {
                     canCraft = false;
                     break;
                 }
             }
             if (canCraft) {
-                for (Item item : items) {
-                    inventory.removeOne(new ItemStack(item));
+                for (Item recipeItem : recipe) {
+                    inventory.removeOne(itemInInventory(inventory, recipeItem));
                 }
-                inventory.insertStack(DotaCraft.RECIPES.get(items).getDefaultStack());
+                Item resultItem = DotaCraft.RECIPES.get(recipe);
+                inventory.insertStack(resultItem.getDefaultStack());
+                player.getItemCooldownManager().set(resultItem, 10);
             }
         }
-        DotaCraft.LOGGER.info("Tried to autocraft");
     }
 
 
     @Override
     public void serverTick() {
-        DotaCraft.LOGGER.warn("Tried to serverTick");
         if (this.hero) {
             provider.setHealth(HEALTH);
             provider.getHungerManager().setFoodLevel(100);
@@ -61,7 +70,7 @@ public class SyncedHeroComponent implements HeroComponent, ServerTickingComponen
                 NbtList current = provider.getInventory().writeNbt(new NbtList());
                 if (!this.cache.equals(current)) {
                     this.cache = current;
-                    autocraft(provider.getInventory());
+                    autocraft(provider);
                 }
             }
         }

@@ -14,7 +14,7 @@ import static com.dota2.component.ModComponents.VALUES_COMPONENT;
 
 
 public class ShadowBlade extends Weapon implements CustomItem {
-    private static final String ID = "shadowblade";
+    private static final String ID = "shadow_blade";
     private static final int DAMAGE = 25;
     private static final int MINUS_MANA = 75;
 

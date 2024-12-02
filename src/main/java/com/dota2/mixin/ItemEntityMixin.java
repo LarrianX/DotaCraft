@@ -63,7 +63,9 @@ public abstract class ItemEntityMixin extends Entity {
             Item item = itemStack.getItem();
             int i = itemStack.getCount();
 
-            if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUuid()))) {
+            if (
+//                    this.pickupDelay == 0 &&
+                    (this.owner == null || this.owner.equals(player.getUuid()))) {
                 if (itemStack.getItem() instanceof RuneItem runeItem) {
                     // Применение руны
                     boolean result = Bottle.checkRune(player, this);

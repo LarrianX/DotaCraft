@@ -40,7 +40,7 @@ public class DotaCraft implements ModInitializer {
 
     // Константы
     public static final boolean DEBUG = true;
-    public static final boolean AUTO_CRAFT = false;  // IN PROGRESS
+    public static final boolean AUTO_CRAFT = true;
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();
     static {

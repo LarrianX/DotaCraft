@@ -5,7 +5,7 @@
     32
   ],
   "textures": {
-    "0": "dotacraft:item/shadowblade"
+    "0": "dotacraft:item/shadow_blade"
   },
   "elements": [
     {
