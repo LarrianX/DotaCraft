@@ -37,6 +37,7 @@ import static com.dota2.item.ModItems.*;
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Random RANDOM = new Random();
 
     // Константы
     public static final boolean DEBUG = true;

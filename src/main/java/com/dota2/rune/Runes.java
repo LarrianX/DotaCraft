@@ -1,7 +1,9 @@
 package com.dota2.rune;
 
 public enum Runes {
-    speed(new RuneSpeed(), 0.4F);
+    speed(new RuneSpeed(), 0.4F),
+    double_damage(new RuneDoubleDamage(), 0.5F);
+
 
     private final Rune rune;
     private final float state;
