@@ -23,7 +23,7 @@
       "com.larrian.dotacraft.DotaCraftClient"
     ],
     "cardinal-components": [
-      "com.larrian.dotacraft.component.ModComponents"
+      "com.larrian.dotacraft.init.ModComponents"
     ]
   },
   "mixins": [

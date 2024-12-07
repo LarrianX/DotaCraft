@@ -4,7 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import static com.larrian.dotacraft.component.ModComponents.MAX_VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.MAX_VALUES_COMPONENT;
 
 public class SyncedOldValuesComponent implements OldValuesComponent, AutoSyncedComponent {
     private final PlayerEntity provider;

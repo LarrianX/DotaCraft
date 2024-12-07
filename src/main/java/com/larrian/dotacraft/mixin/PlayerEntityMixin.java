@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.attributes.ModAttributes;
+import com.larrian.dotacraft.init.ModAttributes;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;

@@ -1,5 +1,7 @@
-package com.larrian.dotacraft.event;
+package com.larrian.dotacraft.init;
 
+import com.larrian.dotacraft.event.AllowDamage;
+import com.larrian.dotacraft.event.AttackEntity;
 import com.larrian.dotacraft.event.client.ClientEvents;
 import com.larrian.dotacraft.event.server.ServerEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;

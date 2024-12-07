@@ -1,13 +1,14 @@
-package com.larrian.dotacraft.component;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.component.EffectComponent;
+import com.larrian.dotacraft.component.SyncedEffectComponent;
 import com.larrian.dotacraft.component.hero.*;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
 

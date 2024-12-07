@@ -18,8 +18,8 @@ import net.minecraft.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.larrian.dotacraft.component.ModComponents.EFFECT_COMPONENT;
-import static com.larrian.dotacraft.effect.ModEffects.EFFECTS;
+import static com.larrian.dotacraft.init.ModComponents.EFFECT_COMPONENT;
+import static com.larrian.dotacraft.init.ModEffects.EFFECTS;
 
 public class SetEffects {
     private static final List<String> IDS;

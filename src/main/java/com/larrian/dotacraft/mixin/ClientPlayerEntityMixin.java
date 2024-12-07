@@ -1,15 +1,13 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.hero.HeroComponent;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {

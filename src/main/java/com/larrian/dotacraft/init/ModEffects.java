@@ -1,10 +1,10 @@
-package com.larrian.dotacraft.effect;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.effect.CustomEffect;
 import com.larrian.dotacraft.effect.item.*;
 import com.larrian.dotacraft.effect.rune.RuneDoubleDamageEffect;
 import com.larrian.dotacraft.effect.rune.RuneSpeedEffect;
-import com.larrian.dotacraft.rune.RuneDoubleDamage;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

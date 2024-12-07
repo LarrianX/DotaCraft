@@ -12,7 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.effect.ModEffects.FLASK_REGENERATION_HEALTH;
+import static com.larrian.dotacraft.init.ModEffects.FLASK_REGENERATION_HEALTH;
 
 public class Flask extends Item implements CustomItem {
     private static final String ID = "flask";

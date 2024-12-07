@@ -18,9 +18,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
-import static com.larrian.dotacraft.attributes.ModAttributes.CRIT_CHANCE;
-import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.component.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModAttributes.CRIT_CHANCE;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
 
 public class AttackEntity {
     public static int calculateDamage(PlayerEntity provider) {

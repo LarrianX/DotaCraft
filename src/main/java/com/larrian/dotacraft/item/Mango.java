@@ -14,8 +14,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.component.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
 
 public class Mango extends Item implements CustomItem {
     private static final String ID = "mango";

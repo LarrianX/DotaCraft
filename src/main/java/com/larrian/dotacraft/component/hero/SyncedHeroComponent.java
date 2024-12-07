@@ -1,7 +1,6 @@
 package com.larrian.dotacraft.component.hero;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.DotaCraftClient;
 import com.larrian.dotacraft.event.server.AutoCraft;
 import com.larrian.dotacraft.event.server.ServerEvents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -9,22 +8,16 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
 import net.minecraft.scoreboard.AbstractTeam;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     public static final int HEALTH = 100;

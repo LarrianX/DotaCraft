@@ -1,6 +1,6 @@
 package com.larrian.dotacraft;
 
-import com.larrian.dotacraft.event.ModEvents;
+import com.larrian.dotacraft.init.ModEvents;
 import com.larrian.dotacraft.item.BottlePredicate;
 import com.larrian.dotacraft.item.CustomItem;
 import com.larrian.dotacraft.item.Predicate;

@@ -1,7 +1,9 @@
-package com.larrian.dotacraft.block;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.block.Portal;
+import com.larrian.dotacraft.block.PressurePlate;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;

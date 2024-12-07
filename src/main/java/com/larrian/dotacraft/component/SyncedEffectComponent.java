@@ -1,5 +1,6 @@
 package com.larrian.dotacraft.component;
 
+import com.larrian.dotacraft.init.ModComponents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;

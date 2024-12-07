@@ -12,7 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.effect.ModEffects.CLARITY_REGENERATION_MANA;
+import static com.larrian.dotacraft.init.ModEffects.CLARITY_REGENERATION_MANA;
 
 public class Clarity extends Item implements CustomItem {
     private static final String ID = "clarity";
