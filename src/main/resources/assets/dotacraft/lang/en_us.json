@@ -28,5 +28,7 @@
   "effect.dotacraft.rune_speed": "Haste",
   "effect.dotacraft.rune_double_damage": "Double Damage",
   "attribute.name.generic.crit_chance": "Chance of critical damage",
-  "text.dotacraft.tango_timer": "%d left"
+  "text.dotacraft.tango_timer": "%d left",
+  "key.category.dotacraft": "Dota Craft",
+  "key.dotacraft.block_slot": "Block slot(no autocraft)"
 }

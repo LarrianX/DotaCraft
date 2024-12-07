@@ -28,5 +28,7 @@
   "effect.dotacraft.rune_speed": "Торопливость",
   "effect.dotacraft.rune_double_damage": "Двойной урон",
   "attribute.name.generic.crit_chance": "Шансъ критическаго удара",
-  "text.dotacraft.tango_timer": "%d осталося"
+  "text.dotacraft.tango_timer": "%d осталося",
+  "key.category.dotacraft": "Dota Craft",
+  "key.dotacraft.block_slot": "Заблокировать слот"
 }

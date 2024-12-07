@@ -3,7 +3,6 @@ package com.dota2.item;
 import com.dota2.DotaCraft;
 import com.dota2.item.rune.RuneDoubleDamageItem;
 import com.dota2.item.rune.RuneSpeedItem;
-import com.dota2.rune.RuneSpeed;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -27,7 +26,7 @@ public class ModItems {
     public static final RecDaedalus REC_DAEDALUS = new RecDaedalus();
     public static final TangoTF TANGO_TF = new TangoTF();
     public static final RuneSpeedItem RUNE_SPEED = new RuneSpeedItem();
-    public static final RuneDoubleDamageItem DOUBLE_DAMAGE = new RuneDoubleDamageItem();
+    public static final RuneDoubleDamageItem RUNE_DOUBLE_DAMAGE = new RuneDoubleDamageItem();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -47,7 +46,7 @@ public class ModItems {
             REC_DAEDALUS,
             TANGO_TF,
             RUNE_SPEED,
-            DOUBLE_DAMAGE,
+            RUNE_DOUBLE_DAMAGE,
     };
 
     private static void registerItems() {
