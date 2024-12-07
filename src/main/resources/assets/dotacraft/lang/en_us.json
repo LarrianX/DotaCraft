@@ -10,12 +10,13 @@
   "item.dotacraft.scepter": "Aghanim's Scepter",
   "item.dotacraft.tango": "Tango",
   "item.dotacraft.tp_scroll": "Teleport Scroll",
-  "item.dotacraft.shadowblade": "Shadow Blade",
+  "item.dotacraft.shadow_blade": "Shadow Blade",
   "item.dotacraft.boots_of_speed": "Boots of Speed",
   "item.dotacraft.rec_daedalus": "Recipe of Daedalus",
   "item.dotacraft.demon_edge": "Demon Edge",
   "item.dotacraft.tango_tf": "Tango(transferred)",
   "item.dotacraft.rune_of_speed": "Haste",
+  "item.dotacraft.rune_of_double_damage": "Double Damage",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Portal",
   "block.dotacraft.pressure_plate": "Pressure Plate",
@@ -25,6 +26,9 @@
   "effect.dotacraft.flask_regeneration_health": "Regeneration of health",
   "effect.dotacraft.tango_regeneration_health": "Regeneration of health",
   "effect.dotacraft.rune_speed": "Haste",
+  "effect.dotacraft.rune_double_damage": "Double Damage",
   "attribute.name.generic.crit_chance": "Chance of critical damage",
-  "text.dotacraft.tango_timer": "%d left"
+  "text.dotacraft.tango_timer": "%d left",
+  "key.category.dotacraft": "Dota Craft",
+  "key.dotacraft.block_slot": "Block slot(no autocraft)"
 }

@@ -1,6 +1,5 @@
 package com.dota2.mixin;
 
-import com.dota2.DotaCraft;
 import com.dota2.component.EffectComponent;
 import com.dota2.component.hero.HeroComponent;
 import com.dota2.component.hero.MaxValuesComponent;
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,14 +18,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
 import java.util.Map;
+import java.util.Set;
 
 import static com.dota2.component.ModComponents.*;
 
 
 @Mixin(InGameHud.class)
 public class ReplaceBarsMixin {
-    @Unique
-    private static final Logger LOGGER = DotaCraft.LOGGER;
     @Unique
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
     @Unique
@@ -37,18 +34,18 @@ public class ReplaceBarsMixin {
 
 
     @Unique
-    private int calculatePixels(int value, int max_value) {
-        if (max_value == 0) {
+    private int calculatePixels(int value, int maxValue) {
+        if (maxValue == 0) {
             return 0;
         }
-        return (int) Math.min(MAX_PIXELS * ((double) value / (double) max_value), MAX_PIXELS);
+        return (int) Math.min(MAX_PIXELS * ((double) value / (double) maxValue), MAX_PIXELS);
     }
 
     @Unique
     private int correctPosition(int value) {
 //        (MAX_PIXELS / 2) - (7 * 3)
-        int correct_len = (3 - String.valueOf(value).length()) * 6;
-        return (MAX_PIXELS / 2) - (3 * 6) + correct_len;
+        int correctLen = (3 - String.valueOf(value).length()) * 6;
+        return (MAX_PIXELS / 2) - (3 * 6) + correctLen;
     }
 
     @Unique
@@ -105,7 +102,7 @@ public class ReplaceBarsMixin {
     }
 
     @Unique
-    private void drawAmplifiers(DrawContext context, Map<String, Double> amplifiers, MinecraftClient client) {
+    private void drawTexts(DrawContext context, Map<String, Double> amplifiers, Set<Integer> blockedSlots, MinecraftClient client) {
         int x = context.getScaledWindowWidth() / 2 + 100;
         int y = context.getScaledWindowHeight() - 50;
 
@@ -114,13 +111,17 @@ public class ReplaceBarsMixin {
             context.drawTextWithShadow(client.textRenderer, entry.getValue().toString(), x + 132, y, 16777215);
             y -= 10;
         }
+        for (Integer slot : blockedSlots) {
+            context.drawTextWithShadow(client.textRenderer, slot.toString(), x, y, 16777215);
+            y -= 10;
+        }
     }
 
     @Inject(method = "renderStatusBars(Lnet/minecraft/client/gui/DrawContext;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;ceil(F)I"), cancellable = true)
     private void onRenderStatusBars(DrawContext context, CallbackInfo ci, @Local PlayerEntity playerEntity) {
         if (playerEntity != null) {
-            HeroComponent hero = playerEntity.getComponent(HERO_COMPONENT);
-            if (hero.isHero()) {
+            HeroComponent heroComponent = playerEntity.getComponent(HERO_COMPONENT);
+            if (heroComponent.isHero()) {
                 ci.cancel();
 
                 ValuesComponent valuesComponent = playerEntity.getComponent(VALUES_COMPONENT);
@@ -129,14 +130,15 @@ public class ReplaceBarsMixin {
 
                 int mana = (int) valuesComponent.getMana();
                 int health = (int) valuesComponent.getHealth();
-                int max_mana = (int) maxValuesComponent.getMaxMana();
-                int max_health = (int) maxValuesComponent.getMaxHealth();
+                int maxMana = (int) maxValuesComponent.getMaxMana();
+                int maxHealth = (int) maxValuesComponent.getMaxHealth();
                 Map<String, Double> amplifiers = effectComponent.getAmplifiers();
+                Set<Integer> blockedSlots = heroComponent.getBlocked();
                 MinecraftClient client = MinecraftClient.getInstance();
 
-                drawManaBar(context, mana, max_mana, client);
-                drawHealthBar(context, health, max_health, client);
-                drawAmplifiers(context, amplifiers, client);
+                drawManaBar(context, mana, maxMana, client);
+                drawHealthBar(context, health, maxHealth, client);
+                drawTexts(context, amplifiers, blockedSlots, client);
             }
         }
     }

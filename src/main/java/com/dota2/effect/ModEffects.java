@@ -2,7 +2,9 @@ package com.dota2.effect;
 
 import com.dota2.DotaCraft;
 import com.dota2.effect.item.*;
+import com.dota2.effect.rune.RuneDoubleDamageEffect;
 import com.dota2.effect.rune.RuneSpeedEffect;
+import com.dota2.rune.RuneDoubleDamage;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -15,6 +17,7 @@ public class ModEffects {
     public static final StatusEffect FLASK_REGENERATION_HEALTH = new FlaskRegenerationHealth();
     public static final StatusEffect TANGO_REGENERATION_HEALTH = new TangoRegenerationHealth();
     public static final StatusEffect RUNE_SPEED_EFFECT = new RuneSpeedEffect();
+    public static final StatusEffect RUNE_DOUBLE_DAMAGE_EFFECT = new RuneDoubleDamageEffect();
 
     public static final StatusEffect[] EFFECTS = {
             BOTTLE_REGENERATION_HEALTH,
@@ -22,7 +25,8 @@ public class ModEffects {
             CLARITY_REGENERATION_MANA,
             FLASK_REGENERATION_HEALTH,
             TANGO_REGENERATION_HEALTH,
-            RUNE_SPEED_EFFECT
+            RUNE_SPEED_EFFECT,
+            RUNE_DOUBLE_DAMAGE_EFFECT
     };
 
     private static void registerEffects() {

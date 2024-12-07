@@ -4,6 +4,7 @@ import com.dota2.component.hero.HeroComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Box;
@@ -41,10 +42,7 @@ public abstract class GameRendererMixin {
             )
     )
     private EntityHitResult redirectRaycastLogic(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double d) {
-        // Вставьте ваш редирект или изменённую логику здесь
-        // Например, добавьте логику, проверяющую только активных объектов и изменяющую поведение.
-        return ProjectileUtil.raycast(entity, min, max, box, entityx -> {
-            return !entityx.isSpectator() && (entityx.canHit() || checkIsHero());
-        }, d);
+        // Изменение рейкаста, добавление в предикат также сущности предмета
+        return ProjectileUtil.raycast(entity, min, max, box, entityx -> !entityx.isSpectator() && entityx.canHit() || (checkIsHero() && entityx instanceof ItemEntity), d);
     }
 }

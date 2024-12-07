@@ -30,6 +30,12 @@
         "state": 0.4
       },
       "model": "dotacraft:item/bottle_speed"
+    },
+    {
+      "predicate": {
+        "state": 0.5
+      },
+      "model": "dotacraft:item/bottle_double_damage"
     }
   ]
 }

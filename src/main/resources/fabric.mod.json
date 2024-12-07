@@ -3,12 +3,11 @@
   "id": "dotacraft",
   "version": "${version}",
   "name": "DotaCraft",
-  "description": "Мод переносящий Dota 2 в Minecraft",
+  "description": "A mod for Minecraft that transforms it into Dota 2.",
   "authors": [
-    "LarrianX - code",
-    "MrTime4ik - code",
-    "Youlday - idea",
-    "Nuklon - sprite artist"
+    "LarrianX",
+    "Youlday",
+    "Nuklon"
   ],
   "contact": {
     "sources": "https://github.com/LarrianX/DotaCraft"
@@ -34,7 +33,9 @@
     "fabricloader": ">=0.15.11",
     "minecraft": "~1.20.1",
     "java": ">=17",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "cardinal-components-base": ">=5.2.2",
+    "cardinal-components-entity": ">=5.2.2"
   },
   "suggests": {
   },

@@ -15,9 +15,9 @@ import static com.dota2.component.ModComponents.HERO_COMPONENT;
 public abstract class ClientPlayerEntityMixin {
     @Inject(method="shouldSpawnSprintingParticles()Z", at = @At("HEAD"), cancellable = true)
     private void onShouldSpawnSprintingParticles(CallbackInfoReturnable<Boolean> cir) {
+        // Удаление частиц бега если игрок невидим
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
-        HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
-        if (heroComponent.isHero() && player.getStatusEffect(StatusEffects.INVISIBILITY) != null) {
+        if (player.getComponent(HERO_COMPONENT).isHero() && player.getStatusEffect(StatusEffects.INVISIBILITY) != null) {
             cir.setReturnValue(false);
         }
     }

@@ -10,12 +10,13 @@
   "item.dotacraft.scepter": "Скіпетр Аганіма",
   "item.dotacraft.tango": "Танґо",
   "item.dotacraft.tp_scroll": "Свиток телепортації",
-  "item.dotacraft.shadowblade": "Тіньове лезо",
+  "item.dotacraft.shadow_blade": "Тіньове лезо",
   "item.dotacraft.boots_of_speed": "Черевики мерщійходи",
   "item.dotacraft.rec_daedalus": "Рецепт Дедала",
   "item.dotacraft.demon_edge": "Клинок демона",
   "item.dotacraft.tango_tf": "Танґо (передане)",
   "item.dotacraft.rune_of_speed": "Руна поспішності",
+  "item.dotacraft.rune_of_double_damage": "Double Damage",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Портал",
   "block.dotacraft.pressure_plate": "Натискна плита",
@@ -25,6 +26,9 @@
   "effect.dotacraft.flask_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.tango_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.rune_speed": "Поспішність",
+  "effect.dotacraft.rune_double_damage": "Двойной урон",
   "attribute.name.generic.crit_chance": "Шанс критичного удару",
-  "text.dotacraft.tango_timer": "Залишилося %d"
+  "text.dotacraft.tango_timer": "Залишилося %d",
+  "key.category.dotacraft": "Dota Craft",
+  "key.dotacraft.block_slot": "Заблокировать слот"
 }
