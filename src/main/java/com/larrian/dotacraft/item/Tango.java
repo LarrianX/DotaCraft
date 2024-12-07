@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.effect.ModEffects.TANGO_REGENERATION_HEALTH;
-import static com.larrian.dotacraft.item.ModItems.TANGO_TF;
+import static com.larrian.dotacraft.init.ModEffects.TANGO_REGENERATION_HEALTH;
+import static com.larrian.dotacraft.init.ModItems.TANGO_TF;
 
 public class Tango extends Item implements CustomItem {
     public static final String FULLNESS_KEY = "fullness";

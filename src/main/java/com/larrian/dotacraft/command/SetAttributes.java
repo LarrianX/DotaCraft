@@ -12,9 +12,9 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.larrian.dotacraft.attributes.ModAttributes.CRIT_CHANCE;
-import static com.larrian.dotacraft.component.ModComponents.MAX_VALUES_COMPONENT;
-import static com.larrian.dotacraft.component.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModAttributes.CRIT_CHANCE;
+import static com.larrian.dotacraft.init.ModComponents.MAX_VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
 
 public class SetAttributes {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

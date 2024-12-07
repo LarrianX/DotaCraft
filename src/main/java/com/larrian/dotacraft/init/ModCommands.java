@@ -1,6 +1,7 @@
-package com.larrian.dotacraft.command;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.command.*;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;

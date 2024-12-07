@@ -1,6 +1,7 @@
-package com.larrian.dotacraft.item;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.item.*;
 import com.larrian.dotacraft.item.rune.RuneDoubleDamageItem;
 import com.larrian.dotacraft.item.rune.RuneSpeedItem;
 import net.minecraft.item.Item;

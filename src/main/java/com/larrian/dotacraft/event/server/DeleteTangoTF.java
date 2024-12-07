@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.event.server;
 
-import com.larrian.dotacraft.item.ModItems;
+import com.larrian.dotacraft.init.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.server.world.ServerWorld;

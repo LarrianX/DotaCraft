@@ -6,7 +6,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.larrian.dotacraft.component.ModComponents.*;
+import static com.larrian.dotacraft.init.ModComponents.*;
 
 public class Sync {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

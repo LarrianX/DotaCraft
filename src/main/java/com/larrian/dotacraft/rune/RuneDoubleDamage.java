@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.rune;
 
-import com.larrian.dotacraft.effect.ModEffects;
+import com.larrian.dotacraft.init.ModEffects;
 import net.minecraft.entity.effect.StatusEffect;
 
 public class RuneDoubleDamage implements Rune {

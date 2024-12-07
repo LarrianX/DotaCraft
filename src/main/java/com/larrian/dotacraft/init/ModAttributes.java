@@ -1,7 +1,8 @@
-package com.larrian.dotacraft.attributes;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.attributes.CritChance;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.registry.Registries;

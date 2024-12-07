@@ -4,9 +4,6 @@ import com.larrian.dotacraft.DotaCraft;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
@@ -15,7 +12,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
 
-import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class ServerEvents {
     public static final Identifier AUTO_CRAFT_PACKET = new Identifier(DotaCraft.MOD_ID, "auto_craft");

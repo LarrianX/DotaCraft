@@ -1,21 +1,18 @@
 package com.larrian.dotacraft;
 
-import com.larrian.dotacraft.attributes.ModAttributes;
-import com.larrian.dotacraft.block.ModBlocks;
-import com.larrian.dotacraft.command.ModCommands;
-import com.larrian.dotacraft.effect.ModEffects;
-import com.larrian.dotacraft.event.ModEvents;
-import com.larrian.dotacraft.item.CustomItem;
-import com.larrian.dotacraft.item.ModItemGroups;
-import com.larrian.dotacraft.item.ModItems;
+import com.larrian.dotacraft.init.ModAttributes;
+import com.larrian.dotacraft.init.ModBlocks;
+import com.larrian.dotacraft.init.ModCommands;
+import com.larrian.dotacraft.init.ModEffects;
+import com.larrian.dotacraft.init.ModEvents;
+import com.larrian.dotacraft.init.ModItemGroups;
+import com.larrian.dotacraft.init.ModItems;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.sun.net.httpserver.Headers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.scoreboard.Scoreboard;
@@ -32,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import static com.larrian.dotacraft.item.ModItems.*;
+import static com.larrian.dotacraft.init.ModItems.*;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";

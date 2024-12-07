@@ -1,7 +1,6 @@
 package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.component.hero.HeroComponent;
 import com.larrian.dotacraft.item.Bottle;
 import com.larrian.dotacraft.item.rune.RuneItem;
 import com.larrian.dotacraft.rune.Rune;
@@ -16,18 +15,16 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.UUID;
 
-import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {

@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.larrian.dotacraft.component.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
 
 
 public abstract class RegenerationHealth extends CustomEffect {

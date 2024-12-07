@@ -1,5 +1,6 @@
 package com.larrian.dotacraft.item;
 
+import com.larrian.dotacraft.init.ModItems;
 import com.larrian.dotacraft.rune.Rune;
 import com.larrian.dotacraft.rune.Runes;
 import net.minecraft.client.item.ClampedModelPredicateProvider;

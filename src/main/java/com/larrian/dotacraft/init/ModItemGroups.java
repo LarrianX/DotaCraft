@@ -1,7 +1,7 @@
-package com.larrian.dotacraft.item;
+package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.block.ModBlocks;
+import com.larrian.dotacraft.item.CustomItem;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

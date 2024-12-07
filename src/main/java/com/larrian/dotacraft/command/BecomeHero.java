@@ -21,7 +21,7 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-import static com.larrian.dotacraft.component.ModComponents.*;
+import static com.larrian.dotacraft.init.ModComponents.*;
 import static com.larrian.dotacraft.component.hero.SyncedHeroComponent.HEALTH;
 
 public class BecomeHero {

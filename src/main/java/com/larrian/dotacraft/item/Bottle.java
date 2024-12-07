@@ -1,6 +1,7 @@
 package com.larrian.dotacraft.item;
 
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.init.ModItems;
 import com.larrian.dotacraft.item.rune.RuneItem;
 import com.larrian.dotacraft.rune.Rune;
 import com.larrian.dotacraft.rune.Runes;
@@ -19,8 +20,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.effect.ModEffects.BOTTLE_REGENERATION_HEALTH;
-import static com.larrian.dotacraft.effect.ModEffects.BOTTLE_REGENERATION_MANA;
+import static com.larrian.dotacraft.init.ModEffects.BOTTLE_REGENERATION_HEALTH;
+import static com.larrian.dotacraft.init.ModEffects.BOTTLE_REGENERATION_MANA;
 
 public class Bottle extends Item implements CustomItem {
     private static final String ID = "bottle";

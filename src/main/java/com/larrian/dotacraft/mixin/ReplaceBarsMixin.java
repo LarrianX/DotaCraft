@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Set;
 
-import static com.larrian.dotacraft.component.ModComponents.*;
+import static com.larrian.dotacraft.init.ModComponents.*;
 
 
 @Mixin(InGameHud.class)
