@@ -40,7 +40,7 @@ public class DotaCraft implements ModInitializer {
     public static final Random RANDOM = new Random();
 
     // Константы
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final boolean AUTO_CRAFT = true;
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();
