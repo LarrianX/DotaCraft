@@ -2,7 +2,7 @@ package com.larrian.dotacraft.item;
 
 public class Radiance extends Weapon implements CustomItem {
     private static final String ID = "radiance";
-    private static final int DAMAGE = 25;
+    private static final int DAMAGE = 55;
 
     public Radiance() {
         super(DAMAGE);

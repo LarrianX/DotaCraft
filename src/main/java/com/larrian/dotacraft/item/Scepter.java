@@ -1,20 +1,15 @@
 package com.larrian.dotacraft.item;
 
-public class Scepter extends Weapon implements CustomItem {
-    private static final String ID = "scepter";
-    private static final int DAMAGE = 25;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.item.Item;
 
-    public Scepter() {
-        super(DAMAGE);
-    }
+public class Scepter extends Item implements CustomItem {
+    private static final String ID = "scepter";
+
+    public Scepter() {super(new FabricItemSettings().maxCount(64));}
 
     @Override
     public String getId() {
         return ID;
-    }
-
-    @Override
-    public int getDamage() {
-        return DAMAGE;
     }
 }

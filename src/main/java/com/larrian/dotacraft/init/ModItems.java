@@ -28,6 +28,7 @@ public class ModItems {
     public static final TangoTF TANGO_TF = new TangoTF();
     public static final RuneSpeedItem RUNE_SPEED = new RuneSpeedItem();
     public static final RuneDoubleDamageItem RUNE_DOUBLE_DAMAGE = new RuneDoubleDamageItem();
+    public static final PhaseBoots PHASE_BOOTS = new PhaseBoots();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -48,6 +49,7 @@ public class ModItems {
             TANGO_TF,
             RUNE_SPEED,
             RUNE_DOUBLE_DAMAGE,
+            PHASE_BOOTS
     };
 
     private static void registerItems() {

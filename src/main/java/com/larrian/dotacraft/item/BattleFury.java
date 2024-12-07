@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class BattleFury extends Weapon implements CustomItem {
     private static final String ID = "battle_fury";
-    private static final int DAMAGE = 25;
+    private static final int DAMAGE = 65;
     private static final float SPLASH_DAMAGE = 10.0f; // Урон сплэша
     private static final double SPLASH_RADIUS = 5.0;  // Радиус сплэша
 
