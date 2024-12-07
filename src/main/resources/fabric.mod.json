@@ -17,13 +17,13 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.dota2.DotaCraft"
+      "com.larrian.dotacraft.DotaCraft"
     ],
     "client": [
-      "com.dota2.DotaCraftClient"
+      "com.larrian.dotacraft.DotaCraftClient"
     ],
     "cardinal-components": [
-      "com.dota2.component.ModComponents"
+      "com.larrian.dotacraft.component.ModComponents"
     ]
   },
   "mixins": [
