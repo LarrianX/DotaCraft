@@ -8,11 +8,11 @@ import net.minecraft.server.command.ServerCommandSource;
 
 public class ModCommands {
     private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-        BecomeHero.register(dispatcher);
-        Undo.register(dispatcher);
-        SetAttributes.register(dispatcher);
-        SetEffects.register(dispatcher);
-        Sync.register(dispatcher);
+        BecomeHeroCommand.register(dispatcher);
+        UndoCommand.register(dispatcher);
+        SetAttributesCommand.register(dispatcher);
+        SetEffectsCommand.register(dispatcher);
+        SyncCommand.register(dispatcher);
     }
 
     public static void registerModCommands() {

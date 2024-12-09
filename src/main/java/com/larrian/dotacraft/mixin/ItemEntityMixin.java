@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.item.Bottle;
+import com.larrian.dotacraft.item.custom.BottleItem;
 import com.larrian.dotacraft.item.rune.RuneItem;
 import com.larrian.dotacraft.rune.Rune;
 import net.minecraft.entity.Entity;
@@ -65,7 +65,7 @@ public abstract class ItemEntityMixin extends Entity {
                     (this.owner == null || this.owner.equals(player.getUuid()))) {
                 if (itemStack.getItem() instanceof RuneItem runeItem) {
                     // Применение руны
-                    boolean result = Bottle.checkRune(player, this);
+                    boolean result = BottleItem.checkRune(player, this);
                     if (!result) {
                         // Если в инвентаре нет пустой бутылки - используем руну так
                         Rune rune = runeItem.getRune();

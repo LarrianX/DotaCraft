@@ -2,8 +2,8 @@ package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.block.Portal;
-import com.larrian.dotacraft.block.PressurePlate;
+import com.larrian.dotacraft.block.PortalBlock;
+import com.larrian.dotacraft.block.PressurePlateBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -13,8 +13,8 @@ import net.minecraft.util.Identifier;
 
 
 public class ModBlocks {
-    public static final Portal PORTAL = new Portal();
-    public static final PressurePlate PRESSURE_PLATE = new PressurePlate();
+    public static final PortalBlock PORTAL = new PortalBlock();
+    public static final PressurePlateBlock PRESSURE_PLATE = new PressurePlateBlock();
 
     public static final Block[] BLOCKS = {
             PORTAL,

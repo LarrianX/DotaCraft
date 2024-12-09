@@ -1,7 +1,8 @@
 package com.larrian.dotacraft.init;
 
+import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.item.*;
+import com.larrian.dotacraft.item.custom.*;
 import com.larrian.dotacraft.item.rune.RuneDoubleDamageItem;
 import com.larrian.dotacraft.item.rune.RuneSpeedItem;
 import net.minecraft.item.Item;
@@ -10,25 +11,25 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModItems {
-    public static final Flask FLASK = new Flask();
-    public static final Clarity CLARITY = new Clarity();
-    public static final Crystalys CRYSTALYS = new Crystalys();
-    public static final Mango MANGO = new Mango();
-    public static final Daedalus DAEDALUS = new Daedalus();
-    public static final Scepter SCEPTER = new Scepter();
-    public static final BattleFury BATTLE_FURY = new BattleFury();
-    public static final TpScroll TPSCROLL = new TpScroll();
-    public static final ShadowBlade SHADOWBLADE = new ShadowBlade();
-    public static final Radiance RADIANCE = new Radiance();
-    public static final Bottle BOTTLE = new Bottle();
-    public static final Tango TANGO = new Tango();
-    public static final BootsOfSpeed BOOTS_OF_SPEED = new BootsOfSpeed();
-    public static final DemonEdge DEMON_EDGE = new DemonEdge();
-    public static final RecDaedalus REC_DAEDALUS = new RecDaedalus();
-    public static final TangoTF TANGO_TF = new TangoTF();
+    public static final FlaskItem FLASK = new FlaskItem();
+    public static final ClarityItem CLARITY = new ClarityItem();
+    public static final CrystalysItem CRYSTALYS = new CrystalysItem();
+    public static final MangoItem MANGO = new MangoItem();
+    public static final DaedalusItem DAEDALUS = new DaedalusItem();
+    public static final ScepterItem SCEPTER = new ScepterItem();
+    public static final BattleFuryItem BATTLE_FURY = new BattleFuryItem();
+    public static final TpScrollItem TP_SCROLL = new TpScrollItem();
+    public static final ShadowBladeItem SHADOW_BLADE = new ShadowBladeItem();
+    public static final RadianceItem RADIANCE = new RadianceItem();
+    public static final BottleItem BOTTLE = new BottleItem();
+    public static final TangoItem TANGO = new TangoItem();
+    public static final BootsOfSpeedItem BOOTS_OF_SPEED = new BootsOfSpeedItem();
+    public static final DemonEdgeItem DEMON_EDGE = new DemonEdgeItem();
+    public static final RecDaedalusItem REC_DAEDALUS = new RecDaedalusItem();
+    public static final TangoTFItem TANGO_TF = new TangoTFItem();
     public static final RuneSpeedItem RUNE_SPEED = new RuneSpeedItem();
     public static final RuneDoubleDamageItem RUNE_DOUBLE_DAMAGE = new RuneDoubleDamageItem();
-    public static final PhaseBoots PHASE_BOOTS = new PhaseBoots();
+    public static final PhaseBootsItem PHASE_BOOTS = new PhaseBootsItem();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -41,8 +42,8 @@ public class ModItems {
             BOOTS_OF_SPEED,
             BOTTLE,
             TANGO,
-            TPSCROLL,
-            SHADOWBLADE,
+            TP_SCROLL,
+            SHADOW_BLADE,
             RADIANCE,
             DEMON_EDGE,
             REC_DAEDALUS,
@@ -54,8 +55,8 @@ public class ModItems {
 
     private static void registerItems() {
         for (Item item : ITEMS) {
-            if (item instanceof CustomItem) {
-                registerItem(((CustomItem) item).getId(), item);
+            if (item instanceof Custom) {
+                registerItem(((Custom) item).getId(), item);
             }
         }
     }

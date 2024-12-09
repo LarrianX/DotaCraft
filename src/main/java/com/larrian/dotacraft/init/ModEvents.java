@@ -1,17 +1,17 @@
 package com.larrian.dotacraft.init;
 
-import com.larrian.dotacraft.event.AllowDamage;
-import com.larrian.dotacraft.event.AttackEntity;
-import com.larrian.dotacraft.event.client.ClientEvents;
-import com.larrian.dotacraft.event.server.ServerEvents;
+import com.larrian.dotacraft.event.common.AllowDamageEvent;
+import com.larrian.dotacraft.event.common.AttackEntityEvent;
+import com.larrian.dotacraft.event.ClientEvents;
+import com.larrian.dotacraft.event.ServerEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 
 public class ModEvents {
     public static void register() {
         // common sides events
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register(AllowDamage::event);
-        AttackEntityCallback.EVENT.register(AttackEntity::event);
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register(AllowDamageEvent::event);
+        AttackEntityCallback.EVENT.register(AttackEntityEvent::event);
         // server events
         ServerEvents.register();
     }

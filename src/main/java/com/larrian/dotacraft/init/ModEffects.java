@@ -11,11 +11,11 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 public class ModEffects {
-    public static final StatusEffect BOTTLE_REGENERATION_HEALTH = new BottleRegenerationHealth();
-    public static final StatusEffect BOTTLE_REGENERATION_MANA = new BottleRegenerationMana();
-    public static final StatusEffect CLARITY_REGENERATION_MANA = new ClarityRegenerationMana();
-    public static final StatusEffect FLASK_REGENERATION_HEALTH = new FlaskRegenerationHealth();
-    public static final StatusEffect TANGO_REGENERATION_HEALTH = new TangoRegenerationHealth();
+    public static final StatusEffect BOTTLE_REGENERATION_HEALTH = new BottleRegenerationHealthEffect();
+    public static final StatusEffect BOTTLE_REGENERATION_MANA = new BottleRegenerationManaEffect();
+    public static final StatusEffect CLARITY_REGENERATION_MANA = new ClarityRegenerationManaEffect();
+    public static final StatusEffect FLASK_REGENERATION_HEALTH = new FlaskRegenerationHealthEffect();
+    public static final StatusEffect TANGO_REGENERATION_HEALTH = new TangoRegenerationHealthEffect();
     public static final StatusEffect RUNE_SPEED_EFFECT = new RuneSpeedEffect();
     public static final StatusEffect RUNE_DOUBLE_DAMAGE_EFFECT = new RuneDoubleDamageEffect();
 

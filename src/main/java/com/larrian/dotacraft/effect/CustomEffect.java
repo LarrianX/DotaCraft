@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 
 public abstract class CustomEffect extends StatusEffect implements Custom {
+    public static final double ERROR = 0.00000000001;
     private final boolean persistent;
 
     protected CustomEffect(StatusEffectCategory category, int color, boolean persistent) {

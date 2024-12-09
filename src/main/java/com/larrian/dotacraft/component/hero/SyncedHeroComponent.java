@@ -1,8 +1,8 @@
 package com.larrian.dotacraft.component.hero;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.event.server.AutoCraft;
-import com.larrian.dotacraft.event.server.ServerEvents;
+import com.larrian.dotacraft.event.AutoCraft;
+import com.larrian.dotacraft.event.ServerEvents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -26,7 +26,6 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     private boolean hero;
     private NbtList cache;
 
-    @Environment(EnvType.CLIENT)
     private final Set<Integer> clientBlockedSlots;
 
     public SyncedHeroComponent(PlayerEntity provider) {
@@ -55,9 +54,9 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
             if (DotaCraft.AUTO_CRAFT) {
                 NbtList current = provider.getInventory().writeNbt(new NbtList());
                 if (!this.cache.equals(current)) {
-                    this.cache = current;
                     boolean result = AutoCraft.craft(provider, clientBlockedSlots);
                     if (result) {
+                        this.cache = current;
                         ClientPlayNetworking.send(ServerEvents.AUTO_CRAFT_PACKET, new PacketByteBuf(Unpooled.buffer()));
                     }
                 }
