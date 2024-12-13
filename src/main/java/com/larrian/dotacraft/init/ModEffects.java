@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.init;
 
+import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.effect.CustomEffect;
 import com.larrian.dotacraft.effect.item.*;
 import com.larrian.dotacraft.effect.rune.RuneDoubleDamageEffect;
 import com.larrian.dotacraft.effect.rune.RuneSpeedEffect;
@@ -31,8 +31,8 @@ public class ModEffects {
 
     private static void registerEffects() {
         for (StatusEffect effect : EFFECTS) {
-            if (effect instanceof CustomEffect) {
-                registerEffect(((CustomEffect) effect).getId(), effect);
+            if (effect instanceof Custom) {
+                registerEffect(((Custom) effect).getId(), effect);
             }
         }
     }

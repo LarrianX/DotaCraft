@@ -3,7 +3,9 @@ import java.util.UUID;
 
 public class GenerateUUID {
     public static void main(String[] args) {
-        UUID uuid = UUID.randomUUID();
-        System.out.println(uuid.toString().toUpperCase());
+        for (int i = 0; i < 10; i++ ) {
+            UUID uuid = UUID.randomUUID();
+            System.out.println(uuid.toString().toUpperCase());
+        }
     }
 }

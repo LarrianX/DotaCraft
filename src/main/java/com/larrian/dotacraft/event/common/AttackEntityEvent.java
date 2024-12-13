@@ -2,7 +2,6 @@ package com.larrian.dotacraft.event.common;
 
 import com.larrian.dotacraft.component.hero.HeroComponent;
 import com.larrian.dotacraft.component.hero.ValuesComponent;
-import com.larrian.dotacraft.effect.CustomEffect;
 import com.larrian.dotacraft.item.Weapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -54,12 +53,12 @@ public class AttackEntityEvent {
                 // Убирание эффектов
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);
                 Collection<StatusEffectInstance> effects = playerTarget.getStatusEffects();
-                for (StatusEffectInstance effectInstance : effects) {
-                    if (effectInstance.getEffectType() instanceof CustomEffect effect &&
-                            !effect.isPersistent()) {
-                        playerTarget.removeStatusEffect(effect);
-                    }
-                }
+//                for (StatusEffectInstance effectInstance : effects) {
+//                    if (effectInstance.getEffectType() instanceof CustomEffect effect &&
+//                            !effect.isPersistent()) {
+//                        playerTarget.removeStatusEffect(effect);
+//                    }
+//                }
                 return ActionResult.SUCCESS;
             }
         }

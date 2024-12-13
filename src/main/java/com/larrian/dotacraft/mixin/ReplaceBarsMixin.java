@@ -2,7 +2,6 @@ package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.component.EffectComponent;
 import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.MaxValuesComponent;
 import com.larrian.dotacraft.component.hero.ValuesComponent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
@@ -76,7 +75,7 @@ public class ReplaceBarsMixin {
 
         if (client.player != null) {
             x = context.getScaledWindowWidth() / 2 - 91;
-            text = "+" + (int) client.player.getAttributeBaseValue(REGENERATION_HEALTH);
+            text = "+" + (int) client.player.getAttributeValue(REGENERATION_HEALTH);
 
             context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
         }
@@ -110,7 +109,7 @@ public class ReplaceBarsMixin {
 
         if (client.player != null) {
             x = context.getScaledWindowWidth() / 2;
-            text = "+" + (int) client.player.getAttributeBaseValue(REGENERATION_MANA);
+            text = "+" + (int) client.player.getAttributeValue(REGENERATION_MANA);
 
             context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
         }
@@ -144,8 +143,8 @@ public class ReplaceBarsMixin {
 
                 int mana = (int) valuesComponent.getMana();
                 int health = (int) valuesComponent.getHealth();
-                int maxMana = (int) playerEntity.getAttributeBaseValue(MAX_MANA);
-                int maxHealth = (int) playerEntity.getAttributeBaseValue(MAX_HEALTH);
+                int maxMana = (int) playerEntity.getAttributeValue(MAX_MANA);
+                int maxHealth = (int) playerEntity.getAttributeValue(MAX_HEALTH);
                 Map<String, Double> amplifiers = effectComponent.getAmplifiers();
                 Set<Integer> blockedSlots = heroComponent.getBlocked();
                 MinecraftClient client = MinecraftClient.getInstance();

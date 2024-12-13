@@ -1,13 +1,24 @@
 package com.larrian.dotacraft.effect.item;
 
-import com.larrian.dotacraft.effect.RegenerationHealthEffect;
+import com.larrian.dotacraft.Custom;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectCategory;
 
-public class BottleRegenerationHealthEffect extends RegenerationHealthEffect {
+import static com.larrian.dotacraft.DotaCraft.ERROR;
+import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_HEALTH;
+
+public class BottleRegenerationHealthEffect extends StatusEffect implements Custom {
     private static final String ID = "bottle_regeneration_health";
     private static final double amplifier = ((double) 110 / 54) + ERROR;
-    private static final boolean persistent = false;
 
     public BottleRegenerationHealthEffect() {
-        super(ID, amplifier, persistent);
+        super(StatusEffectCategory.BENEFICIAL, 0xe9b8b3);
+        addAttributeModifier(REGENERATION_HEALTH, "017BAB6C-7FC5-4116-95FC-45005D59F1A0", amplifier, EntityAttributeModifier.Operation.ADDITION);
+    }
+
+    public String getId() {
+        return ID;
     }
 }

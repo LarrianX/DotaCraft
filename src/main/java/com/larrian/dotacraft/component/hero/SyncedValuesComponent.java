@@ -34,8 +34,8 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     }
 
     private void increaseValues() {
-        addMana(provider.getAttributeBaseValue(REGENERATION_MANA));
-        addHealth(provider.getAttributeBaseValue(REGENERATION_HEALTH));
+        addMana(provider.getAttributeValue(REGENERATION_MANA) / 20);
+        addHealth(provider.getAttributeValue(REGENERATION_HEALTH) / 20);
     }
 
     @Override
@@ -50,12 +50,12 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public boolean isNotFullMana() {
-        return Math.round(this.mana) == provider.getAttributeBaseValue(MAX_MANA);
+        return Math.round(this.mana) == provider.getAttributeValue(MAX_MANA);
     }
 
     @Override
     public void addMana(double mana) {
-        this.mana = Math.max(Math.min(this.mana + mana, provider.getAttributeBaseValue(MAX_MANA)), 0);
+        this.mana = Math.max(Math.min(this.mana + mana, provider.getAttributeValue(MAX_MANA)), 0);
     }
 
     @Override
@@ -65,17 +65,17 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public void setMana(double mana) {
-        this.mana = Math.max(Math.min(mana, provider.getAttributeBaseValue(MAX_MANA)), 0);
+        this.mana = Math.max(Math.min(mana, provider.getAttributeValue(MAX_MANA)), 0);
     }
 
     @Override
     public boolean isNotFullHealth() {
-        return Math.round(this.health) == provider.getAttributeBaseValue(MAX_HEALTH);
+        return Math.round(this.health) == provider.getAttributeValue(MAX_HEALTH);
     }
 
     @Override
     public void addHealth(double health) {
-        this.health = Math.max(Math.min(this.health + health, provider.getAttributeBaseValue(MAX_HEALTH)), 0);
+        this.health = Math.max(Math.min(this.health + health, provider.getAttributeValue(MAX_HEALTH)), 0);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public void setHealth(double health) {
-        this.health = Math.max(Math.min(health, provider.getAttributeBaseValue(MAX_HEALTH)), 0);
+        this.health = Math.max(Math.min(health, provider.getAttributeValue(MAX_HEALTH)), 0);
     }
 
     @Override

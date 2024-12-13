@@ -38,8 +38,8 @@ public class SetAttributesCommand {
 
         if (player != null) {
             ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
-            valuesComponent.setMana(player.getAttributeBaseValue(REGENERATION_MANA));
-            valuesComponent.setHealth(player.getAttributeBaseValue(REGENERATION_HEALTH));
+            valuesComponent.setMana(player.getAttributeValue(REGENERATION_MANA));
+            valuesComponent.setHealth(player.getAttributeValue(REGENERATION_HEALTH));
             valuesComponent.sync();
         }
 
