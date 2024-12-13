@@ -4,6 +4,8 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
+import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_HEALTH;
+import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
 import static com.larrian.dotacraft.init.ModComponents.MAX_VALUES_COMPONENT;
 import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
 
@@ -26,12 +28,27 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     public void sync() {
         if (
                 this.cache.isEmpty() ||
-                        this.cache.getDouble("mana") != this.mana ||
-                        this.cache.getDouble("health") != this.health
+                this.cache.getDouble("mana") != this.mana ||
+                this.cache.getDouble("health") != this.health
         ) {
             provider.syncComponent(VALUES_COMPONENT);
             writeToNbt(this.cache);
         }
+    }
+
+    private void increaseValues() {
+        addMana(provider.getAttributeBaseValue(REGENERATION_MANA));
+        addHealth(provider.getAttributeBaseValue(REGENERATION_HEALTH));
+    }
+
+    @Override
+    public void serverTick() {
+        increaseValues();
+    }
+
+    @Override
+    public void clientTick() {
+        increaseValues();
     }
 
     @Override

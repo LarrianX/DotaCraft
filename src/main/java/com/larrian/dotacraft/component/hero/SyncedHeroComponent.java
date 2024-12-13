@@ -1,6 +1,7 @@
 package com.larrian.dotacraft.component.hero;
 
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.attributes.RegenerationHealthAttribute;
 import com.larrian.dotacraft.event.AutoCraft;
 import com.larrian.dotacraft.event.ServerEvents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -17,6 +18,7 @@ import net.minecraft.scoreboard.AbstractTeam;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
@@ -89,7 +91,7 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
         tag.putBoolean("hero", hero);
     }
 
-    // Методы для работы с clientBlockedSlots
+    // Methods to work with clientBlockedSlots
     @Environment(EnvType.CLIENT)
     public void setBlock(int slot, boolean blocked) {
         if (blocked) {

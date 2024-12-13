@@ -27,7 +27,9 @@
   "effect.dotacraft.tango_regeneration_health": "Regeneration of health",
   "effect.dotacraft.rune_speed": "Haste",
   "effect.dotacraft.rune_double_damage": "Double Damage",
-  "attribute.name.generic.crit_chance": "Chance of critical damage",
+  "attribute.dotacraft.generic.crit_chance": "Chance of critical damage",
+  "attribute.dotacraft.generic.regeneration_mana": "Regeneration of mana",
+  "attribute.dotacraft.generic.regeneration_health": "Regeneration of health",
   "text.dotacraft.tango_timer": "%d left",
   "key.category.dotacraft": "Dota Craft",
   "key.dotacraft.block_slot": "Block slot(no autocraft)"

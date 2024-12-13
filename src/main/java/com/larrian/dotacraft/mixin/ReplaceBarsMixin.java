@@ -20,6 +20,8 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Set;
 
+import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_HEALTH;
+import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
 import static com.larrian.dotacraft.init.ModComponents.*;
 
 
@@ -72,6 +74,13 @@ public class ReplaceBarsMixin {
         String text = health + "/" + outputFormat.format(max_health);
 
         context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
+
+        if (client.player != null) {
+            x = context.getScaledWindowWidth() / 2 - 91;
+            text = "+" + (client.player.getAttributeBaseValue(REGENERATION_HEALTH) * 20);
+
+            context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
+        }
     }
 
     @Unique
@@ -99,6 +108,13 @@ public class ReplaceBarsMixin {
         String text = mana + "/" + outputFormat.format(max_mana);
 
         context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
+
+        if (client.player != null) {
+            x = context.getScaledWindowWidth() / 2;
+            text = "+" + (client.player.getAttributeBaseValue(REGENERATION_MANA) * 20);
+
+            context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
+        }
     }
 
     @Unique

@@ -27,7 +27,9 @@
   "effect.dotacraft.tango_regeneration_health": "Регенерація здоровья",
   "effect.dotacraft.rune_speed": "Торопливость",
   "effect.dotacraft.rune_double_damage": "Двойной урон",
-  "attribute.name.generic.crit_chance": "Шансъ критическаго удара",
+  "attribute.dotacraft.generic.crit_chance": "Chance of critical damage",
+  "attribute.dotacraft.generic.regeneration_mana": "Regeneration of mana",
+  "attribute.dotacraft.generic.regeneration_health": "Regeneration of health",
   "text.dotacraft.tango_timer": "%d осталося",
   "key.category.dotacraft": "Dota Craft",
   "key.dotacraft.block_slot": "Заблокировать слот"

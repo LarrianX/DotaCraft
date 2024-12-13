@@ -3,6 +3,8 @@ package com.larrian.dotacraft.init;
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.attributes.CritChanceAttribute;
+import com.larrian.dotacraft.attributes.RegenerationHealthAttribute;
+import com.larrian.dotacraft.attributes.RegenerationManaAttribute;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.registry.Registries;
@@ -11,9 +13,13 @@ import net.minecraft.util.Identifier;
 
 public class ModAttributes {
     public static final CritChanceAttribute CRIT_CHANCE = new CritChanceAttribute();
+    public static final RegenerationManaAttribute REGENERATION_MANA = new RegenerationManaAttribute();
+    public static final RegenerationHealthAttribute REGENERATION_HEALTH = new RegenerationHealthAttribute();
 
     public static final ClampedEntityAttribute[] ATTRIBUTES = {
             CRIT_CHANCE,
+            REGENERATION_MANA,
+            REGENERATION_HEALTH
     };
 
     private static void registerAttributes() {
