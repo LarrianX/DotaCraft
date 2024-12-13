@@ -20,8 +20,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Set;
 
-import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_HEALTH;
-import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
+import static com.larrian.dotacraft.init.ModAttributes.*;
 import static com.larrian.dotacraft.init.ModComponents.*;
 
 
@@ -77,7 +76,7 @@ public class ReplaceBarsMixin {
 
         if (client.player != null) {
             x = context.getScaledWindowWidth() / 2 - 91;
-            text = "+" + (client.player.getAttributeBaseValue(REGENERATION_HEALTH) * 20);
+            text = "+" + (int) client.player.getAttributeBaseValue(REGENERATION_HEALTH);
 
             context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
         }
@@ -111,7 +110,7 @@ public class ReplaceBarsMixin {
 
         if (client.player != null) {
             x = context.getScaledWindowWidth() / 2;
-            text = "+" + (client.player.getAttributeBaseValue(REGENERATION_MANA) * 20);
+            text = "+" + (int) client.player.getAttributeBaseValue(REGENERATION_MANA);
 
             context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
         }
@@ -141,13 +140,12 @@ public class ReplaceBarsMixin {
                 ci.cancel();
 
                 ValuesComponent valuesComponent = playerEntity.getComponent(VALUES_COMPONENT);
-                MaxValuesComponent maxValuesComponent = playerEntity.getComponent(MAX_VALUES_COMPONENT);
                 EffectComponent effectComponent = playerEntity.getComponent(EFFECT_COMPONENT);
 
                 int mana = (int) valuesComponent.getMana();
                 int health = (int) valuesComponent.getHealth();
-                int maxMana = (int) maxValuesComponent.getMaxMana();
-                int maxHealth = (int) maxValuesComponent.getMaxHealth();
+                int maxMana = (int) playerEntity.getAttributeBaseValue(MAX_MANA);
+                int maxHealth = (int) playerEntity.getAttributeBaseValue(MAX_HEALTH);
                 Map<String, Double> amplifiers = effectComponent.getAmplifiers();
                 Set<Integer> blockedSlots = heroComponent.getBlocked();
                 MinecraftClient client = MinecraftClient.getInstance();

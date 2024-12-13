@@ -44,7 +44,6 @@
       "dotacraft:effect",
       "dotacraft:hero",
       "dotacraft:values",
-      "dotacraft:max_values",
       "dotacraft:old_values"
     ]
   }

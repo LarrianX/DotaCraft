@@ -4,8 +4,6 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import static com.larrian.dotacraft.init.ModComponents.MAX_VALUES_COMPONENT;
-
 public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedComponent {
     public static final double MIN = 1;
     public static final double MAX = 30000;
@@ -24,7 +22,7 @@ public class SyncedMaxValuesComponent implements MaxValuesComponent, AutoSyncedC
         NbtCompound data = new NbtCompound();
         writeToNbt(data);
         if (!data.equals(this.cache)) {
-            provider.syncComponent(MAX_VALUES_COMPONENT);
+//            provider.syncComponent(MAX_VALUES_COMPONENT);
         }
         this.cache = data;
     }

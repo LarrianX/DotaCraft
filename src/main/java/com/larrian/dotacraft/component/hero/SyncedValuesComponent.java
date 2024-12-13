@@ -6,7 +6,8 @@ import net.minecraft.nbt.NbtCompound;
 
 import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_HEALTH;
 import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
-import static com.larrian.dotacraft.init.ModComponents.MAX_VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModAttributes.MAX_HEALTH;
+import static com.larrian.dotacraft.init.ModAttributes.MAX_MANA;
 import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
 
 public class SyncedValuesComponent implements ValuesComponent, AutoSyncedComponent {
@@ -20,16 +21,12 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
         this.cache = new NbtCompound();
     }
 
-    private MaxValuesComponent getMaxValuesComponent() {
-        return this.provider.getComponent(MAX_VALUES_COMPONENT);
-    }
-
     @Override
     public void sync() {
         if (
                 this.cache.isEmpty() ||
-                this.cache.getDouble("mana") != this.mana ||
-                this.cache.getDouble("health") != this.health
+                        this.cache.getDouble("mana") != this.mana ||
+                        this.cache.getDouble("health") != this.health
         ) {
             provider.syncComponent(VALUES_COMPONENT);
             writeToNbt(this.cache);
@@ -53,12 +50,12 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public boolean isNotFullMana() {
-        return Math.round(this.mana) == (getMaxValuesComponent().getMaxMana());
+        return Math.round(this.mana) == provider.getAttributeBaseValue(MAX_MANA);
     }
 
     @Override
     public void addMana(double mana) {
-        this.mana = Math.max(Math.min(this.mana + mana, getMaxValuesComponent().getMaxMana()), 0);
+        this.mana = Math.max(Math.min(this.mana + mana, provider.getAttributeBaseValue(MAX_MANA)), 0);
     }
 
     @Override
@@ -68,17 +65,17 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public void setMana(double mana) {
-        this.mana = Math.max(Math.min(mana, getMaxValuesComponent().getMaxMana()), 0);
+        this.mana = Math.max(Math.min(mana, provider.getAttributeBaseValue(MAX_MANA)), 0);
     }
 
     @Override
     public boolean isNotFullHealth() {
-        return Math.round(this.health) == (getMaxValuesComponent().getMaxHealth());
+        return Math.round(this.health) == provider.getAttributeBaseValue(MAX_HEALTH);
     }
 
     @Override
     public void addHealth(double health) {
-        this.health = Math.max(Math.min(this.health + health, getMaxValuesComponent().getMaxHealth()), 0);
+        this.health = Math.max(Math.min(this.health + health, provider.getAttributeBaseValue(MAX_HEALTH)), 0);
     }
 
     @Override
@@ -88,7 +85,7 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
 
     @Override
     public void setHealth(double health) {
-        this.health = Math.max(Math.min(health, getMaxValuesComponent().getMaxHealth()), 0);
+        this.health = Math.max(Math.min(health, provider.getAttributeBaseValue(MAX_HEALTH)), 0);
     }
 
     @Override

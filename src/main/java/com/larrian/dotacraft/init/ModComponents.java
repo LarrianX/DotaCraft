@@ -20,8 +20,6 @@ public final class ModComponents implements EntityComponentInitializer {
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "hero"), HeroComponent.class);
     public static final ComponentKey<ValuesComponent> VALUES_COMPONENT =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "values"), ValuesComponent.class);
-    public static final ComponentKey<MaxValuesComponent> MAX_VALUES_COMPONENT =
-            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "max_values"), MaxValuesComponent.class);
     public static final ComponentKey<OldValuesComponent> OLD_VALUES_COMPONENT =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "old_values"), OldValuesComponent.class);
 
@@ -30,7 +28,6 @@ public final class ModComponents implements EntityComponentInitializer {
         registry.registerForPlayers(EFFECT_COMPONENT, SyncedEffectComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         registry.registerForPlayers(OLD_VALUES_COMPONENT, SyncedOldValuesComponent::new, RespawnCopyStrategy.ALWAYS_COPY);
         registry.registerForPlayers(HERO_COMPONENT, SyncedHeroComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
-        registry.registerForPlayers(MAX_VALUES_COMPONENT, SyncedMaxValuesComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
         registry.registerForPlayers(VALUES_COMPONENT, SyncedValuesComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
     }
 }

@@ -3,14 +3,13 @@ package com.larrian.dotacraft.attributes;
 import com.larrian.dotacraft.Custom;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 
-public class CritChanceAttribute extends ClampedEntityAttribute implements Custom {
-    public static final double MIN = 0;
-    public static final double MAX = 100;
-    private static final String ID = "crit_chance";
-    private static final double FALLBACK = 0;
+public class MaxManaAttribute extends ClampedEntityAttribute implements Custom {
+    public static final double MIN = 1;
+    public static final double MAX = 30000;
+    private static final String ID = "max_mana";
+    private static final double FALLBACK = 1;
 
-
-    public CritChanceAttribute() {
+    public MaxManaAttribute() {
         super("attribute.dotacraft.generic." + ID,
                 FALLBACK, MIN, MAX);
         setTracked(true);

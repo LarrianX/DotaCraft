@@ -1,5 +1,7 @@
 package com.larrian.dotacraft.command;
 
+import com.larrian.dotacraft.attributes.MaxHealthAttribute;
+import com.larrian.dotacraft.attributes.MaxManaAttribute;
 import com.larrian.dotacraft.component.EffectComponent;
 import com.larrian.dotacraft.component.hero.*;
 import com.mojang.brigadier.CommandDispatcher;
@@ -21,6 +23,8 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
+import static com.larrian.dotacraft.init.ModAttributes.MAX_HEALTH;
+import static com.larrian.dotacraft.init.ModAttributes.MAX_MANA;
 import static com.larrian.dotacraft.init.ModComponents.*;
 import static com.larrian.dotacraft.component.hero.SyncedHeroComponent.HEALTH;
 
@@ -34,16 +38,16 @@ public class BecomeHeroCommand {
         return builder.buildFuture();
     };
     private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS_VALUES = (context, builder) -> {
-        builder.suggest(String.valueOf((int) SyncedMaxValuesComponent.MAX));
+        builder.suggest(String.valueOf((int) MaxHealthAttribute.MAX));
         return builder.buildFuture();
     };
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("become_hero")
-                        .then(CommandManager.argument("max health", DoubleArgumentType.doubleArg(SyncedMaxValuesComponent.MIN, SyncedMaxValuesComponent.MAX))
+                        .then(CommandManager.argument("max health", DoubleArgumentType.doubleArg(MaxHealthAttribute.MIN, MaxHealthAttribute.MAX))
                                 .suggests(SUGGESTIONS_VALUES)
-                                .then(CommandManager.argument("max mana", DoubleArgumentType.doubleArg(SyncedMaxValuesComponent.MIN, SyncedMaxValuesComponent.MAX))
+                                .then(CommandManager.argument("max mana", DoubleArgumentType.doubleArg(MaxManaAttribute.MIN, MaxManaAttribute.MAX))
                                         .suggests(SUGGESTIONS_VALUES)
                                         .then(CommandManager.argument("team", StringArgumentType.string())
                                                 .suggests(SUGGESTIONS_TEAMS)
@@ -55,32 +59,35 @@ public class BecomeHeroCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            EntityAttributeInstance attribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
+            EntityAttributeInstance vanillaMaxHealthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
+            EntityAttributeInstance maxHealthAttribute = player.getAttributeInstance(MAX_HEALTH);
+            EntityAttributeInstance maxManaAttribute = player.getAttributeInstance(MAX_MANA);
+
             HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
 
-            if (attribute != null && !heroComponent.isHero()) {
+            if (vanillaMaxHealthAttribute != null &&
+                    maxManaAttribute != null &&
+                    maxHealthAttribute != null &&
+                    !heroComponent.isHero()) {
                 double maxHealth = DoubleArgumentType.getDouble(context, "max health");
                 double maxMana = DoubleArgumentType.getDouble(context, "max mana");
                 String teamName = StringArgumentType.getString(context, "team");
 
-                // Проверка на валидность
+                // valid check
                 if (!TEAMS.contains(teamName)) {
                     throw new SimpleCommandExceptionType(Text.literal("Недопустимая команда: " + teamName)).create();
                 }
-                // Выставление старых значений
+                // set old values
                 OldValuesComponent oldValuesComponent = player.getComponent(OLD_VALUES_COMPONENT);
                 oldValuesComponent.setOldHealth((int) player.getHealth());
-                oldValuesComponent.setOldMaxHealth((int) attribute.getBaseValue());
+                oldValuesComponent.setOldMaxHealth((int) vanillaMaxHealthAttribute.getBaseValue());
                 oldValuesComponent.sync();
-                // Выставление макс. хп
-                attribute.setBaseValue(HEALTH);
-                player.setHealth(HEALTH);
-                // Выставление максимальных значений
-                MaxValuesComponent maxValuesComponent = player.getComponent(MAX_VALUES_COMPONENT);
-                maxValuesComponent.setMaxHealth(maxHealth);
-                maxValuesComponent.setMaxMana(maxMana);
-                maxValuesComponent.sync();
-                // Выставление значений хп и маны
+                // set vanilla max health
+                vanillaMaxHealthAttribute.setBaseValue(HEALTH);
+                // set max health and mana
+                maxHealthAttribute.setBaseValue(maxHealth);
+                maxManaAttribute.setBaseValue(maxMana);
+                // set health and mana
                 ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
                 valuesComponent.setHealth(maxHealth);
                 valuesComponent.setMana(maxMana);

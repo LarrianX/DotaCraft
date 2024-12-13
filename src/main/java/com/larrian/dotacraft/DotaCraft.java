@@ -13,6 +13,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.scoreboard.Scoreboard;
@@ -35,6 +36,7 @@ public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final Random RANDOM = new Random();
+//    public static final Object o = EntityAttributes.GENERIC_MAX_HEALTH
 
     // Константы
     public static final boolean DEBUG = false;

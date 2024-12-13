@@ -4,7 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import static com.larrian.dotacraft.init.ModComponents.MAX_VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.OLD_VALUES_COMPONENT;
 
 public class SyncedOldValuesComponent implements OldValuesComponent, AutoSyncedComponent {
     private final PlayerEntity provider;
@@ -21,7 +21,7 @@ public class SyncedOldValuesComponent implements OldValuesComponent, AutoSyncedC
         NbtCompound data = new NbtCompound();
         writeToNbt(data);
         if (!data.equals(this.cache)) {
-            provider.syncComponent(MAX_VALUES_COMPONENT);
+            provider.syncComponent(OLD_VALUES_COMPONENT);
         }
         this.cache = data;
     }
