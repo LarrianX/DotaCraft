@@ -16,7 +16,8 @@
   "item.dotacraft.demon_edge": "Клинок демона",
   "item.dotacraft.tango_tf": "Танґо (передане)",
   "item.dotacraft.rune_of_speed": "Руна поспішності",
-  "item.dotacraft.rune_of_double_damage": "Double Damage",
+  "item.dotacraft.rune_of_double_damage": "Подвійна шкода",
+  "item.dotacraft.phase_boots": "Фазові черевики",
   "itemgroup.dota": "Dota Craft",
   "block.dotacraft.portal": "Портал",
   "block.dotacraft.pressure_plate": "Натискна плита",
@@ -26,11 +27,11 @@
   "effect.dotacraft.flask_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.tango_regeneration_health": "Регенерація здоров'я",
   "effect.dotacraft.rune_speed": "Поспішність",
-  "effect.dotacraft.rune_double_damage": "Двойной урон",
-  "attribute.dotacraft.generic.crit_chance": "Chance of critical damage",
-  "attribute.dotacraft.generic.regeneration_mana": "Regeneration of mana",
-  "attribute.dotacraft.generic.regeneration_health": "Regeneration of health",
+  "effect.dotacraft.rune_double_damage": "Подвійна шкода",
+  "attribute.dotacraft.generic.crit_chance": "Шанс критичного урону",
+  "attribute.dotacraft.generic.regeneration_mana": "Регенерація магії",
+  "attribute.dotacraft.generic.regeneration_health": "Регенерація здоров'я",
   "text.dotacraft.tango_timer": "Залишилося %d",
   "key.category.dotacraft": "Dota Craft",
-  "key.dotacraft.block_slot": "Заблокировать слот"
+  "key.dotacraft.block_slot": "Заблокувати слот"
 }
