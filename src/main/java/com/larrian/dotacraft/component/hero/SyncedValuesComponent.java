@@ -34,8 +34,8 @@ public class SyncedValuesComponent implements ValuesComponent, AutoSyncedCompone
     }
 
     private void increaseValues() {
-        addMana(provider.getAttributeValue(REGENERATION_MANA) / 20);
-        addHealth(provider.getAttributeValue(REGENERATION_HEALTH) / 20);
+        addMana(provider.getAttributeValue(REGENERATION_MANA));
+        addHealth(provider.getAttributeValue(REGENERATION_HEALTH));
     }
 
     @Override
