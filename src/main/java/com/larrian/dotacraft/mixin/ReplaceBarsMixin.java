@@ -75,7 +75,7 @@ public class ReplaceBarsMixin {
 
         if (client.player != null) {
             x = context.getScaledWindowWidth() / 2 - 91;
-            text = "+" + Math.round(client.player.getAttributeValue(REGENERATION_HEALTH));
+            text = "+" + Math.round(client.player.getAttributeValue(REGENERATION_HEALTH) * 20);
 
             context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
         }
@@ -109,7 +109,7 @@ public class ReplaceBarsMixin {
 
         if (client.player != null) {
             x = context.getScaledWindowWidth() / 2;
-            text = "+" + Math.round(client.player.getAttributeValue(REGENERATION_MANA));
+            text = "+" + Math.round(client.player.getAttributeValue(REGENERATION_MANA) * 20);
 
             context.drawTextWithShadow(client.textRenderer, text, x, y, 16777215);
         }
