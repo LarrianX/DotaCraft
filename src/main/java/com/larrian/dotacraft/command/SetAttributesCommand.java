@@ -3,7 +3,8 @@ package com.larrian.dotacraft.command;
 import com.larrian.dotacraft.attributes.CritChanceAttribute;
 import com.larrian.dotacraft.attributes.RegenerationHealthAttribute;
 import com.larrian.dotacraft.attributes.RegenerationManaAttribute;
-import com.larrian.dotacraft.component.hero.ValuesComponent;
+import com.larrian.dotacraft.component.hero.HealthComponent;
+import com.larrian.dotacraft.component.hero.ManaComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -13,7 +14,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import static com.larrian.dotacraft.init.ModAttributes.*;
-import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.*;
 
 public class SetAttributesCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
@@ -23,7 +24,7 @@ public class SetAttributesCommand {
                         .then(CommandManager.argument("health", DoubleArgumentType.doubleArg(RegenerationHealthAttribute.MIN, RegenerationHealthAttribute.MAX))
                                 .executes(SetAttributesCommand::setHealth)
                                 .then(CommandManager.argument("mana", DoubleArgumentType.doubleArg(RegenerationManaAttribute.MIN, RegenerationManaAttribute.MAX))
-                                        .executes(SetAttributesCommand::setHealthAndMana)
+                                        .executes(SetAttributesCommand::setMana)
                                         .then(CommandManager.argument("regeneration health", DoubleArgumentType.doubleArg(RegenerationHealthAttribute.MIN, RegenerationHealthAttribute.MAX))
                                                 .executes(SetAttributesCommand::setRegenerationHealth)
                                                 .then(CommandManager.argument("regeneration mana", DoubleArgumentType.doubleArg(RegenerationManaAttribute.MIN, RegenerationManaAttribute.MAX))
@@ -37,10 +38,10 @@ public class SetAttributesCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
-            valuesComponent.setMana(player.getAttributeValue(REGENERATION_MANA));
-            valuesComponent.setHealth(player.getAttributeValue(REGENERATION_HEALTH));
-            valuesComponent.sync();
+            ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
+            manaComponent.setMana(player.getAttributeValue(REGENERATION_MANA));
+            HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
+            healthComponent.setHealth(player.getAttributeValue(REGENERATION_HEALTH));
         }
 
         return 1;
@@ -50,7 +51,7 @@ public class SetAttributesCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            ValuesComponent component = player.getComponent(VALUES_COMPONENT);
+            HealthComponent component = player.getComponent(HEALTH_COMPONENT);
             double health = DoubleArgumentType.getDouble(context, "health");
             component.setHealth(health);
             component.sync();
@@ -59,16 +60,15 @@ public class SetAttributesCommand {
         return 1;
     }
 
-    private static int setHealthAndMana(CommandContext<ServerCommandSource> context) {
+    private static int setMana(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            ValuesComponent component = player.getComponent(VALUES_COMPONENT);
+            setHealth(context);
+            ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
             double mana = DoubleArgumentType.getDouble(context, "mana");
-            component.setMana(mana);
-            double health = DoubleArgumentType.getDouble(context, "health");
-            component.setHealth(health);
-            component.sync();
+            manaComponent.setMana(mana);
+            manaComponent.sync();
         }
 
         return 1;
@@ -78,7 +78,7 @@ public class SetAttributesCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
 
         if (player != null) {
-            setHealthAndMana(context);
+            setMana(context);
             EntityAttributeInstance attribute = player.getAttributeInstance(REGENERATION_HEALTH);
             if (attribute != null) {
                 double regenerationHealth = DoubleArgumentType.getDouble(context, "regeneration health");

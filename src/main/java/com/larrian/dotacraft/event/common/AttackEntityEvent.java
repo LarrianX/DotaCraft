@@ -1,7 +1,8 @@
 package com.larrian.dotacraft.event.common;
 
+import com.larrian.dotacraft.component.hero.HealthComponent;
 import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.ValuesComponent;
+import com.larrian.dotacraft.component.hero.ManaComponent;
 import com.larrian.dotacraft.item.Weapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -18,8 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 import static com.larrian.dotacraft.init.ModAttributes.CRIT_CHANCE;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.*;
 
 public class AttackEntityEvent {
     public static int calculateDamage(PlayerEntity provider) {
@@ -46,9 +46,9 @@ public class AttackEntityEvent {
                 int damage = calculateDamage(playerSource);
                 EntityAttributeInstance critAttribute = playerSource.getAttributeInstance(CRIT_CHANCE);
                 if (critAttribute != null) {
-                    ValuesComponent valuesComponentTarget = playerTarget.getComponent(VALUES_COMPONENT);
-                    valuesComponentTarget.addHealth(-damage); // TODO: доделать крит удар
-                    valuesComponentTarget.sync();
+                    HealthComponent healthComponentTarget = playerTarget.getComponent(HEALTH_COMPONENT);
+                    healthComponentTarget.addHealth(-damage); // TODO: доделать крит удар
+                    healthComponentTarget.sync();
                 }
                 // Убирание эффектов
                 playerSource.removeStatusEffect(StatusEffects.INVISIBILITY);

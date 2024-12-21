@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.hero.ValuesComponent;
+import com.larrian.dotacraft.component.hero.ManaComponent;
 import com.larrian.dotacraft.item.Weapon;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -12,7 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.MANA_COMPONENT;
 
 
 public class ShadowBladeItem extends Weapon implements Custom {
@@ -28,10 +28,10 @@ public class ShadowBladeItem extends Weapon implements Custom {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
-        ValuesComponent valuesComponent = user.getComponent(VALUES_COMPONENT);
-        if (valuesComponent.getMana() >= MINUS_MANA || user.isCreative()) {
+        ManaComponent manaComponent = user.getComponent(MANA_COMPONENT);
+        if (manaComponent.getMana() >= MINUS_MANA || user.isCreative()) {
             if (!user.isCreative()) {
-                valuesComponent.addMana(-MINUS_MANA);
+                manaComponent.addMana(-MINUS_MANA);
                 user.getItemCooldownManager().set(this, 500);
             }
             // Применяем эффекты

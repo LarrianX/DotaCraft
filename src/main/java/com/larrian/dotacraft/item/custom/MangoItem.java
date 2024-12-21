@@ -3,7 +3,7 @@ package com.larrian.dotacraft.item.custom;
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.ValuesComponent;
+import com.larrian.dotacraft.component.hero.ManaComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.HungerManager;
@@ -16,7 +16,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.VALUES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.MANA_COMPONENT;
 
 public class MangoItem extends Item implements Custom {
     private static final String ID = "mango";
@@ -59,9 +59,9 @@ public class MangoItem extends Item implements Custom {
         HeroComponent heroComponent = user.getComponent(HERO_COMPONENT);
 
         if (heroComponent.isHero()) {
-            ValuesComponent valuesComponent = user.getComponent(VALUES_COMPONENT);
-            valuesComponent.addMana(REGENERATION);
-            valuesComponent.sync();
+            ManaComponent manaComponent = user.getComponent(MANA_COMPONENT);
+            manaComponent.addMana(REGENERATION);
+            manaComponent.sync();
         } else {
             HungerManager hunger = (user.getHungerManager());
             hunger.setFoodLevel(hunger.getFoodLevel() + 6);

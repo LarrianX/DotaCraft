@@ -42,6 +42,7 @@ public class DotaCraft implements ModInitializer {
     public static final boolean DEBUG = false;
     public static final boolean AUTO_CRAFT = true;
     public static final double ERROR = 0.00000000001;
+//    public static final double ERROR = 0.0000001;
 
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();

@@ -7,7 +7,7 @@ public class RegenerationHealthAttribute extends ClampedEntityAttribute implemen
     public static final double MIN = 0;
     public static final double MAX = 100;
     private static final String ID = "regeneration_health";
-    private static final double FALLBACK = 1;
+    private static final double FALLBACK = 0;
 
     public RegenerationHealthAttribute() {
         super("attribute.dotacraft.generic." + ID,

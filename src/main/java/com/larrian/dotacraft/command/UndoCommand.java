@@ -1,6 +1,5 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.component.EffectComponent;
 import com.larrian.dotacraft.component.hero.HeroComponent;
 import com.larrian.dotacraft.component.hero.OldValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
@@ -35,13 +34,6 @@ public class UndoCommand {
                 attribute.setBaseValue((maxHealth == 0.0) ? 20.0F : maxHealth);
                 float health = OldValuesComponent.getOldHealth();
                 player.setHealth((health == 0.0) ? 20.0F : health);
-                // Удаление amplifier с именем команды
-                AbstractTeam team = player.getScoreboardTeam();
-                if (team != null) {
-                    EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
-                    effectComponent.getAmplifiers().remove(team.getName(), 1.0);
-                    effectComponent.sync();
-                }
                 // Удаление у игрока поле героя
                 HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
                 heroComponent.setHero(false);

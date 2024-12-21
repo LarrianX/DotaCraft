@@ -2,7 +2,6 @@ package com.larrian.dotacraft.command;
 
 import com.larrian.dotacraft.attributes.MaxHealthAttribute;
 import com.larrian.dotacraft.attributes.MaxManaAttribute;
-import com.larrian.dotacraft.component.EffectComponent;
 import com.larrian.dotacraft.component.hero.*;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -88,10 +87,10 @@ public class BecomeHeroCommand {
                 maxHealthAttribute.setBaseValue(maxHealth);
                 maxManaAttribute.setBaseValue(maxMana);
                 // set health and mana
-                ValuesComponent valuesComponent = player.getComponent(VALUES_COMPONENT);
-                valuesComponent.setHealth(maxHealth);
-                valuesComponent.setMana(maxMana);
-                valuesComponent.sync();
+                ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
+                manaComponent.setMana(maxMana);
+                HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
+                healthComponent.setHealth(maxHealth);
                 // Выставление героем
                 heroComponent.setHero(true);
                 heroComponent.sync();
@@ -102,10 +101,6 @@ public class BecomeHeroCommand {
                 if (team != null) {
                     scoreboard.addPlayerToTeam(player.getEntityName(), team);
                 }
-                // Временно: показ в amplifiers к какой команде вы принадлежите
-                EffectComponent effectComponent = player.getComponent(EFFECT_COMPONENT);
-                effectComponent.getAmplifiers().put(teamName, 1.0);
-                effectComponent.sync();
             }
         }
         return 1;

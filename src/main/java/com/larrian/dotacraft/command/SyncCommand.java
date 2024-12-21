@@ -18,9 +18,11 @@ public class SyncCommand {
 
     private static int execute(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
-        EFFECT_COMPONENT.sync(player);
-        HERO_COMPONENT.sync(player);
-        VALUES_COMPONENT.sync(player);
+        if (player != null) {
+            player.getComponent(HEALTH_COMPONENT).sync();
+            player.getComponent(MANA_COMPONENT).sync();
+            player.getComponent(HERO_COMPONENT).sync();
+        }
 
         return 1;
     }

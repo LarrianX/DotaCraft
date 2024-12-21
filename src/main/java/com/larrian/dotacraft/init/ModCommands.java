@@ -11,7 +11,6 @@ public class ModCommands {
         BecomeHeroCommand.register(dispatcher);
         UndoCommand.register(dispatcher);
         SetAttributesCommand.register(dispatcher);
-        SetEffectsCommand.register(dispatcher);
         SyncCommand.register(dispatcher);
     }
 

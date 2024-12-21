@@ -41,10 +41,10 @@
   },
   "custom": {
     "cardinal-components": [
-      "dotacraft:effect",
       "dotacraft:hero",
-      "dotacraft:values",
-      "dotacraft:old_values"
+      "dotacraft:old_values",
+      "dotacraft:mana",
+      "dotacraft:health"
     ]
   }
 }
