@@ -4,6 +4,7 @@ import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.item.custom.*;
 import com.larrian.dotacraft.item.rune.RuneDoubleDamageItem;
+import com.larrian.dotacraft.item.rune.RuneInvisibilityItem;
 import com.larrian.dotacraft.item.rune.RuneSpeedItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -29,6 +30,7 @@ public class ModItems {
     public static final TangoTFItem TANGO_TF = new TangoTFItem();
     public static final RuneSpeedItem RUNE_SPEED = new RuneSpeedItem();
     public static final RuneDoubleDamageItem RUNE_DOUBLE_DAMAGE = new RuneDoubleDamageItem();
+    public static final RuneInvisibilityItem RUNE_INVISIBILITY = new RuneInvisibilityItem();
     public static final PhaseBootsItem PHASE_BOOTS = new PhaseBootsItem();
 
     public static final Item[] ITEMS = {
@@ -50,6 +52,7 @@ public class ModItems {
             TANGO_TF,
             RUNE_SPEED,
             RUNE_DOUBLE_DAMAGE,
+            RUNE_INVISIBILITY,
             PHASE_BOOTS
     };
 
