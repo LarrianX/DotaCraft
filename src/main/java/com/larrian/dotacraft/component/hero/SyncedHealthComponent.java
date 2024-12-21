@@ -9,7 +9,7 @@ import static com.larrian.dotacraft.init.ModComponents.HEALTH_COMPONENT;
 
 public class SyncedHealthComponent implements HealthComponent, AutoSyncedComponent {
     private final PlayerEntity provider;
-    private double mana;
+    private double health;
 
     public SyncedHealthComponent(PlayerEntity provider) {
         this.provider = provider;
@@ -27,31 +27,31 @@ public class SyncedHealthComponent implements HealthComponent, AutoSyncedCompone
 
     @Override
     public boolean isNotFullHealth() {
-        return this.mana == provider.getAttributeValue(MAX_HEALTH);
+        return this.health == provider.getAttributeValue(MAX_HEALTH);
     }
 
     @Override
-    public void addHealth(double mana) {
-        setHealth(getHealth() + mana);
+    public void addHealth(double health) {
+        setHealth(getHealth() + health);
     }
 
     @Override
     public double getHealth() {
-        return this.mana;
+        return this.health;
     }
 
     @Override
-    public void setHealth(double mana) {
-        this.mana = Math.max(Math.min(mana, provider.getAttributeValue(MAX_HEALTH)), 0);
+    public void setHealth(double health) {
+        this.health = Math.max(Math.min(health, provider.getAttributeValue(MAX_HEALTH)), 0);
     }
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        this.mana = tag.getDouble("health");
+        this.health = tag.getDouble("health");
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putDouble("health", this.mana);
+        tag.putDouble("health", this.health);
     }
 }
