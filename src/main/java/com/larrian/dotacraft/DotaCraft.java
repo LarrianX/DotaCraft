@@ -14,6 +14,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.scoreboard.Scoreboard;
@@ -43,7 +44,6 @@ public class DotaCraft implements ModInitializer {
     public static final boolean AUTO_CRAFT = true;
     public static final double ERROR = 0.00000000001;
 //    public static final double ERROR = 0.0000001;
-
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();
     static {
