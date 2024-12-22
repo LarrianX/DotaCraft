@@ -7,7 +7,7 @@ import net.minecraft.entity.effect.StatusEffect;
 public class InvisibilityRune implements Rune {
     private static final String ID = "invisibility";
     private static final int DURATION = 900;
-    private static final StatusEffect EFFECT = ModEffects.RUNE_DOUBLE_DAMAGE_EFFECT;
+    private static final StatusEffect EFFECT = ModEffects.RUNE_INVISIBILITY_EFFECT;
 
     @Override
     public String getId() {
