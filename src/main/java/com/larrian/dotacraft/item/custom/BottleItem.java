@@ -121,7 +121,7 @@ public class BottleItem extends Item implements Custom {
         }
         // Использование руны
         if (rune != null) {
-            user.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
+            user.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration(), 0, false, false), null);
             user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.0F);
 
             if (!user.isCreative()) {

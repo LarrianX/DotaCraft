@@ -19,6 +19,8 @@ public final class ModComponents implements EntityComponentInitializer {// Hero 
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "health"), HealthComponent.class);
     public static final ComponentKey<OldValuesComponent> OLD_VALUES_COMPONENT =
             ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "old_values"), OldValuesComponent.class);
+    public static final ComponentKey<AttributesComponent> ATTRIBUTES_COMPONENT =
+            ComponentRegistryV3.INSTANCE.getOrCreate(new Identifier(DotaCraft.MOD_ID, "attributes"), AttributesComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
@@ -26,5 +28,6 @@ public final class ModComponents implements EntityComponentInitializer {// Hero 
         registry.registerForPlayers(HERO_COMPONENT, SyncedHeroComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
         registry.registerForPlayers(MANA_COMPONENT, SyncedManaComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
         registry.registerForPlayers(HEALTH_COMPONENT, SyncedHealthComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
+        registry.registerForPlayers(ATTRIBUTES_COMPONENT, SyncedAttributesComponent::new, RespawnCopyStrategy.LOSSLESS_ONLY);
     }
 }

@@ -1,5 +1,6 @@
 package com.larrian.dotacraft.mixin;
 
+import com.larrian.dotacraft.component.hero.AttributesComponent;
 import com.larrian.dotacraft.component.hero.HealthComponent;
 import com.larrian.dotacraft.component.hero.HeroComponent;
 import com.larrian.dotacraft.component.hero.ManaComponent;
@@ -8,6 +9,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -119,16 +122,24 @@ public class ReplaceBarsMixin {
     @Unique
     private void drawTexts(DrawContext context, PlayerEntity player, Set<Integer> blockedSlots, MinecraftClient client) {
         int x = context.getScaledWindowWidth() / 2 + 100;
-        int y = context.getScaledWindowHeight() - 50;
+        int y = context.getScaledWindowHeight() - 80;
 
         AbstractTeam team = player.getScoreboardTeam();
         if (team != null) {
             context.drawTextWithShadow(client.textRenderer, team.getName(), x, y, 16777215);
-            y -= 10;
+            y += 10;
         }
         for (Integer slot : blockedSlots) {
             context.drawTextWithShadow(client.textRenderer, slot.toString(), x, y, 16777215);
-            y -= 10;
+            y += 10;
+        }
+        AttributesComponent component = player.getComponent(ATTRIBUTES_COMPONENT);
+        NbtCompound nbt = new NbtCompound();
+        component.writeToNbt(nbt);
+        for (String key : nbt.getKeys()) {
+            context.drawTextWithShadow(client.textRenderer, key, x, y, 16777215);
+            context.drawTextWithShadow(client.textRenderer, String.valueOf((int)nbt.getDouble(key)), x + 132, y, 16777215);
+            y += 10;
         }
     }
 

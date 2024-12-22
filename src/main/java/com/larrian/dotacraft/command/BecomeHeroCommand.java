@@ -37,7 +37,7 @@ public class BecomeHeroCommand {
         return builder.buildFuture();
     };
     private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS_VALUES = (context, builder) -> {
-        builder.suggest(String.valueOf((int) MaxHealthAttribute.MAX));
+        builder.suggest("10000");
         return builder.buildFuture();
     };
 
