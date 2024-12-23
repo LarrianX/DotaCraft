@@ -44,7 +44,8 @@
       "dotacraft:hero",
       "dotacraft:old_values",
       "dotacraft:mana",
-      "dotacraft:health"
+      "dotacraft:health",
+      "dotacraft:attributes"
     ]
   }
 }

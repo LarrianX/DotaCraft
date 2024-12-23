@@ -7,6 +7,7 @@ import com.larrian.dotacraft.rune.Rune;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -69,7 +70,7 @@ public abstract class ItemEntityMixin extends Entity {
                     if (!result) {
                         // Если в инвентаре нет пустой бутылки - используем руну так
                         Rune rune = runeItem.getRune();
-                        player.setStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration()), null);
+                        player.addStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration(), 0, false, false),null);
                         kill();
                         return ActionResult.SUCCESS;
                     }
