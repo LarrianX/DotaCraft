@@ -7,7 +7,7 @@ import com.larrian.dotacraft.rune.custom.SpeedRune;
 public enum Runes {
     speed(new SpeedRune(), 0.4F),
     double_damage(new DoubleDamageRune(), 0.5F),
-    invisibility(new InvisibilityRune(), 0.5F);
+    invisibility(new InvisibilityRune(), 0.6F);
 
     private final Rune rune;
     private final float state;

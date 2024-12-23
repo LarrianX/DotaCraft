@@ -36,6 +36,12 @@
         "state": 0.5
       },
       "model": "dotacraft:item/bottle_double_damage"
+    },
+    {
+      "predicate": {
+        "state": 0.6
+      },
+      "model": "dotacraft:item/bottle_invisibility"
     }
   ]
 }
