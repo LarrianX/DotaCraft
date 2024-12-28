@@ -5,7 +5,9 @@ import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.effect.item.*;
 import com.larrian.dotacraft.effect.rune.RuneDoubleDamageEffect;
 import com.larrian.dotacraft.effect.rune.RuneInvisibilityEffect;
+import com.larrian.dotacraft.effect.rune.RuneRegenerationEffect;
 import com.larrian.dotacraft.effect.rune.RuneSpeedEffect;
+import com.larrian.dotacraft.item.rune.RuneRegenerationItem;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -20,6 +22,7 @@ public class ModEffects {
     public static final StatusEffect RUNE_SPEED_EFFECT = new RuneSpeedEffect();
     public static final StatusEffect RUNE_DOUBLE_DAMAGE_EFFECT = new RuneDoubleDamageEffect();
     public static final StatusEffect RUNE_INVISIBILITY_EFFECT = new RuneInvisibilityEffect();
+    public static final StatusEffect RUNE_REGENERATION_EFFECT = new RuneRegenerationEffect();
 
     public static final StatusEffect[] EFFECTS = {
             BOTTLE_REGENERATION_HEALTH,
@@ -29,7 +32,8 @@ public class ModEffects {
             TANGO_REGENERATION_HEALTH,
             RUNE_SPEED_EFFECT,
             RUNE_DOUBLE_DAMAGE_EFFECT,
-            RUNE_INVISIBILITY_EFFECT
+            RUNE_INVISIBILITY_EFFECT,
+            RUNE_REGENERATION_EFFECT
     };
 
     private static void registerEffects() {
