@@ -37,9 +37,9 @@ public class SetAttributesCommand {
 
         if (player != null) {
             ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
-            manaComponent.setMana(player.getAttributeValue(REGENERATION_MANA));
+            manaComponent.set(player.getAttributeValue(REGENERATION_MANA));
             HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
-            healthComponent.setHealth(player.getAttributeValue(REGENERATION_HEALTH));
+            healthComponent.set(player.getAttributeValue(REGENERATION_HEALTH));
 //            AttributesComponent attributesComponent = player.getComponent(ATTRIBUTES_COMPONENT);
 //            attributesComponent.setStrength(30000);
 //            attributesComponent.setAgility(30000);
@@ -56,7 +56,7 @@ public class SetAttributesCommand {
         if (player != null) {
             HealthComponent component = player.getComponent(HEALTH_COMPONENT);
             double health = DoubleArgumentType.getDouble(context, "health");
-            component.setHealth(health);
+            component.set(health);
             component.sync();
         }
 
@@ -70,7 +70,7 @@ public class SetAttributesCommand {
             setHealth(context);
             ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
             double mana = DoubleArgumentType.getDouble(context, "mana");
-            manaComponent.setMana(mana);
+            manaComponent.set(mana);
             manaComponent.sync();
         }
 

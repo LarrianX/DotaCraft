@@ -4,7 +4,7 @@ import com.larrian.dotacraft.init.ModEffects;
 import com.larrian.dotacraft.rune.Rune;
 import net.minecraft.entity.effect.StatusEffect;
 
-public class DoubleDamageRune implements Rune {
+public class DoubleDamageRune extends Rune {
     private static final String ID = "double_damage";
     private static final int DURATION = 900;
     private static final StatusEffect EFFECT = ModEffects.RUNE_DOUBLE_DAMAGE_EFFECT;

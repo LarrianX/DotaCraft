@@ -3,7 +3,7 @@ package com.larrian.dotacraft.component.hero;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 
-public interface AttributesComponent extends ComponentV3, ServerTickingComponent {
+public interface AttributesComponent extends ComponentV3 {
     double getStrength();
 
     void setStrength(double strength);

@@ -6,7 +6,6 @@ import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 
 import static com.larrian.dotacraft.init.ModComponents.*;
 
@@ -24,9 +23,9 @@ public abstract class RegenerationMana extends StatusEffect {
         if (entity instanceof ServerPlayerEntity player) {
             // +amplifier прибавится на клиенте
             ManaComponent component = player.getComponent(MANA_COMPONENT);
-            component.addMana(-amplifier);
+            component.add(-amplifier);
             component.sync();
-            component.addMana(amplifier);
+            component.add(amplifier);
         }
     }
 }

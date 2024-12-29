@@ -29,9 +29,9 @@ public class ShadowBladeItem extends Weapon implements Custom {
         ItemStack stack = user.getStackInHand(hand);
 
         ManaComponent manaComponent = user.getComponent(MANA_COMPONENT);
-        if (manaComponent.getMana() >= MINUS_MANA || user.isCreative()) {
+        if (manaComponent.get() >= MINUS_MANA || user.isCreative()) {
             if (!user.isCreative()) {
-                manaComponent.addMana(-MINUS_MANA);
+                manaComponent.add(-MINUS_MANA);
                 user.getItemCooldownManager().set(this, 500);
             }
             // Применяем эффекты

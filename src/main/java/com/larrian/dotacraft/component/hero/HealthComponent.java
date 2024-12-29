@@ -4,13 +4,13 @@ import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 
 public interface HealthComponent extends ComponentV3, CommonTickingComponent {
-    double getHealth();
+    double get();
 
-    void setHealth(double health);
+    void set(double health);
 
-    void addHealth(double health);
+    void add(double health);
 
-    boolean isNotFullHealth();
+    boolean isFull();
 
     void sync();
 }

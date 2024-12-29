@@ -12,14 +12,14 @@ public enum Runes {
     regeneration(new RegenerationRune(), 0.7F);
 
     private final Rune rune;
-    private final float state;
+    private final float predicateState;
 
-    Runes(Rune rune, float state) {
+    Runes(Rune rune, float predicateState) {
         this.rune = rune;
 //        if (state < 0 || state > 1) {
 //            throw new Exception();
 //        }
-        this.state = state;
+        this.predicateState = predicateState;
     }
 
     public Rune getRune() {
@@ -27,6 +27,6 @@ public enum Runes {
     }
 
     public float getState() {
-        return this.state;
+        return this.predicateState;
     }
 }

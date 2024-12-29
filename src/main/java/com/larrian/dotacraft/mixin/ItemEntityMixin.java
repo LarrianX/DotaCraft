@@ -70,7 +70,7 @@ public abstract class ItemEntityMixin extends Entity {
                     if (!result) {
                         // Если в инвентаре нет пустой бутылки - используем руну так
                         Rune rune = runeItem.getRune();
-                        player.addStatusEffect(new StatusEffectInstance(rune.getEffect(), rune.getDuration(), 0, false, false),null);
+                        rune.use(player);
                         kill();
                         return ActionResult.SUCCESS;
                     }

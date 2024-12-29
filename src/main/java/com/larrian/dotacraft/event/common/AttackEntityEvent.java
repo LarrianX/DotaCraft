@@ -2,7 +2,6 @@ package com.larrian.dotacraft.event.common;
 
 import com.larrian.dotacraft.component.hero.HealthComponent;
 import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.ManaComponent;
 import com.larrian.dotacraft.item.Weapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -47,7 +46,7 @@ public class AttackEntityEvent {
                 EntityAttributeInstance critAttribute = playerSource.getAttributeInstance(CRIT_CHANCE);
                 if (critAttribute != null) {
                     HealthComponent healthComponentTarget = playerTarget.getComponent(HEALTH_COMPONENT);
-                    healthComponentTarget.addHealth(-damage); // TODO: доделать крит удар
+                    healthComponentTarget.add(-damage); // TODO: доделать крит удар
                     healthComponentTarget.sync();
                 }
                 // Убирание эффектов

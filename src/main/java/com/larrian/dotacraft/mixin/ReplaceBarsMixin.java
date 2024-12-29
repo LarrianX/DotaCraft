@@ -10,7 +10,6 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
-import java.util.Map;
 import java.util.Set;
 
 import static com.larrian.dotacraft.init.ModAttributes.*;
@@ -153,8 +151,8 @@ public class ReplaceBarsMixin {
                 ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
                 HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
 
-                int mana = (int) manaComponent.getMana();
-                int health = (int) healthComponent.getHealth();
+                int mana = (int) manaComponent.get();
+                int health = (int) healthComponent.get();
                 int maxMana = (int) player.getAttributeValue(MAX_MANA);
                 int maxHealth = (int) player.getAttributeValue(MAX_HEALTH);
                 Set<Integer> blockedSlots = heroComponent.getBlocked();

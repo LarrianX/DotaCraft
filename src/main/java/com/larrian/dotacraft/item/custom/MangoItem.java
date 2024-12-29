@@ -60,7 +60,7 @@ public class MangoItem extends Item implements Custom {
 
         if (heroComponent.isHero()) {
             ManaComponent manaComponent = user.getComponent(MANA_COMPONENT);
-            manaComponent.addMana(REGENERATION);
+            manaComponent.add(REGENERATION);
             manaComponent.sync();
         } else {
             HungerManager hunger = (user.getHungerManager());

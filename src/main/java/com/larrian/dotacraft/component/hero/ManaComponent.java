@@ -4,13 +4,13 @@ import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 
 public interface ManaComponent extends ComponentV3, CommonTickingComponent {
-    double getMana();
+    double get();
 
-    void setMana(double mana);
+    void set(double mana);
 
-    void addMana(double mana);
+    void add(double mana);
 
-    boolean isNotFullMana();
+    boolean isFull();
 
     void sync();
 }

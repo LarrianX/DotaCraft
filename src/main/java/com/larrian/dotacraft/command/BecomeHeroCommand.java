@@ -88,9 +88,9 @@ public class BecomeHeroCommand {
                 maxManaAttribute.setBaseValue(maxMana);
                 // set health and mana
                 ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
-                manaComponent.setMana(maxMana);
+                manaComponent.set(maxMana);
                 HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
-                healthComponent.setHealth(maxHealth);
+                healthComponent.set(maxHealth);
                 // Выставление героем
                 heroComponent.setHero(true);
                 heroComponent.sync();

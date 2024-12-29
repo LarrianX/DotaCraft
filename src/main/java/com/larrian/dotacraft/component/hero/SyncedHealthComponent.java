@@ -22,26 +22,26 @@ public class SyncedHealthComponent implements HealthComponent, AutoSyncedCompone
 
     @Override
     public void tick() {
-        addHealth(provider.getAttributeValue(REGENERATION_HEALTH));
+        add(provider.getAttributeValue(REGENERATION_HEALTH));
     }
 
     @Override
-    public boolean isNotFullHealth() {
+    public boolean isFull() {
         return this.health == provider.getAttributeValue(MAX_HEALTH);
     }
 
     @Override
-    public void addHealth(double health) {
-        setHealth(getHealth() + health);
+    public void add(double health) {
+        set(get() + health);
     }
 
     @Override
-    public double getHealth() {
+    public double get() {
         return this.health;
     }
 
     @Override
-    public void setHealth(double health) {
+    public void set(double health) {
         this.health = Math.max(Math.min(health, provider.getAttributeValue(MAX_HEALTH)), 0);
     }
 

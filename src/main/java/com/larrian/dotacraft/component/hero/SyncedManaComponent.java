@@ -22,26 +22,26 @@ public class SyncedManaComponent implements ManaComponent, AutoSyncedComponent {
 
     @Override
     public void tick() {
-        addMana(provider.getAttributeValue(REGENERATION_MANA));
+        add(provider.getAttributeValue(REGENERATION_MANA));
     }
 
     @Override
-    public boolean isNotFullMana() {
+    public boolean isFull() {
         return this.mana == provider.getAttributeValue(MAX_MANA);
     }
 
     @Override
-    public void addMana(double mana) {
-        setMana(getMana() + mana);
+    public void add(double mana) {
+        set(get() + mana);
     }
 
     @Override
-    public double getMana() {
+    public double get() {
         return this.mana;
     }
 
     @Override
-    public void setMana(double mana) {
+    public void set(double mana) {
         this.mana = Math.max(Math.min(mana, provider.getAttributeValue(MAX_MANA)), 0);
     }
 

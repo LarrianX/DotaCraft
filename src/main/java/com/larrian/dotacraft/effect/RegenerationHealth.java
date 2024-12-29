@@ -6,7 +6,6 @@ import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 
 import static com.larrian.dotacraft.init.ModComponents.HEALTH_COMPONENT;
 
@@ -24,9 +23,9 @@ public abstract class RegenerationHealth extends StatusEffect {
         if (entity instanceof ServerPlayerEntity player) {
             // +amplifier прибавится на клиенте
             HealthComponent component = player.getComponent(HEALTH_COMPONENT);
-            component.addHealth(-amplifier);
+            component.add(-amplifier);
             component.sync();
-            component.addHealth(amplifier);
+            component.add(amplifier);
         }
     }
 }
