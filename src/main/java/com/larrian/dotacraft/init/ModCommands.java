@@ -12,6 +12,8 @@ public class ModCommands {
         UndoCommand.register(dispatcher);
         SetAttributesCommand.register(dispatcher);
         SyncCommand.register(dispatcher);
+        UpCommand.register(dispatcher);
+        ResetCommand.register(dispatcher);
     }
 
     public static void registerModCommands() {
