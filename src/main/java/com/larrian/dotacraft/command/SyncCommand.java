@@ -22,6 +22,7 @@ public class SyncCommand {
             player.getComponent(HEALTH_COMPONENT).sync();
             player.getComponent(MANA_COMPONENT).sync();
             player.getComponent(HERO_COMPONENT).sync();
+            player.getComponent(ATTRIBUTES_COMPONENT).sync();
         }
 
         return 1;

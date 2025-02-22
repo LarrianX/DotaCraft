@@ -1,15 +1,12 @@
 package com.larrian.dotacraft.component.hero;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import static com.larrian.dotacraft.init.ModAttributes.*;
@@ -17,8 +14,12 @@ import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
 
 public class SyncedAttributesComponent implements AttributesComponent, AutoSyncedComponent {
     private static final double LIMIT = 30000.0;
+    private static final int LEVEL_LIMIT = 30;
+    private static final int LEVEL_BOOST = 2;
 
     private final PlayerEntity provider;
+
+    private int level; // 0 - 30
 
     private double strength;
     private double agility;
@@ -31,6 +32,34 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     @Override
     public void sync() {
         provider.syncComponent(ATTRIBUTES_COMPONENT);
+    }
+
+    @Override
+    public int getLevel() {
+        return this.level;
+    }
+
+    @Override
+    public void resetLevel() {
+        addStrength(-LEVEL_BOOST * getLevel());
+        addAgility(-LEVEL_BOOST * getLevel());
+        addIntelligence(-LEVEL_BOOST * getLevel());
+        this.level = 0;
+    }
+
+    @Override
+    public void setLevel(int level) {
+        resetLevel();
+        level = Math.max(0, Math.min(level, LEVEL_LIMIT));
+        addStrength(LEVEL_BOOST * level);
+        addAgility(LEVEL_BOOST * level);
+        addIntelligence(LEVEL_BOOST * level);
+        this.level = level;
+    }
+
+    @Override
+    public void addLevel(int level) {
+        setLevel(getLevel() + level);
     }
 
     @Override
@@ -83,6 +112,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public void readFromNbt(NbtCompound tag) {
+        this.level = tag.getInt("level");
         this.strength = tag.getDouble("strength");
         this.agility = tag.getDouble("agility");
         this.intelligence = tag.getDouble("intelligence");
@@ -91,6 +121,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public void writeToNbt(NbtCompound tag) {
+        tag.putInt("level", this.level);
         tag.putDouble("strength", this.strength);
         tag.putDouble("agility", this.agility);
         tag.putDouble("intelligence", this.intelligence);
