@@ -24,27 +24,19 @@ public class ClarityItem extends Item implements Custom {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Получаем стак, который игрок держит в руке
         ItemStack stack = user.getStackInHand(hand);
-
-        // Максимальная дистанция, на которую игрок может взаимодействовать с сущностями
         Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
 
         if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
-            // Применяем эффекты на игрока, на которого смотрят
             applyEffects(playerTarget);
         } else {
-            // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
             applyEffects(user);
         }
 
-        // Если игрок не в креативе - уменьшаем стак на один
         if (!user.isCreative()) {
-            user.getItemCooldownManager().set(this, 10);
             stack.decrement(1);
         }
 
-        // Успех
         return TypedActionResult.success(stack);
     }
 

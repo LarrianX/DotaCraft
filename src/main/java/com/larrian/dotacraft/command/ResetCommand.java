@@ -1,10 +1,9 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.component.hero.AttributesComponent;
-import com.larrian.dotacraft.component.hero.HealthComponent;
-import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.ManaComponent;
-import com.larrian.dotacraft.init.ModAttributes;
+import com.larrian.dotacraft.component.AttributesComponent;
+import com.larrian.dotacraft.component.HealthComponent;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.ManaComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.entity.attribute.EntityAttributeInstance;

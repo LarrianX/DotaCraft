@@ -1,14 +1,14 @@
-package com.larrian.dotacraft.component.hero;
+package com.larrian.dotacraft.component;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 
-public interface HealthComponent extends ComponentV3, CommonTickingComponent {
+public interface ManaComponent extends ComponentV3, CommonTickingComponent {
     double get();
 
-    void set(double health);
+    void set(double mana);
 
-    void add(double health);
+    void add(double mana);
 
     boolean isFull();
 

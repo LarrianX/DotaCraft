@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.component.hero.AttributesComponent;
+import com.larrian.dotacraft.component.AttributesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;

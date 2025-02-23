@@ -48,13 +48,11 @@ public class TangoTFItem extends Item implements Custom {
         int secondsLeft = (TIME / 20) - (tickPassed / 20);
 
         if (!world.isClient && entity instanceof ServerPlayerEntity player) {
-            // Проверяем, что игрок держит предмет в руке
             if (player.getStackInHand(player.getActiveHand()) == stack) {
                 player.networkHandler.sendPacket(new OverlayMessageS2CPacket(Text.translatable("text.dotacraft.tango_timer", secondsLeft)));
             }
         }
 
-        // Проверяем, прошло ли 20 тиков (1 секунда)
         if (tickPassed > TIME) {
             stack.decrement(1);
         }
@@ -64,7 +62,6 @@ public class TangoTFItem extends Item implements Custom {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
 
-        // Проверка, на что нацелился игрок (дерево)
         BlockHitResult hitResult = (BlockHitResult) player.raycast(5.0D, 0.0F, false);
         if (hitResult.getType() == BlockHitResult.Type.BLOCK && world.getBlockState(hitResult.getBlockPos()).getBlock() == Blocks.OAK_LOG) {
 

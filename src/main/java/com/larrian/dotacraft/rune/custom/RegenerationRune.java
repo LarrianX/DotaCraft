@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.rune.custom;
 
-import com.larrian.dotacraft.component.hero.HealthComponent;
-import com.larrian.dotacraft.component.hero.ManaComponent;
+import com.larrian.dotacraft.component.HealthComponent;
+import com.larrian.dotacraft.component.ManaComponent;
 import com.larrian.dotacraft.init.ModEffects;
 import com.larrian.dotacraft.rune.Rune;
 import net.minecraft.entity.effect.StatusEffect;

@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.effect;
 
-import com.larrian.dotacraft.component.hero.ManaComponent;
+import com.larrian.dotacraft.component.ManaComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;

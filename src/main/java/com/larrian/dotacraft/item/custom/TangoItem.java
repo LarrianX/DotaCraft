@@ -39,11 +39,9 @@ public class TangoItem extends Item implements Custom {
     }
 
     public static void removeTree(World world, BlockPos pos) {
-        // Проверка, является ли блок древесиной
         if (world.getBlockState(pos).getBlock() == Blocks.OAK_LOG || world.getBlockState(pos).getBlock() == Blocks.OAK_LEAVES) {
             world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-            // Рекурсивный вызов для проверки всех соседних блоков
             for (Direction direction : Direction.values()) {
                 BlockPos neighborPos = pos.offset(direction);
                 removeTree(world, neighborPos);
@@ -76,11 +74,9 @@ public class TangoItem extends Item implements Custom {
             return TypedActionResult.fail(stack);
         }
 
-        // Проверка, на что нацелился игрок
         Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
         if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
             playerTarget.giveItemStack(new ItemStack(TANGO_TF, 1));
-            user.getItemCooldownManager().set(this, 10);
             updateStack(stack);
         } else {
             BlockHitResult hitResult = (BlockHitResult) user.raycast(5.0D, 0.0F, false);

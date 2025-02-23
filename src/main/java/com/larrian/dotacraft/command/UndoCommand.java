@@ -1,12 +1,11 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.OldValuesComponent;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.OldValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;

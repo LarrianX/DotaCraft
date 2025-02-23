@@ -1,4 +1,4 @@
-package com.larrian.dotacraft.component.hero;
+package com.larrian.dotacraft.component;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 

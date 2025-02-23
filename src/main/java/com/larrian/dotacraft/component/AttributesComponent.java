@@ -1,7 +1,6 @@
-package com.larrian.dotacraft.component.hero;
+package com.larrian.dotacraft.component;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
-import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 
 public interface AttributesComponent extends ComponentV3 {
     int getLevel();

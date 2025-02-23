@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.component.hero.*;
+import com.larrian.dotacraft.component.*;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;

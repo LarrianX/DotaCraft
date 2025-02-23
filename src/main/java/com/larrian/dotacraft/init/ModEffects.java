@@ -2,6 +2,7 @@ package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.effect.custom.DisarmEffect;
 import com.larrian.dotacraft.effect.item.BottleRegenerationHealthEffect;
 import com.larrian.dotacraft.effect.item.BottleRegenerationManaEffect;
 import com.larrian.dotacraft.effect.item.ClarityRegenerationManaEffect;
@@ -19,15 +20,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModEffects {
-
-    // Список всех зарегистрированных эффектов
+    // List of all effects
     public static final List<StatusEffect> EFFECTS = new ArrayList<>();
 
+    // custom
+    public static final StatusEffect DISARM_EFFECT = register(new DisarmEffect());
+    // item
     public static final StatusEffect BOTTLE_REGENERATION_HEALTH = register(new BottleRegenerationHealthEffect());
     public static final StatusEffect BOTTLE_REGENERATION_MANA = register(new BottleRegenerationManaEffect());
     public static final StatusEffect CLARITY_REGENERATION_MANA = register(new ClarityRegenerationManaEffect());
     public static final StatusEffect FLASK_REGENERATION_HEALTH = register(new FlaskRegenerationHealthEffect());
     public static final StatusEffect TANGO_REGENERATION_HEALTH = register(new TangoRegenerationHealthEffect());
+    // rune
     public static final StatusEffect RUNE_SPEED_EFFECT = register(new RuneSpeedEffect());
     public static final StatusEffect RUNE_DOUBLE_DAMAGE_EFFECT = register(new RuneDoubleDamageEffect());
     public static final StatusEffect RUNE_INVISIBILITY_EFFECT = register(new RuneInvisibilityEffect());
@@ -44,6 +48,5 @@ public class ModEffects {
 
     public static void registerModEffects() {
         DotaCraft.LOGGER.info("Registering Mod Effects for " + DotaCraft.MOD_ID);
-        // Регистрация выполнена при инициализации статических полей
     }
 }

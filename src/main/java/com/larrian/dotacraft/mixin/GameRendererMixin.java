@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.hero.HeroComponent;
+import com.larrian.dotacraft.component.HeroComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;

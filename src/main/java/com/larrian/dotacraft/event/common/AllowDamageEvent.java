@@ -5,14 +5,12 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModEffects.DISARM_EFFECT;
 
 public class AllowDamageEvent {
     public static boolean event(LivingEntity entity, DamageSource source, float amount) {
-        if (entity instanceof PlayerEntity player && player.getComponent(HERO_COMPONENT).isHero()) {
-            player.setHealth(20);
-            player.setFireTicks(0);
-            player.setFrozenTicks(0);
-            return false;
+        if (source.getAttacker() instanceof PlayerEntity player) {
+            return !player.hasStatusEffect(DISARM_EFFECT);
         } else {
             return true;
         }

@@ -2,8 +2,8 @@ package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.ManaComponent;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.ManaComponent;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.HungerManager;
@@ -29,27 +29,19 @@ public class MangoItem extends Item implements Custom {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        // Получаем стак, который игрок держит в руке
         ItemStack stack = user.getStackInHand(hand);
-
-        // Максимальная дистанция, на которую игрок может взаимодействовать с сущностями
         Entity targetedEntity = DotaCraft.getTargetedEntity(world, user, 5.0D);
 
         if (targetedEntity instanceof PlayerEntity playerTarget && user.isTeammate(playerTarget)) {
-            // Применяем эффекты на игрока, на которого смотрят
             applyEffects(playerTarget);
         } else {
-            // Если игрок ни на кого не смотрит, применяем эффекты на самого пользователя
             applyEffects(user);
         }
 
-        // Если игрок не в креативе - уменьшаем стак на один
         if (!user.isCreative()) {
-            user.getItemCooldownManager().set(this, 10);
             stack.decrement(1);
         }
 
-        // Успех
         return TypedActionResult.success(stack);
     }
 

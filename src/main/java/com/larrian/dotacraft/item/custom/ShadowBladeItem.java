@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.hero.ManaComponent;
+import com.larrian.dotacraft.component.ManaComponent;
 import com.larrian.dotacraft.item.Weapon;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -34,7 +34,6 @@ public class ShadowBladeItem extends Weapon implements Custom {
                 manaComponent.add(-MINUS_MANA);
                 user.getItemCooldownManager().set(this, 500);
             }
-            // Применяем эффекты
             applyEffects(user);
             return TypedActionResult.success(stack);
         } else {
@@ -42,13 +41,12 @@ public class ShadowBladeItem extends Weapon implements Custom {
         }
     }
 
-    private void applyEffects(PlayerEntity user) {
-        user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-        // Создаем эффект невидимости без частиц
+    private void applyEffects(PlayerEntity player) {
+        player.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
         StatusEffectInstance invisibilityEffect = new StatusEffectInstance(
                 StatusEffects.INVISIBILITY, 340, 0, false, false
         );
-        user.addStatusEffect(invisibilityEffect);
+        player.addStatusEffect(invisibilityEffect);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.larrian.dotacraft.component.hero;
+package com.larrian.dotacraft.component;
 
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -25,6 +25,8 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     private double agility;
     private double intelligence;
 
+    // TODO: speed and damage
+
     public SyncedAttributesComponent(PlayerEntity provider) {
         this.provider = provider;
     }
@@ -49,11 +51,11 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public void setLevel(int level) {
-        resetLevel();
         level = Math.max(0, Math.min(level, LEVEL_LIMIT));
-        addStrength(LEVEL_BOOST * level);
-        addAgility(LEVEL_BOOST * level);
-        addIntelligence(LEVEL_BOOST * level);
+        int forAdd = level - getLevel();
+        addStrength(LEVEL_BOOST * forAdd);
+        addAgility(LEVEL_BOOST * forAdd);
+        addIntelligence(LEVEL_BOOST * forAdd);
         this.level = level;
     }
 
@@ -127,14 +129,6 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         tag.putDouble("intelligence", this.intelligence);
     }
 
-    private void removeModifier(EntityAttributeInstance attribute, UUID uuid) {
-        for (EntityAttributeModifier modifier : attribute.getModifiers()) {
-            if (modifier.getId().equals(uuid)) {
-                attribute.removeModifier(modifier);
-            }
-        }
-    }
-
     private void applyStrengthModifiers() {
         addModifier(MAX_HEALTH, "38F520DA-4892-4F79-A0F9-141781473B8F", strength * 22);
         addModifier(REGENERATION_HEALTH, "31BC4398-D5BC-4035-AC59-E2A253E825CF", strength * (0.1 / 20));
@@ -163,6 +157,14 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
             removeModifier(attributeInstance, uuid);
             if (amount > 0) {
                 attributeInstance.addPersistentModifier(modifier);
+            }
+        }
+    }
+
+    private void removeModifier(EntityAttributeInstance attribute, UUID uuid) {
+        for (EntityAttributeModifier modifier : attribute.getModifiers()) {
+            if (modifier.getId().equals(uuid)) {
+                attribute.removeModifier(modifier);
             }
         }
     }

@@ -53,8 +53,6 @@ public class DotaCraft implements ModInitializer {
     }
 
     public static Entity getTargetedEntity(World world, Entity entity, double reachDistance) {
-        // Выполняем raycast (луч) для поиска сущности, на который смотрит игрок
-        // Код полностью скопирован с GameRenderer
         HitResult crosshairTarget = entity.raycast(reachDistance, 1.0F, false);
         Vec3d vec3d = entity.getCameraPosVec(1.0F);
         double e = reachDistance;

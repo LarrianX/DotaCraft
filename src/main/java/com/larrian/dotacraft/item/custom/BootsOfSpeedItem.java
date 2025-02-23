@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 public class BootsOfSpeedItem extends Item implements Custom {
     private static final String ID = "boots_of_speed";
 
+    // TODO: сделать +45 к скорости передвижения
+
     public BootsOfSpeedItem() {
         super(new FabricItemSettings().maxCount(1));
     }

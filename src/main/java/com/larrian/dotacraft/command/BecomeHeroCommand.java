@@ -2,7 +2,8 @@ package com.larrian.dotacraft.command;
 
 import com.larrian.dotacraft.attributes.MaxHealthAttribute;
 import com.larrian.dotacraft.attributes.MaxManaAttribute;
-import com.larrian.dotacraft.component.hero.*;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.OldValuesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -22,7 +23,7 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-import static com.larrian.dotacraft.component.hero.SyncedHeroComponent.HEALTH;
+import static com.larrian.dotacraft.component.SyncedHeroComponent.HEALTH;
 import static com.larrian.dotacraft.init.ModAttributes.*;
 import static com.larrian.dotacraft.init.ModComponents.*;
 

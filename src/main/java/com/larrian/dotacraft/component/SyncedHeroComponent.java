@@ -1,7 +1,6 @@
-package com.larrian.dotacraft.component.hero;
+package com.larrian.dotacraft.component;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.attributes.RegenerationHealthAttribute;
 import com.larrian.dotacraft.event.AutoCraft;
 import com.larrian.dotacraft.event.ServerEvents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -18,7 +17,6 @@ import net.minecraft.scoreboard.AbstractTeam;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {

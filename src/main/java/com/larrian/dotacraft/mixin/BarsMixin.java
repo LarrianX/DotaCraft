@@ -1,9 +1,9 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.hero.AttributesComponent;
-import com.larrian.dotacraft.component.hero.HealthComponent;
-import com.larrian.dotacraft.component.hero.HeroComponent;
-import com.larrian.dotacraft.component.hero.ManaComponent;
+import com.larrian.dotacraft.component.AttributesComponent;
+import com.larrian.dotacraft.component.HealthComponent;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.ManaComponent;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -26,7 +26,7 @@ import static com.larrian.dotacraft.init.ModComponents.*;
 
 
 @Mixin(InGameHud.class)
-public class BarMixin {
+public class BarsMixin {
     @Unique
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
     @Unique

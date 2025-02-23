@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.event.client;
 
-import com.larrian.dotacraft.component.hero.HeroComponent;
+import com.larrian.dotacraft.component.HeroComponent;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
