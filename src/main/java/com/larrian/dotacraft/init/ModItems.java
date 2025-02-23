@@ -34,6 +34,7 @@ public class ModItems {
     public static final RuneInvisibilityItem RUNE_INVISIBILITY = new RuneInvisibilityItem();
     public static final RuneRegenerationItem RUNE_REGENERATION = new RuneRegenerationItem();
     public static final PhaseBootsItem PHASE_BOOTS = new PhaseBootsItem();
+    public static final HeavenHalberdItem HEAVEN_HALBERD = new HeavenHalberdItem();
 
     public static final Item[] ITEMS = {
             FLASK,
@@ -56,7 +57,8 @@ public class ModItems {
             RUNE_DOUBLE_DAMAGE,
             RUNE_INVISIBILITY,
             RUNE_REGENERATION,
-            PHASE_BOOTS
+            PHASE_BOOTS,
+            HEAVEN_HALBERD
     };
 
     private static void registerItems() {
