@@ -38,7 +38,8 @@ public class AttackEntityEvent {
 //        }
 
         HeroComponent heroComponentSource = playerSource.getComponent(HERO_COMPONENT);
-        if (heroComponentSource.isHero() && entity instanceof PlayerEntity playerTarget) {
+        if (!playerSource.hasStatusEffect(DISARM_EFFECT) &&
+                heroComponentSource.isHero() && entity instanceof PlayerEntity playerTarget) {
             HeroComponent heroComponentTarget = playerTarget.getComponent(HERO_COMPONENT);
 
             if (heroComponentTarget.isHero() && !playerSource.isTeammate(playerTarget)) {
