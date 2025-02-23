@@ -12,6 +12,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
@@ -25,7 +26,13 @@ public class ServerEvents {
 
     private static void autocraft(MinecraftServer server, ServerPlayerEntity player,
                            ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        if (player.getComponent(HERO_COMPONENT).isHero())
-            AutoCraft.craft(player, new HashSet<>());
+        if (player.getComponent(HERO_COMPONENT).isHero()) {
+            int count = buf.readInt();
+            Set<Integer> blockedSlots = new HashSet<>();
+            for (int i = 0; i < count; i++) {
+                blockedSlots.add(buf.readInt());
+            }
+            AutoCraft.craft(player, blockedSlots);
+        }
     }
 }

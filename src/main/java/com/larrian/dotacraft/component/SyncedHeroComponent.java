@@ -57,7 +57,13 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
                     boolean result = AutoCraft.craft(provider, clientBlockedSlots);
                     if (result) {
                         this.cache = current;
-                        ClientPlayNetworking.send(ServerEvents.AUTO_CRAFT_PACKET, new PacketByteBuf(Unpooled.buffer()));
+                        // auto craft
+                        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+                        buf.writeInt(clientBlockedSlots.size());
+                        for (Integer slot : clientBlockedSlots) {
+                            buf.writeInt(slot);
+                        }
+                        ClientPlayNetworking.send(ServerEvents.AUTO_CRAFT_PACKET, buf);
                     }
                 }
             }
