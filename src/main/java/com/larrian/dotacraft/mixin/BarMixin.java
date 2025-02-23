@@ -26,13 +26,13 @@ import static com.larrian.dotacraft.init.ModComponents.*;
 
 
 @Mixin(InGameHud.class)
-public class ReplaceBarsMixin {
+public class BarMixin {
     @Unique
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
     @Unique
     private static final int MAX_PIXELS = 88;
     @Unique
-    private static final DecimalFormat outputFormat = new DecimalFormat("000");
+    private static final DecimalFormat outputFormat = new DecimalFormat("00");
 
 
     @Unique
