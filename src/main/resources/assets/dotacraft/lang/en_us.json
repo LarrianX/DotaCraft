@@ -33,6 +33,7 @@
   "effect.dotacraft.rune_double_damage": "Double Damage",
   "effect.dotacraft.rune_invisibility": "Invisibility",
   "effect.dotacraft.rune_regeneration": "Regeneration",
+  "effect.dotacraft.disarm": "Disarm",
   "attribute.dotacraft.generic.crit_chance": "Chance of critical damage",
   "attribute.dotacraft.generic.regeneration_mana": "Regeneration of mana",
   "attribute.dotacraft.generic.regeneration_health": "Regeneration of health",

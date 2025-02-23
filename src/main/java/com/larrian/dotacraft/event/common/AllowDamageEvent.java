@@ -9,10 +9,15 @@ import static com.larrian.dotacraft.init.ModEffects.DISARM_EFFECT;
 
 public class AllowDamageEvent {
     public static boolean event(LivingEntity entity, DamageSource source, float amount) {
-        if (source.getAttacker() instanceof PlayerEntity player) {
-            return !player.hasStatusEffect(DISARM_EFFECT);
-        } else {
-            return true;
+        if (source.getAttacker() instanceof PlayerEntity playerSource) {
+            if (playerSource.hasStatusEffect(DISARM_EFFECT)) {
+                return false;
+            }
+            if (entity instanceof PlayerEntity playerTarget &&
+                    playerTarget.getComponent(HERO_COMPONENT).isHero()) {
+                return false;
+            }
         }
+        return true;
     }
 }

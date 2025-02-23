@@ -35,14 +35,14 @@ public class HeavenHalberdItem extends Weapon implements Custom {
 
         ManaComponent manaComponent = user.getComponent(MANA_COMPONENT);
         if (
-//                targetedEntity instanceof PlayerEntity playerTarget && !user.isTeammate(playerTarget) &&
+                targetedEntity instanceof PlayerEntity playerTarget && !user.isTeammate(playerTarget) &&
                 (manaComponent.get() >= MINUS_MANA || user.isCreative())) {
             if (!user.isCreative()) {
                 manaComponent.add(-MINUS_MANA);
                 user.getItemCooldownManager().set(this, COOLDOWN);
             }
 
-            applyEffects(user);
+            applyEffects(playerTarget);
 
             return TypedActionResult.success(stack);
         } else {
