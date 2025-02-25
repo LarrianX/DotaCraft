@@ -2,45 +2,40 @@ name: Release Mod
 
 on:
   workflow_dispatch:
-    
-  pull_request:
-    branches: [ "main" ]
-    types: [ "closed" ]
 
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '-nobuild')" 
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Stop Gradle Daemons
-      run: ./gradlew --stop
+      - name: Stop Gradle Daemons
+        run: ./gradlew --stop
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-    - name: Build with Gradle Wrapper
-      run: |
-        ./gradlew --no-daemon build
+      - name: Build with Gradle Wrapper
+        run: |
+          ./gradlew --no-daemon build
 
-    - name: List build directory
-      run: ls -R build
+      - name: List build directory
+        run: ls -R build
 
-    - name: Save build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: build-artifacts
-        path: build/libs/*.jar
+      - name: Save build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: build/libs/*.jar
 
   release:
     runs-on: ubuntu-latest
@@ -49,63 +44,23 @@ jobs:
       contents: write
 
     steps:
-    - name: Download build artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: build-artifacts
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
 
-    - name: Extract full version from file
-      id: extract_full_version
-      run: |
-        filename=$(basename build/libs/dotacraft-*-1.20.1.jar)
-        version=$(echo $filename | sed -n 's/^dotacraft-\(.*\)\.jar$/\1/p')
-        echo "FULL_VERSION=$version"
-        echo "FULL_VERSION=$version" >> $GITHUB_ENV
+      - name: Extract version from file
+        id: extract_version
+        run: |
+          filename=$(basename build/libs/dotacraft-*-1.20.1.jar)
+          version=$(echo $filename | sed -n 's/^dotacraft-\(.*\)-1\.20\.1\.jar$/\1/p')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
-    - name: Extract version from file
-      id: extract_version
-      run: |
-        filename=$(basename build/libs/dotacraft-*-1.20.1.jar)
-        version=$(echo $filename | sed -n 's/^dotacraft-\(.*\)-1\.20\.1\.jar$/\1/p')
-        echo "VERSION=$version"
-        echo "VERSION=$version" >> $GITHUB_ENV
-
-    - name: Create GitHub Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ env.VERSION }}
-        release_name: ${{ env.FULL_VERSION }}
-        body: ${{ github.event.inputs.body }}
-        draft: false
-        prerelease: false
-      continue-on-error: true
-
-    - name: Check for Release Error
-      if: steps.create_release.outcome == 'failure'
-      run: echo "::error::Релиз с таким тегом уже существует" && exit 1
-
-    - name: List build directory
-      run: ls -R /home/runner/work/DotaCraft/DotaCraft/
-
-    - name: Upload Release Assets
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.FULL_VERSION }}.jar
-        asset_name: dotacraft-${{ env.FULL_VERSION }}.jar
-        asset_content_type: application/java-archive
-
-    - name: Upload Source Jar
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: /home/runner/work/DotaCraft/DotaCraft/dotacraft-${{ env.FULL_VERSION }}-sources.jar
-        asset_name: dotacraft-${{ env.FULL_VERSION }}-sources.jar
-        asset_content_type: application/java-archive
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          files: |
+            build/libs/dotacraft-${{ env.VERSION }}-1.20.1.jar
+            build/libs/dotacraft-${{ env.VERSION }}-sources.jar
