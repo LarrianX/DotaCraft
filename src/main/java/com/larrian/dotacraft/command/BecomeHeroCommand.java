@@ -1,9 +1,8 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.attributes.MaxHealthAttribute;
-import com.larrian.dotacraft.attributes.MaxManaAttribute;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.component.OldValuesComponent;
+import com.larrian.dotacraft.component.attributes.AttributesComponent;
+import com.larrian.dotacraft.component.attributes.DotaAttributeType;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -23,8 +22,6 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-import static com.larrian.dotacraft.component.SyncedHeroComponent.HEALTH;
-import static com.larrian.dotacraft.init.ModAttributes.*;
 import static com.larrian.dotacraft.init.ModComponents.*;
 
 public class BecomeHeroCommand {
@@ -35,69 +32,41 @@ public class BecomeHeroCommand {
         return builder.buildFuture();
     };
 
-    private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS_VALUES = (context, builder) -> {
-        builder.suggest("10000");
-        return builder.buildFuture();
-    };
-
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("become_hero")
-                        .then(CommandManager.argument("max_health", DoubleArgumentType.doubleArg(MaxHealthAttribute.MIN, MaxHealthAttribute.MAX))
-                                .suggests(SUGGESTIONS_VALUES)
-                                .then(CommandManager.argument("max_mana", DoubleArgumentType.doubleArg(MaxManaAttribute.MIN, MaxManaAttribute.MAX))
-                                        .suggests(SUGGESTIONS_VALUES)
-                                        .then(CommandManager.argument("team", StringArgumentType.string())
-                                                .suggests(SUGGESTIONS_TEAMS)
-                                                .executes(BecomeHeroCommand::execute))))
+                    .then(CommandManager.argument("team", StringArgumentType.string())
+                            .suggests(SUGGESTIONS_TEAMS)
+                            .executes(BecomeHeroCommand::execute))
         );
     }
 
     private static int execute(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-
-        double maxHealth = DoubleArgumentType.getDouble(context, "max_health");
-        double maxMana = DoubleArgumentType.getDouble(context, "max_mana");
         String teamName = StringArgumentType.getString(context, "team");
 
         if (!TEAMS.contains(teamName)) {
-            throw new SimpleCommandExceptionType(Text.literal("Недопустимая команда: " + teamName)).create();
-        }
-
-        applyHeroAttributes(player, maxHealth, maxMana);
-        assignPlayerToTeam(context.getSource().getServer(), player, teamName);
-
-        return 1;
-    }
-
-    private static void applyHeroAttributes(ServerPlayerEntity player, double maxHealth, double maxMana) {
-        EntityAttributeInstance vanillaMaxHealthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
-        EntityAttributeInstance maxHealthAttribute = player.getAttributeInstance(MAX_HEALTH);
-        EntityAttributeInstance maxManaAttribute = player.getAttributeInstance(MAX_MANA);
-
-        if (vanillaMaxHealthAttribute == null || maxHealthAttribute == null || maxManaAttribute == null) {
-            return;
+            throw new SimpleCommandExceptionType(Text.literal("Invalid team: " + teamName)).create();
         }
 
         HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
-        if (heroComponent.isHero()) {
-            return;
-        }
-
-        OldValuesComponent oldValuesComponent = player.getComponent(OLD_VALUES_COMPONENT);
-        oldValuesComponent.setOldHealth((int) player.getHealth());
-        oldValuesComponent.setOldMaxHealth((int) vanillaMaxHealthAttribute.getBaseValue());
-        oldValuesComponent.sync();
-
-        vanillaMaxHealthAttribute.setBaseValue(HEALTH);
-        maxHealthAttribute.setBaseValue(maxHealth);
-        maxManaAttribute.setBaseValue(maxMana);
-
-        player.getComponent(MANA_COMPONENT).set(maxMana);
-        player.getComponent(HEALTH_COMPONENT).set(maxHealth);
-
+        heroComponent.setHealth(0);
+        heroComponent.setMana(0);
         heroComponent.setHero(true);
-        heroComponent.sync();
+
+        AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
+        attributes.setLevel(0);
+        for (DotaAttributeType attribute : DotaAttributeType.values()) {
+            attributes.getAttribute(attribute).clearModifiers();
+            attributes.getAttribute(attribute).set(0);
+        }
+        attributes.getAttribute(DotaAttributeType.MAX_HEALTH).set(120);
+        attributes.getAttribute(DotaAttributeType.MAX_MANA).set(75);
+        attributes.sync();
+
+        assignPlayerToTeam(context.getSource().getServer(), player, teamName);
+
+        return 1;
     }
 
     private static void assignPlayerToTeam(MinecraftServer server, ServerPlayerEntity player, String teamName) {

@@ -2,6 +2,7 @@ package com.larrian.dotacraft.component;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
+import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,6 +14,22 @@ public interface HeroComponent extends ComponentV3, ServerTickingComponent, Clie
     boolean isHero();
 
     void setHero(boolean hero);
+
+    double getHealth();
+
+    boolean isFullHealth();
+
+    void setHealth(double health);
+
+    void addHealth(double amount);
+
+    double getMana();
+
+    boolean isFullMana();
+
+    void setMana(double mana);
+
+    void addMana(double amount);
 
     AbstractTeam getTeam();
 

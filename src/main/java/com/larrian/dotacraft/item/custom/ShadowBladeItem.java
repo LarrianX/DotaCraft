@@ -1,8 +1,11 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.ManaComponent;
-import com.larrian.dotacraft.item.Weapon;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.attributes.DotaAttribute;
+import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.item.DotaItem;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,26 +15,29 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static com.larrian.dotacraft.init.ModComponents.MANA_COMPONENT;
+import java.util.EnumMap;
 
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
-public class ShadowBladeItem extends Weapon implements Custom {
+public class ShadowBladeItem extends DotaItem implements Custom {
     private static final String ID = "shadow_blade";
-    private static final int DAMAGE = 20;
     private static final int MINUS_MANA = 75;
 
+    private static final double DAMAGE = 25;
+    private static final double ATTACK_SPEED = 35;
+
     public ShadowBladeItem() {
-        super(DAMAGE);
+        super(new FabricItemSettings().maxCount(1));
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
-        ManaComponent manaComponent = user.getComponent(MANA_COMPONENT);
-        if (manaComponent.get() >= MINUS_MANA || user.isCreative()) {
+        HeroComponent component = user.getComponent(HERO_COMPONENT);
+        if (component.getMana() >= MINUS_MANA || user.isCreative()) {
             if (!user.isCreative()) {
-                manaComponent.add(-MINUS_MANA);
+                component.addMana(-MINUS_MANA);
                 user.getItemCooldownManager().set(this, 500);
             }
             applyEffects(user);
@@ -55,7 +61,8 @@ public class ShadowBladeItem extends Weapon implements Custom {
     }
 
     @Override
-    public int getDamage() {
-        return DAMAGE;
+    public void addModifiers(EnumMap<DotaAttributeType, DotaAttribute> attributes) {
+        attributes.get(DotaAttributeType.DAMAGE).addModifier(getId(), DAMAGE);
+        attributes.get(DotaAttributeType.ATTACK_SPEED).addModifier(getId(), ATTACK_SPEED);
     }
 }

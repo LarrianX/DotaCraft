@@ -1,6 +1,5 @@
 package com.larrian.dotacraft;
 
-import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.init.ModBlocks;
 import com.larrian.dotacraft.init.ModCommands;
 import com.larrian.dotacraft.init.ModEffects;
@@ -13,8 +12,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.scoreboard.Scoreboard;

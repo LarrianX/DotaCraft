@@ -42,7 +42,6 @@ public abstract class GameRendererMixin {
             )
     )
     private EntityHitResult redirectRaycastLogic(Entity entity, Vec3d min, Vec3d max, Box box, Predicate<Entity> predicate, double d) {
-        // Изменение рейкаста, добавление в предикат также сущности предмета
         return ProjectileUtil.raycast(entity, min, max, box, entityx -> !entityx.isSpectator() && entityx.canHit() || (checkIsHero() && entityx instanceof ItemEntity), d);
     }
 }

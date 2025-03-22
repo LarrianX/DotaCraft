@@ -1,6 +1,7 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
+import com.larrian.dotacraft.item.DotaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -16,7 +17,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
-public class TangoTFItem extends Item implements Custom {
+public class TangoTFItem extends DotaItem implements Custom {
     private static final String ID = "tango_tf";
     private static final String TIME_KEY = "time";
     private static final int TIME = 800;

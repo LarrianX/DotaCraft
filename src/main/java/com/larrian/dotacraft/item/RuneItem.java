@@ -1,4 +1,4 @@
-package com.larrian.dotacraft.item.rune;
+package com.larrian.dotacraft.item;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.rune.Rune;
@@ -18,11 +18,5 @@ public abstract class RuneItem extends Item implements Custom {
     @Override
     public String getId() {
         return "rune_of_" + getRune().getId();
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(stack, world, entity, slot, selected);
-//        stack.decrement(1);
     }
 }

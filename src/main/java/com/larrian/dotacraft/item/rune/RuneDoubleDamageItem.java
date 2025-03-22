@@ -1,5 +1,6 @@
 package com.larrian.dotacraft.item.rune;
 
+import com.larrian.dotacraft.item.RuneItem;
 import com.larrian.dotacraft.rune.Rune;
 import com.larrian.dotacraft.rune.Runes;
 

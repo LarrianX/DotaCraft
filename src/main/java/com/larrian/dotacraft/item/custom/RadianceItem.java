@@ -1,14 +1,21 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.item.Weapon;
+import com.larrian.dotacraft.component.attributes.DotaAttribute;
+import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.item.DotaItem;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
-public class RadianceItem extends Weapon implements Custom {
+import java.util.EnumMap;
+
+public class RadianceItem extends DotaItem implements Custom {
     private static final String ID = "radiance";
+
     private static final int DAMAGE = 55;
+    // TODO: +20% dodge
 
     public RadianceItem() {
-        super(DAMAGE);
+        super(new FabricItemSettings().maxCount(1));
     }
 
     @Override
@@ -17,8 +24,8 @@ public class RadianceItem extends Weapon implements Custom {
     }
 
     @Override
-    public int getDamage() {
-        return DAMAGE;
+    public void addModifiers(EnumMap<DotaAttributeType, DotaAttribute> attributes) {
+        attributes.get(DotaAttributeType.DAMAGE).addModifier(getId(), DAMAGE);
     }
 }
 

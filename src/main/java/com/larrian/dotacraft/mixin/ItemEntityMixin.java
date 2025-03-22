@@ -2,13 +2,11 @@ package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.item.custom.BottleItem;
-import com.larrian.dotacraft.item.rune.RuneItem;
+import com.larrian.dotacraft.item.RuneItem;
 import com.larrian.dotacraft.rune.Rune;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

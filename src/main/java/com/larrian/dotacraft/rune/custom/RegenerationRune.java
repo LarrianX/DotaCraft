@@ -1,14 +1,13 @@
 package com.larrian.dotacraft.rune.custom;
 
-import com.larrian.dotacraft.component.HealthComponent;
-import com.larrian.dotacraft.component.ManaComponent;
+import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.attributes.AttributesComponent;
 import com.larrian.dotacraft.init.ModEffects;
 import com.larrian.dotacraft.rune.Rune;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.larrian.dotacraft.init.ModComponents.HEALTH_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.MANA_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class RegenerationRune extends Rune {
     private static final String ID = "regeneration";
@@ -32,9 +31,9 @@ public class RegenerationRune extends Rune {
 
     @Override
     public void use(PlayerEntity player) {
-        ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
-        HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
-        if (!(manaComponent.isFull() && healthComponent.isFull()))
+        HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
+        if (!(heroComponent.isFullMana() && heroComponent.isFullHealth())) {
             super.use(player);
+        }
     }
 }

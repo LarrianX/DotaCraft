@@ -4,8 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ItemEntityMixin",
-    "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

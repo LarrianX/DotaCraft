@@ -1,139 +1,60 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.component.AttributesComponent;
-import com.larrian.dotacraft.component.HealthComponent;
-import com.larrian.dotacraft.component.ManaComponent;
+import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.component.attributes.AttributesComponent;
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 
-import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_HEALTH;
-import static com.larrian.dotacraft.init.ModAttributes.REGENERATION_MANA;
-import static com.larrian.dotacraft.init.ModComponents.*;
+import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
 
 public class SetAttributesCommand {
+    private static final SuggestionProvider<ServerCommandSource> SUGGESTION_ATTRIBUTES = (context, builder) -> {
+        for (DotaAttributeType type : DotaAttributeType.values()) {
+            builder.suggest(type.name());
+        }
+        return builder.buildFuture();
+    };
+
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
                 CommandManager.literal("set")
-                        .executes(SetAttributesCommand::setMax)
-                        .then(CommandManager.argument("health", DoubleArgumentType.doubleArg(0, 30000))
-                                .executes(SetAttributesCommand::setHealth)
-                                .then(CommandManager.argument("mana", DoubleArgumentType.doubleArg(0, 30000))
-                                        .executes(SetAttributesCommand::setMana)
-                                        .then(CommandManager.argument("level", IntegerArgumentType.integer(0, 30))
-                                                .executes(SetAttributesCommand::setLevel)
-                                                .then(CommandManager.argument("strength", DoubleArgumentType.doubleArg(0, 30000))
-                                                        .executes(SetAttributesCommand::setStrength)
-                                                        .then(CommandManager.argument("agility", DoubleArgumentType.doubleArg(0, 30000))
-                                                                .executes(SetAttributesCommand::setAgility)
-                                                                .then(CommandManager.argument("intelligence", DoubleArgumentType.doubleArg(0, 30000))
-                                                                        .executes(SetAttributesCommand::setIntelligence)
-                                                                )))))));
+                        .then(CommandManager.argument("attribute", StringArgumentType.string())
+                                .suggests(SUGGESTION_ATTRIBUTES)
+                                .then(CommandManager.argument("value", DoubleArgumentType.doubleArg())
+                                        .executes(SetAttributesCommand::execute))));
     }
 
-    private static int setMax(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
-            manaComponent.set(player.getAttributeValue(REGENERATION_MANA));
-            HealthComponent healthComponent = player.getComponent(HEALTH_COMPONENT);
-            healthComponent.set(player.getAttributeValue(REGENERATION_HEALTH));
+    private static int execute(com.mojang.brigadier.context.CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerCommandSource source = context.getSource();
+        ServerPlayerEntity player = source.getPlayer();
+        if (player == null) {
+            throw new SimpleCommandExceptionType(Text.literal("This command can only be used by a player.")).create();
         }
 
-        return 1;
-    }
+        String attributeName = StringArgumentType.getString(context, "attribute");
+        double value = DoubleArgumentType.getDouble(context, "value");
 
-    private static int setHealth(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            HealthComponent component = player.getComponent(HEALTH_COMPONENT);
-            double health = DoubleArgumentType.getDouble(context, "health");
-            component.set(health);
-            component.sync();
+        DotaAttributeType attributeType;
+        try {
+            attributeType = DotaAttributeType.valueOf(attributeName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new SimpleCommandExceptionType(Text.literal("Invalid attribute name: " + attributeName)).create();
         }
 
-        return 1;
-    }
+        AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
+        attributes.getAttribute(attributeType).set(value);
+        attributes.sync();
 
-    private static int setMana(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            setHealth(context);
-            ManaComponent manaComponent = player.getComponent(MANA_COMPONENT);
-            double mana = DoubleArgumentType.getDouble(context, "mana");
-            manaComponent.set(mana);
-            manaComponent.sync();
-        }
-
-        return 1;
-    }
-
-    private static int setLevel(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            setMana(context);
-            AttributesComponent attributesComponent = player.getComponent(ATTRIBUTES_COMPONENT);
-            int level = IntegerArgumentType.getInteger(context, "level");
-            attributesComponent.setLevel(level);
-            attributesComponent.sync();
-        }
-
-        return 1;
-    }
-
-    private static int setStrength(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            setLevel(context);
-            AttributesComponent attributesComponent = player.getComponent(ATTRIBUTES_COMPONENT);
-            double strength = DoubleArgumentType.getDouble(context, "strength");
-            attributesComponent.setStrength(strength);
-            attributesComponent.sync();
-        }
-
-        return 1;
-    }
-
-    private static int setAgility(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            setLevel(context);
-            AttributesComponent attributesComponent = player.getComponent(ATTRIBUTES_COMPONENT);
-            double strength = DoubleArgumentType.getDouble(context, "strength");
-            attributesComponent.setStrength(strength);
-            double agility = DoubleArgumentType.getDouble(context, "agility");
-            attributesComponent.setAgility(agility);
-            attributesComponent.sync();
-        }
-
-        return 1;
-    }
-
-    private static int setIntelligence(CommandContext<ServerCommandSource> context) {
-        ServerPlayerEntity player = context.getSource().getPlayer();
-
-        if (player != null) {
-            setLevel(context);
-            AttributesComponent attributesComponent = player.getComponent(ATTRIBUTES_COMPONENT);
-            double strength = DoubleArgumentType.getDouble(context, "strength");
-            attributesComponent.setStrength(strength);
-            double agility = DoubleArgumentType.getDouble(context, "agility");
-            attributesComponent.setAgility(agility);
-            double intelligence = DoubleArgumentType.getDouble(context, "intelligence");
-            attributesComponent.setIntelligence(intelligence);
-            attributesComponent.sync();
-        }
-
-        return 1;
+        context.getSource().sendFeedback(() -> Text.literal("Set " + attributeName + " to " + value + " for " + player.getName().getString()), false);
+        return Command.SINGLE_SUCCESS;
     }
 }

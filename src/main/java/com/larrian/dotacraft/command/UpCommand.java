@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.component.AttributesComponent;
+import com.larrian.dotacraft.component.attributes.AttributesComponent;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -34,9 +34,9 @@ public class UpCommand {
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player != null) {
             int levels = IntegerArgumentType.getInteger(context, "levels");
-            AttributesComponent component = player.getComponent(ATTRIBUTES_COMPONENT);
-            component.addLevel(levels);
-            component.sync();
+            AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
+            attributes.addLevel(levels);
+            attributes.sync();
         }
         return 1;
     }
