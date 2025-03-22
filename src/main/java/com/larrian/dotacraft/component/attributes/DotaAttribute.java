@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DotaAttribute {
+public class DotaAttribute implements IDotaAttribute {
     private final DotaAttributeType type;
     private final PlayerEntity provider;
     private final AttributesComponent attributes;
@@ -18,32 +18,39 @@ public class DotaAttribute {
         this.baseValue = 0;
     }
 
+    @Override
     public void set(double value) {
-        this.baseValue = value;
+        this.baseValue = Math.max(0, value);
     }
 
+    @Override
     public double getBase() {
         return baseValue;
     }
 
+    @Override
     public void add(double value) {
         set(this.baseValue + value);
     }
 
+    @Override
     public double get() {
         double modifiedValue = baseValue + modifiers.values().stream().mapToDouble(Double::doubleValue).sum();
         double correlationValue = type.getCorrelationValue(provider, attributes);
-        return modifiedValue + correlationValue;
+        return Math.max(0, modifiedValue + correlationValue);
     }
 
+    @Override
     public void addModifier(String key, double amount) {
         modifiers.put(key, amount);
     }
 
+    @Override
     public void removeModifier(String key) {
         modifiers.remove(key);
     }
 
+    @Override
     public void clearModifiers() {
         modifiers.clear();
     }

@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.DotaAttribute;
+import com.larrian.dotacraft.component.attributes.IDotaAttribute;
 import com.larrian.dotacraft.component.attributes.DotaAttributeType;
 import com.larrian.dotacraft.item.DotaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -21,7 +21,7 @@ public class ScepterItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, DotaAttribute> attributes) {
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
         attributes.get(DotaAttributeType.STRENGTH).addModifier(getId(), ALL_ATTRIBUTES);
         attributes.get(DotaAttributeType.AGILITY).addModifier(getId(), ALL_ATTRIBUTES);
         attributes.get(DotaAttributeType.INTELLIGENCE).addModifier(getId(), ALL_ATTRIBUTES);

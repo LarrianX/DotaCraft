@@ -4,12 +4,9 @@ import com.larrian.dotacraft.item.DotaItem;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.network.PacketByteBuf;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -24,7 +21,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     private final PlayerEntity provider;
     private Map<String, ItemStack> cache;
     private int level;
-    private final EnumMap<DotaAttributeType, DotaAttribute> attributes = new EnumMap<>(DotaAttributeType.class);
+    private final EnumMap<DotaAttributeType, IDotaAttribute> attributes = new EnumMap<>(DotaAttributeType.class);
 
     public SyncedAttributesComponent(PlayerEntity provider) {
         this.provider = provider;
@@ -81,7 +78,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     }
 
     private void removeModifier(String id) {
-        for (DotaAttribute attribute : this.attributes.values()) {
+        for (IDotaAttribute attribute : this.attributes.values()) {
             attribute.removeModifier(id);
         }
     }
@@ -107,7 +104,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public DotaAttribute getAttribute(DotaAttributeType type) {
-        return attributes.get(type);
+        return (DotaAttribute) attributes.get(type);
     }
 
     @Override
@@ -116,7 +113,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
         if (tag.contains("attributes", NbtElement.COMPOUND_TYPE)) {
             NbtCompound attrsTag = tag.getCompound("attributes");
-            for (Map.Entry<DotaAttributeType, DotaAttribute> entry : attributes.entrySet()) {
+            for (Map.Entry<DotaAttributeType, IDotaAttribute> entry : attributes.entrySet()) {
                 if (attrsTag.contains(entry.getKey().name(), NbtElement.DOUBLE_TYPE)) {
                     entry.getValue().set(attrsTag.getDouble(entry.getKey().name()));
                 }
@@ -129,7 +126,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         tag.putInt("level", this.level);
 
         NbtCompound attrsTag = new NbtCompound();
-        for (Map.Entry<DotaAttributeType, DotaAttribute> entry : attributes.entrySet()) {
+        for (Map.Entry<DotaAttributeType, IDotaAttribute> entry : attributes.entrySet()) {
             attrsTag.putDouble(entry.getKey().name(), entry.getValue().getBase());
         }
         tag.put("attributes", attrsTag);

@@ -3,6 +3,7 @@
   "package": "com.larrian.dotacraft.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AttributesTooltipMixin",
     "ItemEntityMixin",
     "LivingEntityMixin"
   ],
@@ -10,9 +11,9 @@
     "defaultRequire": 1
   },
   "client": [
+    "BarsMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",
-    "GameRendererMixin",
-    "BarsMixin"
+    "GameRendererMixin"
   ]
 }

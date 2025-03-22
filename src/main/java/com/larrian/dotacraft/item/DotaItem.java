@@ -1,8 +1,8 @@
 package com.larrian.dotacraft.item;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.DotaAttribute;
 import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.component.attributes.IDotaAttribute;
 import net.minecraft.item.Item;
 
 import java.util.EnumMap;
@@ -12,7 +12,7 @@ public abstract class DotaItem extends Item implements Custom {
         super(settings);
     }
 
-    public void addModifiers(EnumMap<DotaAttributeType, DotaAttribute> attributes) {
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
 
     }
 }

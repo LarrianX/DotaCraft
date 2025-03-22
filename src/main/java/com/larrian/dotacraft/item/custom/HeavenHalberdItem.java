@@ -2,7 +2,7 @@ package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.component.attributes.DotaAttribute;
+import com.larrian.dotacraft.component.attributes.IDotaAttribute;
 import com.larrian.dotacraft.component.attributes.DotaAttributeType;
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.item.DotaItem;
@@ -62,7 +62,7 @@ public class HeavenHalberdItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, DotaAttribute> attributes) {
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
         attributes.get(DotaAttributeType.MAX_HEALTH).addModifier(getId(), MAX_HEALTH);
         attributes.get(DotaAttributeType.REGENERATION_HEALTH).addModifier(getId(), REGENERATION_HEALTH);
         attributes.get(DotaAttributeType.STRENGTH).addModifier(getId(), ALL_ATTRIBUTES);
