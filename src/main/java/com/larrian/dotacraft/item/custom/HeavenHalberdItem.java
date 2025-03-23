@@ -62,12 +62,12 @@ public class HeavenHalberdItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
-        attributes.get(DotaAttributeType.MAX_HEALTH).addModifier(getId(), MAX_HEALTH);
-        attributes.get(DotaAttributeType.REGENERATION_HEALTH).addModifier(getId(), REGENERATION_HEALTH);
-        attributes.get(DotaAttributeType.STRENGTH).addModifier(getId(), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributeType.AGILITY).addModifier(getId(), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributeType.INTELLIGENCE).addModifier(getId(), ALL_ATTRIBUTES);
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+        attributes.get(DotaAttributeType.MAX_HEALTH).addModifier(String.valueOf(slot), MAX_HEALTH);
+        attributes.get(DotaAttributeType.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
+        attributes.get(DotaAttributeType.STRENGTH).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
+        attributes.get(DotaAttributeType.AGILITY).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
+        attributes.get(DotaAttributeType.INTELLIGENCE).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
     }
 
     @Override

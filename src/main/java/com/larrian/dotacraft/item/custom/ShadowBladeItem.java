@@ -61,8 +61,8 @@ public class ShadowBladeItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
-        attributes.get(DotaAttributeType.DAMAGE).addModifier(getId(), DAMAGE);
-        attributes.get(DotaAttributeType.ATTACK_SPEED).addModifier(getId(), ATTACK_SPEED);
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+        attributes.get(DotaAttributeType.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
+        attributes.get(DotaAttributeType.ATTACK_SPEED).addModifier(String.valueOf(slot), ATTACK_SPEED);
     }
 }

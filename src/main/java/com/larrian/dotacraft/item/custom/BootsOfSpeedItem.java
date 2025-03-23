@@ -18,8 +18,8 @@ public class BootsOfSpeedItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
-        attributes.get(DotaAttributeType.MOVEMENT_SPEED).addModifier(getId(), SPEED);
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+        attributes.get(DotaAttributeType.MOVEMENT_SPEED).addModifier(String.valueOf(slot), SPEED);
     }
 
     @Override

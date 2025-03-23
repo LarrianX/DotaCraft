@@ -70,7 +70,7 @@ public class AttributesTooltipMixin {
             });
         }
 
-        dotaItem.addModifiers(attributes);
+        dotaItem.addModifiers(attributes, 0);
 //        tooltip.add(Text.literal("Attributes:").formatted(Formatting.GRAY, Formatting.BOLD));
 
         for (var entry : modifiersMap.entrySet()) {

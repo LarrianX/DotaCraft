@@ -4,6 +4,7 @@ import com.larrian.dotacraft.item.DotaItem;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -19,7 +20,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     public static final double LEVEL_BOOST = 2;
 
     private final PlayerEntity provider;
-    private Map<String, ItemStack> cache;
+    private Map<Integer, ItemStack> cache;
     private int level;
     private final EnumMap<DotaAttributeType, IDotaAttribute> attributes = new EnumMap<>(DotaAttributeType.class);
 
@@ -39,7 +40,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public void tick() {
-        Map<String, ItemStack> current = mapInventory(provider.getInventory());
+        Map<Integer, ItemStack> current = mapInventory(provider.getInventory());
 
         if (!current.equals(this.cache)) {
             updateModifiers(cache, current);
@@ -47,44 +48,47 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         }
     }
 
-    private void updateModifiers(Map<String, ItemStack> oldItems, Map<String, ItemStack> newItems) {
-        for (String id : oldItems.keySet()) {
-            if (!newItems.containsKey(id)) {
-                removeModifier(id);
+    private void updateModifiers(Map<Integer, ItemStack> oldItems, Map<Integer, ItemStack> newItems) {
+        for (Map.Entry<Integer, ItemStack> entry : oldItems.entrySet()) {
+            int slot = entry.getKey();
+            ItemStack oldItem = entry.getValue();
+            ItemStack newItem = newItems.get(slot);
+
+            if (newItem == null || !ItemStack.areEqual(oldItem, newItem)) {
+                removeModifiers((DotaItem) oldItem.getItem(), entry.getKey());
             }
         }
 
-        for (Map.Entry<String, ItemStack> entry : newItems.entrySet()) {
-            String id = entry.getKey();
+        for (Map.Entry<Integer, ItemStack> entry : newItems.entrySet()) {
+            int slot = entry.getKey();
             ItemStack newItem = entry.getValue();
-            ItemStack oldItem = oldItems.get(id);
+            ItemStack oldItem = oldItems.get(slot);
 
-            if (oldItem == null || !ItemStack.areEqual(oldItem, newItem)) {
+            if (oldItem == null || !ItemStack.areEqual(newItem, oldItem)) {
                 if (newItem.getItem() instanceof DotaItem item) {
-                    addModifier(item);
+                    addModifiers(item, slot);
                 }
             }
         }
     }
 
-    private Map<String, ItemStack> mapInventory(PlayerInventory inventory) {
-        Map<String, ItemStack> map = new HashMap<>();
-        for (ItemStack stack : inventory.main) {
-            if (stack.getItem() instanceof DotaItem item) {
-                map.put(item.getId(), stack);
+    private Map<Integer, ItemStack> mapInventory(PlayerInventory inventory) {
+        Map<Integer, ItemStack> map = new HashMap<>();
+        for (int slot = 0; slot < inventory.main.size(); slot++) {
+            ItemStack stack = inventory.main.get(slot);
+            if (!stack.isEmpty() && stack.getItem() instanceof DotaItem) {
+                map.put(slot, stack.copy());
             }
         }
         return map;
     }
 
-    private void removeModifier(String id) {
-        for (IDotaAttribute attribute : this.attributes.values()) {
-            attribute.removeModifier(id);
-        }
+    private void removeModifiers(DotaItem item, int slot) {
+        item.removeModifiers(this.attributes, slot);
     }
 
-    private void addModifier(DotaItem item) {
-        item.addModifiers(this.attributes);
+    private void addModifiers(DotaItem item, int slot) {
+        item.addModifiers(this.attributes, slot);
     }
 
     @Override

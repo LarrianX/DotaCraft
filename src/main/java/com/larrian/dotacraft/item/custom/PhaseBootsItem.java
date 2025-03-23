@@ -19,9 +19,9 @@ public class PhaseBootsItem extends DotaItem implements Custom {
     public PhaseBootsItem() {super(new FabricItemSettings());}
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
-        attributes.get(DotaAttributeType.MOVEMENT_SPEED).addModifier(getId(), SPEED);
-        attributes.get(DotaAttributeType.ARMOR).addModifier(getId(), ARMOR);
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+        attributes.get(DotaAttributeType.MOVEMENT_SPEED).addModifier(String.valueOf(slot), SPEED);
+        attributes.get(DotaAttributeType.ARMOR).addModifier(String.valueOf(slot), ARMOR);
     }
 
     @Override

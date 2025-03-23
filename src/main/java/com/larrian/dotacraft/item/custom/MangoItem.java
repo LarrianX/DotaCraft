@@ -63,8 +63,8 @@ public class MangoItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes) {
-        attributes.get(DotaAttributeType.REGENERATION_HEALTH).addModifier(getId(), REGENERATION_HEALTH);
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+        attributes.get(DotaAttributeType.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
     }
 
     @Override
