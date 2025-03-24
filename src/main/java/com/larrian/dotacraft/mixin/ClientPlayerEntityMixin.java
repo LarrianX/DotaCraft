@@ -8,14 +8,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModEffects.RUNE_INVISIBILITY_EFFECT;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {
     @Inject(method="shouldSpawnSprintingParticles()Z", at = @At("HEAD"), cancellable = true)
     private void onShouldSpawnSprintingParticles(CallbackInfoReturnable<Boolean> cir) {
-        // Удаление частиц бега если игрок невидим
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
-        if (player.getComponent(HERO_COMPONENT).isHero() && player.getStatusEffect(StatusEffects.INVISIBILITY) != null) {
+        if (player.getComponent(HERO_COMPONENT).isHero() && player.getStatusEffect(RUNE_INVISIBILITY_EFFECT) != null) {
             cir.setReturnValue(false);
         }
     }

@@ -1,21 +1,26 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.init.ModEffects;
+import com.larrian.dotacraft.component.HeroComponent;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-    @Inject(method = "updatePotionVisibility", at = @At("TAIL"))
-    private void addRuneInvisibilityEffect(CallbackInfo ci) {
-        LivingEntity self = (LivingEntity) (Object) this;
-        if (self.hasStatusEffect(StatusEffects.INVISIBILITY) || self.hasStatusEffect(ModEffects.RUNE_INVISIBILITY_EFFECT)) {
-            self.setInvisible(true);
+    @Inject(method = "applyDamage", at = @At("HEAD"), cancellable = true)
+    private void injectDamage(DamageSource source, float amount, CallbackInfo ci) {
+        if ((Object) this instanceof PlayerEntity player) {
+            HeroComponent component = player.getComponent(HERO_COMPONENT);
+            if (component.isHero()) {
+                component.addHealth(-amount);
+                ci.cancel();
+            }
         }
     }
 }
-

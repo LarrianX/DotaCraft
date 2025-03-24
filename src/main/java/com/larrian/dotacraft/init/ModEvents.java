@@ -11,7 +11,6 @@ public class ModEvents {
     public static void register() {
         // common sides events
         ServerLivingEntityEvents.ALLOW_DAMAGE.register(AllowDamageEvent::event);
-        AttackEntityCallback.EVENT.register(AttackEntityEvent::event);
         // server events
         ServerEvents.register();
     }

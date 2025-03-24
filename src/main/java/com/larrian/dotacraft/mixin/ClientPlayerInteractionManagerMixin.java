@@ -18,7 +18,6 @@ public class ClientPlayerInteractionManagerMixin {
     private void attackEntity(CallbackInfo ci, @Local(argsOnly = true) PlayerEntity player, @Local(argsOnly = true) Entity target) {
         if (target instanceof ItemEntity && player.getComponent(HERO_COMPONENT).isHero()) {
             ci.cancel();
-            // Предмет невозможно ударить: игрока кикнет. Фикс этого
         }
     }
 }

@@ -21,7 +21,7 @@ import java.util.function.Predicate;
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 @Mixin(GameRenderer.class)
-public abstract class GameRendererMixin {
+public class GameRendererMixin {
     @Shadow @Final
     MinecraftClient client;
 
