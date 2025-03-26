@@ -29,6 +29,7 @@ public class ModItems {
     public static final TpScrollItem TP_SCROLL = register(new TpScrollItem());
     public static final ShadowBladeItem SHADOW_BLADE = register(new ShadowBladeItem());
     public static final com.larrian.dotacraft.item.custom.RadianceItem RADIANCE = register(new com.larrian.dotacraft.item.custom.RadianceItem());
+    public static final com.larrian.dotacraft.item.custom.DesolatorItem DESOLATOR = register(new com.larrian.dotacraft.item.custom.DesolatorItem());
     public static final BottleItem BOTTLE = register(new BottleItem());
     public static final TangoItem TANGO = register(new TangoItem());
     public static final BootsOfSpeedItem BOOTS_OF_SPEED = register(new BootsOfSpeedItem());
