@@ -38,7 +38,6 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         provider.syncComponent(ATTRIBUTES_COMPONENT);
     }
 
-    @Override
     public void tick() {
         Map<Integer, ItemStack> current = mapInventory(provider.getInventory());
 
@@ -46,6 +45,16 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
             updateModifiers(cache, current);
             this.cache = current;
         }
+    }
+
+    @Override
+    public void clientTick() {
+        tick();
+    }
+
+    @Override
+    public void serverTick() {
+        tick();
     }
 
     private void updateModifiers(Map<Integer, ItemStack> oldItems, Map<Integer, ItemStack> newItems) {

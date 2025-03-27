@@ -53,6 +53,7 @@ public class BecomeHeroCommand {
         heroComponent.setHealth(0);
         heroComponent.setMana(0);
         heroComponent.setHero(true);
+        heroComponent.sync();
 
         AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
         attributes.setLevel(0);

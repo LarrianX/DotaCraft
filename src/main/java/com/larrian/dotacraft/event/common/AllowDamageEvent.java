@@ -13,10 +13,10 @@ public class AllowDamageEvent {
             if (playerSource.hasStatusEffect(DISARM_EFFECT)) {
                 return false;
             }
-            if (entity instanceof PlayerEntity playerTarget &&
-                    playerTarget.getComponent(HERO_COMPONENT).isHero()) {
-                return false;
-            }
+//            if (entity instanceof PlayerEntity playerTarget &&
+//                    playerTarget.getComponent(HERO_COMPONENT).isHero()) {
+//                return false;
+//            }
         }
         return true;
     }
