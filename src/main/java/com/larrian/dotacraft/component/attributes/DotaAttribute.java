@@ -36,8 +36,8 @@ public class DotaAttribute implements IDotaAttribute {
     @Override
     public double get() {
         double modifiedValue = baseValue + modifiers.values().stream().mapToDouble(Double::doubleValue).sum();
-        double correlationValue = type.getCorrelationValue(provider, attributes);
-        return Math.max(0, modifiedValue + correlationValue);
+        double correlationValue = type.getCorrelationValue(provider, attributes, modifiedValue);
+        return Math.max(0, correlationValue);
     }
 
     @Override
