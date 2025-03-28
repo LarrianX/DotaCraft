@@ -12,7 +12,7 @@ public abstract class DotaItem extends Item implements Custom {
         super(settings);
     }
 
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
 
     }
 

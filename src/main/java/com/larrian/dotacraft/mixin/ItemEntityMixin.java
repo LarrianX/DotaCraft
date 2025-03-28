@@ -52,8 +52,6 @@ public abstract class ItemEntityMixin extends Entity {
     @Override
     public ActionResult interact(PlayerEntity player, Hand hand) {
         if (!this.getWorld().isClient) {
-            if (DotaCraft.DEBUG)
-                player.sendMessage(Text.literal("Использована сущность предмета"));
             String name = this.getName().getString();
             ItemStack itemStack = this.getStack();
             Item item = itemStack.getItem();
@@ -83,7 +81,6 @@ public abstract class ItemEntityMixin extends Entity {
 
                         player.increaseStat(Stats.PICKED_UP.getOrCreateStat(item), i);
                         player.triggerItemPickedUpByEntityCriteria((ItemEntity) (Object) this);
-                        player.sendMessage(Text.literal("Подобран предмет: " + name), true);
                         return ActionResult.SUCCESS;
                     }
                 }

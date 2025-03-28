@@ -75,7 +75,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
             if (oldItem == null || !ItemStack.areEqual(newItem, oldItem)) {
                 if (newItem.getItem() instanceof DotaItem item) {
-                    addModifiers(item, slot);
+                    addModifiers(item, slot, newItem.getCount());
                 }
             }
         }
@@ -96,8 +96,8 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         item.removeModifiers(this.attributes, slot);
     }
 
-    private void addModifiers(DotaItem item, int slot) {
-        item.addModifiers(this.attributes, slot);
+    private void addModifiers(DotaItem item, int slot, int count) {
+        item.addModifiers(this.attributes, slot, count);
     }
 
     @Override

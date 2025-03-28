@@ -8,11 +8,12 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.init.ModEffects.RUNE_REGENERATION_EFFECT;
 
 public class RegenerationRune extends Rune {
     private static final String ID = "regeneration";
     private static final int DURATION = 600;
-    private static final StatusEffect EFFECT = ModEffects.RUNE_REGENERATION_EFFECT;
+    private static final StatusEffect EFFECT = RUNE_REGENERATION_EFFECT;
 
     @Override
     public String getId() {

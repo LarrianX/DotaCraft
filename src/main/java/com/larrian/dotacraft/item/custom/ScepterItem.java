@@ -21,7 +21,7 @@ public class ScepterItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
         attributes.get(DotaAttributeType.STRENGTH).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
         attributes.get(DotaAttributeType.AGILITY).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
         attributes.get(DotaAttributeType.INTELLIGENCE).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);

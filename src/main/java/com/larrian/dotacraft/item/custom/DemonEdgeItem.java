@@ -19,7 +19,7 @@ public class DemonEdgeItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot) {
+    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
         attributes.get(DotaAttributeType.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
         attributes.get(DotaAttributeType.ATTACK_SPEED).addModifier(String.valueOf(slot), ATTACK_SPEED);
     }
