@@ -24,12 +24,13 @@ public class ModItems {
     public static final CrystalysItem CRYSTALYS = register(new CrystalysItem());
     public static final MangoItem MANGO = register(new MangoItem());
     public static final DaedalusItem DAEDALUS = register(new DaedalusItem());
-    public static final com.larrian.dotacraft.item.custom.ScepterItem SCEPTER = register(new com.larrian.dotacraft.item.custom.ScepterItem());
+    public static final ScepterItem SCEPTER = register(new ScepterItem());
     public static final BattleFuryItem BATTLE_FURY = register(new BattleFuryItem());
     public static final TpScrollItem TP_SCROLL = register(new TpScrollItem());
     public static final ShadowBladeItem SHADOW_BLADE = register(new ShadowBladeItem());
-    public static final com.larrian.dotacraft.item.custom.RadianceItem RADIANCE = register(new com.larrian.dotacraft.item.custom.RadianceItem());
-    public static final com.larrian.dotacraft.item.custom.DesolatorItem DESOLATOR = register(new com.larrian.dotacraft.item.custom.DesolatorItem());
+    public static final RadianceItem RADIANCE = register(new RadianceItem());
+    public static final DesolatorItem DESOLATOR = register(new DesolatorItem());
+    public static final SkullBasherItem SKULL_BASHER = register(new SkullBasherItem());
     public static final BottleItem BOTTLE = register(new BottleItem());
     public static final TangoItem TANGO = register(new TangoItem());
     public static final BootsOfSpeedItem BOOTS_OF_SPEED = register(new BootsOfSpeedItem());
