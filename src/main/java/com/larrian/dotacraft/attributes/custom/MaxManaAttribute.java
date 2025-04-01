@@ -15,6 +15,6 @@ public class MaxManaAttribute extends DotaAttribute {
 
     @Override
     public double get() {
-        return super.get() + Math.max(0, attributes.getAttribute(DotaAttributes.INTELLIGENCE).get() * 12);
+        return Math.max(0, super.get() + Math.floor(attributes.getAttribute(DotaAttributes.INTELLIGENCE).get()) * 12);
     }
 }

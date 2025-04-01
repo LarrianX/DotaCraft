@@ -19,6 +19,6 @@ public class IntelligenceAttribute extends DotaAttribute {
     public double get() {
         HeroComponent component = provider.getComponent(HERO_COMPONENT);
         double levelBonus = component.isHero() ? component.getHero().getIntelligenceLevelBonus() : 0;
-        return Math.max(0, super.get() + attributes.getLevel() * levelBonus);
+        return Math.max(0, super.get() + (attributes.getLevel() - 1) * levelBonus);
     }
 }
