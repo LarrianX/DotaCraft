@@ -1,5 +1,7 @@
-package com.larrian.dotacraft.component.attributes;
+package com.larrian.dotacraft.component;
 
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
@@ -11,7 +13,7 @@ public interface AttributesComponent extends ComponentV3, ServerTickingComponent
     void setLevel(int level);
     void addLevel(int level);
 
-    DotaAttribute getAttribute(DotaAttributeType type);
+    DotaAttribute getAttribute(DotaAttributes type);
     void sync();
 
 }

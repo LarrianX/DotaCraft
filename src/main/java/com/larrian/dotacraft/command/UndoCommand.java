@@ -9,7 +9,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.larrian.dotacraft.init.ModComponents.*;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class UndoCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
@@ -27,7 +27,7 @@ public class UndoCommand {
 
             if (attribute != null) {
                 HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
-                heroComponent.setHero(false);
+                heroComponent.setHero(null);
                 heroComponent.sync();
             }
         }

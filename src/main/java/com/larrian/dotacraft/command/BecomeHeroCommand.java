@@ -1,17 +1,17 @@
 package com.larrian.dotacraft.command;
 
+import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.component.attributes.AttributesComponent;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.hero.Heroes;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import com.mojang.brigadier.suggestion.SuggestionProvider;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
@@ -22,47 +22,54 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-import static com.larrian.dotacraft.init.ModComponents.*;
+import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class BecomeHeroCommand {
     private static final List<String> TEAMS = List.of("Radiant", "Dire");
 
-    private static final SuggestionProvider<ServerCommandSource> SUGGESTIONS_TEAMS = (context, builder) -> {
-        TEAMS.forEach(builder::suggest);
-        return builder.buildFuture();
-    };
-
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(
-                CommandManager.literal("become_hero")
-                    .then(CommandManager.argument("team", StringArgumentType.string())
-                            .suggests(SUGGESTIONS_TEAMS)
-                            .executes(BecomeHeroCommand::execute))
-        );
+        LiteralArgumentBuilder<ServerCommandSource> command = CommandManager.literal("become_hero");
+
+        for (Heroes hero : Heroes.values()) {
+            LiteralArgumentBuilder<ServerCommandSource> heroCommand = CommandManager.literal(hero.name());
+
+            for (String team : TEAMS) {
+                heroCommand = heroCommand.then(
+                        CommandManager.literal(team)
+                                .executes((context) -> execute(context, hero.name(), team))
+                );
+            }
+
+            command = command.then(heroCommand);
+        }
+
+        dispatcher.register(command);
     }
 
-    private static int execute(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+
+    private static int execute(CommandContext<ServerCommandSource> context, String heroName, String teamName) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-        String teamName = StringArgumentType.getString(context, "team");
 
         if (!TEAMS.contains(teamName)) {
             throw new SimpleCommandExceptionType(Text.literal("Invalid team: " + teamName)).create();
         }
 
+        DotaHero hero = Heroes.valueOf(heroName).getHero();
+
         HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
         heroComponent.setHealth(0);
         heroComponent.setMana(0);
-        heroComponent.setHero(true);
+        heroComponent.setHero(hero);
         heroComponent.sync();
 
         AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
-        attributes.setLevel(0);
-        for (DotaAttributeType attribute : DotaAttributeType.values()) {
+        attributes.setLevel(1);
+        for (DotaAttributes attribute : DotaAttributes.values()) {
             attributes.getAttribute(attribute).clearModifiers();
             attributes.getAttribute(attribute).set(0);
         }
-        attributes.getAttribute(DotaAttributeType.MAX_HEALTH).set(120);
-        attributes.getAttribute(DotaAttributeType.MAX_MANA).set(75);
+        heroComponent.getHero().setAttributes(attributes);
         attributes.sync();
 
         assignPlayerToTeam(context.getSource().getServer(), player, teamName);

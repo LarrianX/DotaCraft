@@ -1,9 +1,8 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.item.custom.BottleItem;
 import com.larrian.dotacraft.item.RuneItem;
-import com.larrian.dotacraft.rune.Rune;
+import com.larrian.dotacraft.rune.DotaRune;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -11,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -65,7 +63,7 @@ public abstract class ItemEntityMixin extends Entity {
                     boolean result = BottleItem.checkRune(player, this);
                     if (!result) {
                         // Если в инвентаре нет пустой бутылки - используем руну так
-                        Rune rune = runeItem.getRune();
+                        DotaRune rune = runeItem.getRune();
                         rune.use(player);
                         kill();
                         return ActionResult.SUCCESS;

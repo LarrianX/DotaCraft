@@ -1,8 +1,8 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.IDotaAttribute;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.item.DotaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
@@ -24,8 +24,8 @@ public class RadianceItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributeType.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
+    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
+        attributes.get(DotaAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
     }
 }
 

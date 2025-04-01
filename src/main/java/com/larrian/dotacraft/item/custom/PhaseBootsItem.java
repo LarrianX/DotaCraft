@@ -1,11 +1,10 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.IDotaAttribute;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.item.DotaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
 
 import java.util.EnumMap;
 
@@ -19,9 +18,9 @@ public class PhaseBootsItem extends DotaItem implements Custom {
     public PhaseBootsItem() {super(new FabricItemSettings());}
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributeType.MOVEMENT_SPEED).addModifier(String.valueOf(slot), SPEED * count);
-        attributes.get(DotaAttributeType.ARMOR).addModifier(String.valueOf(slot), ARMOR * count);
+    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
+        attributes.get(DotaAttributes.MOVEMENT_SPEED).addModifier(String.valueOf(slot), SPEED * count);
+        attributes.get(DotaAttributes.ARMOR).addModifier(String.valueOf(slot), ARMOR * count);
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.attributes.AttributesComponent;
+import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.component.attributes.DotaAttribute;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -154,7 +154,7 @@ public class BarsMixin {
         }
 
         // Manually query AttributesComponent for each attribute.
-        for (DotaAttributeType type : DotaAttributeType.values()) {
+        for (DotaAttributes type : DotaAttributes.values()) {
             DotaAttribute attribute = attributes.getAttribute(type);
             drawTextPair(context, client, type.name().toLowerCase() + ": ",ATTRIBUTES_FORMAT.format(attribute.getBase()) + " -> " + ATTRIBUTES_FORMAT.format(attribute.get()), x, y);
             y += 10;
@@ -173,10 +173,10 @@ public class BarsMixin {
 
                 int health = (int) heroComponent.getHealth();
                 int mana = (int) heroComponent.getMana();
-                int maxHealth = (int) attributes.getAttribute(DotaAttributeType.MAX_HEALTH).get();
-                int maxMana = (int) attributes.getAttribute(DotaAttributeType.MAX_MANA).get();
-                double regenHealth = attributes.getAttribute(DotaAttributeType.REGENERATION_HEALTH).get();
-                double regenMana = attributes.getAttribute(DotaAttributeType.REGENERATION_MANA).get();
+                int maxHealth = (int) attributes.getAttribute(DotaAttributes.MAX_HEALTH).get();
+                int maxMana = (int) attributes.getAttribute(DotaAttributes.MAX_MANA).get();
+                double regenHealth = attributes.getAttribute(DotaAttributes.REGENERATION_HEALTH).get();
+                double regenMana = attributes.getAttribute(DotaAttributes.REGENERATION_MANA).get();
                 Set<Integer> blockedSlots = heroComponent.getBlocked();
                 MinecraftClient client = MinecraftClient.getInstance();
 

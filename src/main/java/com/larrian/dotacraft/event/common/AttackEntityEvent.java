@@ -1,12 +1,11 @@
 package com.larrian.dotacraft.event.common;
 
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.component.attributes.AttributesComponent;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.component.AttributesComponent;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.init.ModEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
@@ -25,7 +24,7 @@ public class AttackEntityEvent {
 
             if (heroComponentTarget.isHero() && !playerSource.isTeammate(playerTarget)) {
                 AttributesComponent attributesComponentSource = playerSource.getComponent(ATTRIBUTES_COMPONENT);
-                double damage = attributesComponentSource.getAttribute(DotaAttributeType.DAMAGE).get();
+                double damage = attributesComponentSource.getAttribute(DotaAttributes.DAMAGE).get();
 
                 heroComponentTarget.addHealth((int) -damage);
                 heroComponentTarget.sync();

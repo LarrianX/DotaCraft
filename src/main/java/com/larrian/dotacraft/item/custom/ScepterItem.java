@@ -1,11 +1,10 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.IDotaAttribute;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.item.DotaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
 
 import java.util.EnumMap;
 
@@ -21,12 +20,12 @@ public class ScepterItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributeType.STRENGTH).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributeType.AGILITY).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributeType.INTELLIGENCE).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributeType.MAX_HEALTH).addModifier(String.valueOf(slot), MAX_HEALTH);
-        attributes.get(DotaAttributeType.MAX_MANA).addModifier(String.valueOf(slot), MAX_MANA);
+    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
+        attributes.get(DotaAttributes.STRENGTH).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
+        attributes.get(DotaAttributes.AGILITY).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
+        attributes.get(DotaAttributes.INTELLIGENCE).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
+        attributes.get(DotaAttributes.MAX_HEALTH).addModifier(String.valueOf(slot), MAX_HEALTH);
+        attributes.get(DotaAttributes.MAX_MANA).addModifier(String.valueOf(slot), MAX_MANA);
     }
 
     @Override

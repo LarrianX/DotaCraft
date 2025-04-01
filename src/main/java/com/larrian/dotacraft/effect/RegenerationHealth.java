@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.effect;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -22,7 +22,7 @@ public abstract class RegenerationHealth extends StatusEffect implements Custom 
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier_) {
         super.onApplied(entity, attributes, amplifier_);
         if (entity instanceof PlayerEntity player) {
-            player.getComponent(ATTRIBUTES_COMPONENT).getAttribute(DotaAttributeType.REGENERATION_HEALTH).addModifier(getId(), amplifier);
+            player.getComponent(ATTRIBUTES_COMPONENT).getAttribute(DotaAttributes.REGENERATION_HEALTH).addModifier(getId(), amplifier);
         }
     }
 
@@ -30,7 +30,7 @@ public abstract class RegenerationHealth extends StatusEffect implements Custom 
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int effectAmplifier) {
         super.onRemoved(entity, attributes, effectAmplifier);
         if (entity instanceof PlayerEntity player) {
-            player.getComponent(ATTRIBUTES_COMPONENT).getAttribute(DotaAttributeType.REGENERATION_HEALTH).removeModifier(getId());
+            player.getComponent(ATTRIBUTES_COMPONENT).getAttribute(DotaAttributes.REGENERATION_HEALTH).removeModifier(getId());
         }
     }
 }

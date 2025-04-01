@@ -1,19 +1,21 @@
 package com.larrian.dotacraft.rune.custom;
 
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.component.attributes.AttributesComponent;
-import com.larrian.dotacraft.init.ModEffects;
-import com.larrian.dotacraft.rune.Rune;
+import com.larrian.dotacraft.rune.DotaRune;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 import static com.larrian.dotacraft.init.ModEffects.RUNE_REGENERATION_EFFECT;
 
-public class RegenerationRune extends Rune {
+public class RegenerationRune extends DotaRune {
     private static final String ID = "regeneration";
     private static final int DURATION = 600;
     private static final StatusEffect EFFECT = RUNE_REGENERATION_EFFECT;
+
+    public RegenerationRune(String id) {
+        super(id);
+    }
 
     @Override
     public String getId() {

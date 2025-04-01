@@ -2,8 +2,8 @@ package com.larrian.dotacraft.init;
 
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.component.*;
-import com.larrian.dotacraft.component.attributes.AttributesComponent;
-import com.larrian.dotacraft.component.attributes.SyncedAttributesComponent;
+import com.larrian.dotacraft.component.AttributesComponent;
+import com.larrian.dotacraft.component.SyncedAttributesComponent;
 import com.larrian.dotacraft.component.SyncedHeroComponent;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;

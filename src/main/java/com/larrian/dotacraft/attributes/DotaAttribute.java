@@ -1,18 +1,22 @@
-package com.larrian.dotacraft.component.attributes;
+package com.larrian.dotacraft.attributes;
 
+import com.larrian.dotacraft.component.AttributesComponent;
+import com.larrian.dotacraft.component.HeroComponent;
 import net.minecraft.entity.player.PlayerEntity;
+
 import java.util.HashMap;
 import java.util.Map;
 
+/* Base attribute class with basic functionality. */
 public class DotaAttribute implements IDotaAttribute {
-    private final DotaAttributeType type;
-    private final PlayerEntity provider;
-    private final AttributesComponent attributes;
-    private double baseValue;
-    private final Map<String, Double> modifiers = new HashMap<>();
 
-    public DotaAttribute(DotaAttributeType type, PlayerEntity provider, AttributesComponent attributes) {
-        this.type = type;
+    // Basic fields
+    protected final PlayerEntity provider;
+    protected final AttributesComponent attributes;
+    protected double baseValue;
+    protected final Map<String, Double> modifiers = new HashMap<>();
+
+    public DotaAttribute(PlayerEntity provider, AttributesComponent attributes) {
         this.provider = provider;
         this.attributes = attributes;
         this.baseValue = 0;
@@ -33,11 +37,11 @@ public class DotaAttribute implements IDotaAttribute {
         set(this.baseValue + value);
     }
 
+    // Base get() method simply returns the base value plus modifiers.
     @Override
     public double get() {
         double modifiedValue = baseValue + modifiers.values().stream().mapToDouble(Double::doubleValue).sum();
-        double correlationValue = type.getCorrelationValue(provider, attributes, modifiedValue);
-        return Math.max(0, correlationValue);
+        return Math.max(0, modifiedValue);
     }
 
     @Override

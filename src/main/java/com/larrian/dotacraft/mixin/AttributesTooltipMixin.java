@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
-import com.larrian.dotacraft.component.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.attributes.IDotaAttribute;
 import com.larrian.dotacraft.item.DotaItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
@@ -36,10 +36,10 @@ public class AttributesTooltipMixin {
             return;
         }
 
-        EnumMap<DotaAttributeType, IDotaAttribute> attributes = new EnumMap<>(DotaAttributeType.class);
-        Map<DotaAttributeType, Double> modifiersMap = new HashMap<>();
+        EnumMap<DotaAttributes, IDotaAttribute> attributes = new EnumMap<>(DotaAttributes.class);
+        Map<DotaAttributes, Double> modifiersMap = new HashMap<>();
 
-        for (DotaAttributeType type : DotaAttributeType.values()) {
+        for (DotaAttributes type : DotaAttributes.values()) {
             attributes.put(type, new IDotaAttribute() {
                 @Override
                 public void set(double value) {}
@@ -74,7 +74,7 @@ public class AttributesTooltipMixin {
 //        tooltip.add(Text.literal("Attributes:").formatted(Formatting.GRAY, Formatting.BOLD));
 
         for (var entry : modifiersMap.entrySet()) {
-            DotaAttributeType type = entry.getKey();
+            DotaAttributes type = entry.getKey();
             double value = entry.getValue();
 
             if (value != 0) {

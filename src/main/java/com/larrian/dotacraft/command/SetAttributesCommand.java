@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -17,10 +17,9 @@ import net.minecraft.text.Text;
 import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
 
 public class SetAttributesCommand {
-
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralArgumentBuilder<ServerCommandSource> command = CommandManager.literal("set");
-        for (DotaAttributeType type : DotaAttributeType.values()) {
+        for (DotaAttributes type : DotaAttributes.values()) {
             command.then(
                     CommandManager.literal(type.name())
                             .then(CommandManager.argument("value", DoubleArgumentType.doubleArg())
@@ -39,9 +38,9 @@ public class SetAttributesCommand {
 
         double value = DoubleArgumentType.getDouble(context, "value");
 
-        DotaAttributeType attributeType;
+        DotaAttributes attributeType;
         try {
-            attributeType = DotaAttributeType.valueOf(attributeName.toUpperCase());
+            attributeType = DotaAttributes.valueOf(attributeName.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new SimpleCommandExceptionType(Text.literal("Invalid attribute name: " + attributeName)).create();
         }

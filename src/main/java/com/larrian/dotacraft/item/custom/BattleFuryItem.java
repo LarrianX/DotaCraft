@@ -1,8 +1,8 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
-import com.larrian.dotacraft.component.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.attributes.IDotaAttribute;
 import com.larrian.dotacraft.item.DotaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
@@ -25,9 +25,9 @@ public class BattleFuryItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributeType, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributeType.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
-        attributes.get(DotaAttributeType.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
-        attributes.get(DotaAttributeType.REGENERATION_MANA).addModifier(String.valueOf(slot), REGENERATION_MANA);
+    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
+        attributes.get(DotaAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
+        attributes.get(DotaAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
+        attributes.get(DotaAttributes.REGENERATION_MANA).addModifier(String.valueOf(slot), REGENERATION_MANA);
     }
 }

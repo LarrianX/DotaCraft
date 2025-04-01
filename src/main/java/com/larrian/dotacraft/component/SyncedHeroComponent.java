@@ -1,10 +1,11 @@
 package com.larrian.dotacraft.component;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.component.attributes.AttributesComponent;
-import com.larrian.dotacraft.component.attributes.DotaAttributeType;
+import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.event.AutoCraft;
 import com.larrian.dotacraft.event.ServerEvents;
+import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.hero.Heroes;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -24,7 +25,7 @@ import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     private final PlayerEntity provider;
-    private boolean hero;
+    private DotaHero hero;
     private double health;
     private double mana;
     private NbtList cache;
@@ -48,8 +49,8 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     private void regeneration() {
         AttributesComponent attributes = getAttributesComponent();
-        addHealth(attributes.getAttribute(DotaAttributeType.REGENERATION_HEALTH).get() / 20);
-        addMana(attributes.getAttribute(DotaAttributeType.REGENERATION_MANA).get() / 20);
+        addHealth(attributes.getAttribute(DotaAttributes.REGENERATION_HEALTH).get() / 20);
+        addMana(attributes.getAttribute(DotaAttributes.REGENERATION_MANA).get() / 20);
     }
 
     @Override
@@ -61,7 +62,7 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     @Environment(EnvType.CLIENT)
     public void clientTick() {
         regeneration();
-        if (this.hero && DotaCraft.AUTO_CRAFT) {
+        if (isHero() && DotaCraft.AUTO_CRAFT) {
             NbtList current = provider.getInventory().writeNbt(new NbtList());
             if (!this.cache.equals(current)) {
                 boolean result = AutoCraft.craft(provider, clientBlockedSlots);
@@ -79,12 +80,17 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     }
 
     @Override
-    public boolean isHero() {
+    public DotaHero getHero() {
         return hero;
     }
 
     @Override
-    public void setHero(boolean hero) {
+    public boolean isHero() {
+        return hero != null;
+    }
+
+    @Override
+    public void setHero(DotaHero hero) {
         this.hero = hero;
     }
 
@@ -95,12 +101,12 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     @Override
     public boolean isFullHealth() {
-        return getHealth() == getAttributesComponent().getAttribute(DotaAttributeType.MAX_HEALTH).get();
+        return getHealth() == getAttributesComponent().getAttribute(DotaAttributes.MAX_HEALTH).get();
     }
 
     @Override
     public void setHealth(double health) {
-        this.health = Math.max(0, Math.min(health, getAttributesComponent().getAttribute(DotaAttributeType.MAX_HEALTH).get()));
+        this.health = Math.max(0, Math.min(health, getAttributesComponent().getAttribute(DotaAttributes.MAX_HEALTH).get()));
     }
 
     @Override
@@ -115,12 +121,12 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     @Override
     public boolean isFullMana() {
-        return getMana() == getAttributesComponent().getAttribute(DotaAttributeType.MAX_MANA).get();
+        return getMana() == getAttributesComponent().getAttribute(DotaAttributes.MAX_MANA).get();
     }
 
     @Override
     public void setMana(double mana) {
-        this.mana = Math.max(0, Math.min(mana, getAttributesComponent().getAttribute(DotaAttributeType.MAX_MANA).get()));
+        this.mana = Math.max(0, Math.min(mana, getAttributesComponent().getAttribute(DotaAttributes.MAX_MANA).get()));
     }
 
     @Override
@@ -131,20 +137,6 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     @Override
     public AbstractTeam getTeam() {
         return provider.getScoreboardTeam();
-    }
-
-    @Override
-    public void readFromNbt(NbtCompound tag) {
-        this.hero = tag.getBoolean("hero");
-        this.health = tag.getDouble("health");
-        this.mana = tag.getDouble("mana");
-    }
-
-    @Override
-    public void writeToNbt(NbtCompound tag) {
-        tag.putBoolean("hero", hero);
-        tag.putDouble("health", health);
-        tag.putDouble("mana", mana);
     }
 
     @Environment(EnvType.CLIENT)
@@ -164,5 +156,21 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     @Environment(EnvType.CLIENT)
     public Set<Integer> getBlocked() {
         return clientBlockedSlots;
+    }
+
+    @Override
+    public void readFromNbt(NbtCompound tag) {
+        String heroNbt = tag.getString("hero");
+        this.hero = heroNbt.isEmpty() ? null : Heroes.valueOf(heroNbt).getHero();
+        this.health = tag.getDouble("health");
+        this.mana = tag.getDouble("mana");
+    }
+
+    @Override
+    public void writeToNbt(NbtCompound tag) {
+        String heroNbt = isHero() ? hero.getId() : "";
+        tag.putString("hero", heroNbt);
+        tag.putDouble("health", health);
+        tag.putDouble("mana", mana);
     }
 }

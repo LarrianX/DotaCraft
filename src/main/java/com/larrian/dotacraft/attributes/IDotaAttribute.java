@@ -1,4 +1,4 @@
-package com.larrian.dotacraft.component.attributes;
+package com.larrian.dotacraft.attributes;
 
 public interface IDotaAttribute {
     void set(double value);
