@@ -1,22 +1,23 @@
 package com.larrian.dotacraft.item;
 
-import com.larrian.dotacraft.attributes.DotaAttributes;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
+import com.larrian.dotacraft.Custom;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import net.minecraft.item.Item;
 
-import java.util.EnumMap;
+import java.util.Map;
 
-public abstract class DotaItem extends Item {
+public abstract class DotaItem extends Item implements Custom {
     public DotaItem(Settings settings) {
         super(settings);
     }
 
-    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
+    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
 
     }
 
-    public void removeModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot) {
-        for (IDotaAttribute attribute : attributes.values()) {
+    public void removeModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot) {
+        for (DotaAttributeInstance attribute : attributes.values()) {
             attribute.removeModifier(String.valueOf(slot));
         }
     }

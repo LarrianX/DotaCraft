@@ -2,7 +2,7 @@ package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.component.AttributesComponent;
-import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.init.ModAttributes;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
@@ -26,7 +26,7 @@ public abstract class PlayerEntityMixin {
                 HeroComponent componentSource = source.getComponent(HERO_COMPONENT);
                 if (componentSource.isHero()) {
                     AttributesComponent attributes = source.getComponent(ATTRIBUTES_COMPONENT);
-                    amount = (float) attributes.getAttribute(DotaAttributes.DAMAGE).get();
+                    amount = (float) attributes.getAttribute(ModAttributes.DAMAGE).get();
                 }
             }
             componentTarget.addHealth(-amount);

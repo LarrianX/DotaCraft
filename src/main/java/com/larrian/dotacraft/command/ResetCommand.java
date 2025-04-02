@@ -1,9 +1,10 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.attributes.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.init.ModRegistries;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
@@ -31,7 +32,7 @@ public class ResetCommand {
 
             AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
             attributes.setLevel(1);
-            for (DotaAttributes attribute : DotaAttributes.values()) {
+            for (DotaAttribute attribute : ModRegistries.ATTRIBUTES) {
                 attributes.getAttribute(attribute).clearModifiers();
                 attributes.getAttribute(attribute).set(0);
             }

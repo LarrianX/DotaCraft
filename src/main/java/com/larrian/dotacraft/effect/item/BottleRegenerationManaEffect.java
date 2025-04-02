@@ -10,7 +10,7 @@ import static com.larrian.dotacraft.DotaCraft.ERROR;
 
 public class BottleRegenerationManaEffect extends RegenerationMana implements Custom {
     private static final String ID = "bottle_regeneration_mana";
-    private static final double amplifier = ((double) 60 / 54) + ERROR;
+    private static final double amplifier = ((double) 60 / 2.7) + ERROR;
 
     public BottleRegenerationManaEffect() {
         super(StatusEffectCategory.BENEFICIAL, 0xe9b8b3, amplifier);

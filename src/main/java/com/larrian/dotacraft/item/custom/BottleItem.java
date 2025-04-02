@@ -3,7 +3,11 @@ package com.larrian.dotacraft.item.custom;
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.init.ModItems;
+
+import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import com.larrian.dotacraft.item.RuneItem;
 import com.larrian.dotacraft.rune.DotaRune;
 import com.larrian.dotacraft.rune.Runes;
@@ -24,7 +28,7 @@ import net.minecraft.world.World;
 import static com.larrian.dotacraft.init.ModEffects.BOTTLE_REGENERATION_HEALTH;
 import static com.larrian.dotacraft.init.ModEffects.BOTTLE_REGENERATION_MANA;
 
-public class BottleItem extends DotaItem implements Custom {
+public class BottleItem extends DotaItem {
     private static final String ID = "bottle";
     public static final String FULLNESS_KEY = "fullness";
     public static final String RUNE_KEY = "rune";

@@ -11,7 +11,6 @@ public class RuneDoubleDamageEffect extends StatusEffect implements Custom {
 
     public RuneDoubleDamageEffect() {
         super(StatusEffectCategory.BENEFICIAL, 3402751);
-        // TODO: modifier damage
     }
 
     @Override

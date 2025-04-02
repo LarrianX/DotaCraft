@@ -42,8 +42,5 @@ public class ModItemGroups {
         return group;
     }
 
-    public static void registerItemGroups() {
-        DotaCraft.LOGGER.info("Registering Item Groups for " + DotaCraft.MOD_ID);
-        // Регистрация выполнена при инициализации статических полей
-    }
+    public static void registerItemGroups() {}
 }

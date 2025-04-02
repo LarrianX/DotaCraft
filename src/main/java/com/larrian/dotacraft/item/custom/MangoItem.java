@@ -1,11 +1,12 @@
 package com.larrian.dotacraft.item.custom;
 
-import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributes;
+
+import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.HungerManager;
@@ -16,11 +17,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import java.util.EnumMap;
+import java.util.Map;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
-public class MangoItem extends DotaItem implements Custom {
+public class MangoItem extends DotaItem {
     private static final String ID = "mango";
     private static final int REGENERATION = 100;
 
@@ -63,8 +64,8 @@ public class MangoItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH * count);
+    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
+        attributes.get(ModAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH * count);
     }
 
     @Override

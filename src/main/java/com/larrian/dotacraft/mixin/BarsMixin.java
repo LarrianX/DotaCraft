@@ -1,9 +1,12 @@
 package com.larrian.dotacraft.mixin;
 
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.attributes.DotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.init.ModAttributes;
+import com.larrian.dotacraft.init.ModRegistries;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -36,7 +39,6 @@ public class BarsMixin {
     @Unique
     private static final DecimalFormat ATTRIBUTES_FORMAT = new DecimalFormat("#.##########");
 
-    // Calculates the number of pixels for the filled part of the bar.
     @Unique
     private int calculatePixels(int value, int maxValue) {
         if (maxValue == 0) {
@@ -137,13 +139,17 @@ public class BarsMixin {
     }
 
     @Unique
-    private void drawTexts(DrawContext context, AbstractTeam team, Set<Integer> blockedSlots, AttributesComponent attributes, MinecraftClient client) {
-        int x = context.getScaledWindowWidth() / 2 + 110;
-        int y = context.getScaledWindowHeight() - 150;
+    private void drawTexts(DrawContext context, DotaHero hero, AbstractTeam team, Set<Integer> blockedSlots, AttributesComponent attributes, MinecraftClient client) {
+        int x = context.getScaledWindowWidth() / 2 - 98;
+        int y = context.getScaledWindowHeight() - 39;
+        context.drawTextWithShadow(client.textRenderer, String.valueOf(attributes.getLevel()), x, y, 16777215);
 
-        // Draw team name if exists.
+        x = context.getScaledWindowWidth() / 2 + 110;
+        y = context.getScaledWindowHeight() - 150;
+
+        // Draw team name and hero.
         if (team != null) {
-            context.drawTextWithShadow(client.textRenderer, team.getName(), x, y, 16777215);
+            context.drawTextWithShadow(client.textRenderer, (capitalize(hero.getId()) + " (" + team.getName().toLowerCase() + ")"), x, y, 16777215);
             y += 10;
         }
 
@@ -154,9 +160,11 @@ public class BarsMixin {
         }
 
         // Manually query AttributesComponent for each attribute.
-        for (DotaAttributes type : DotaAttributes.values()) {
-            DotaAttribute attribute = attributes.getAttribute(type);
-            drawTextPair(context, client, type.name().toLowerCase() + ": ",ATTRIBUTES_FORMAT.format(attribute.getBase()) + " -> " + ATTRIBUTES_FORMAT.format(attribute.get()), x, y);
+        for (DotaAttribute type : ModRegistries.ATTRIBUTES) {
+            DotaAttributeInstance attribute = attributes.getAttribute(type);
+            
+            drawTextPair(context, client, type.getId().toLowerCase() + ": ",
+                    ATTRIBUTES_FORMAT.format(attribute.getBase()) + " -> " + ATTRIBUTES_FORMAT.format(attribute.get()), x, y);
             y += 10;
         }
     }
@@ -173,16 +181,18 @@ public class BarsMixin {
 
                 int health = (int) heroComponent.getHealth();
                 int mana = (int) heroComponent.getMana();
-                int maxHealth = (int) attributes.getAttribute(DotaAttributes.MAX_HEALTH).get();
-                int maxMana = (int) attributes.getAttribute(DotaAttributes.MAX_MANA).get();
-                double regenHealth = attributes.getAttribute(DotaAttributes.REGENERATION_HEALTH).get();
-                double regenMana = attributes.getAttribute(DotaAttributes.REGENERATION_MANA).get();
+                int maxHealth = (int) attributes.getAttribute(ModAttributes.MAX_HEALTH).get();
+                int maxMana = (int) attributes.getAttribute(ModAttributes.MAX_MANA).get();
+                double regenHealth = attributes.getAttribute(ModAttributes.REGENERATION_HEALTH).get();
+                double regenMana = attributes.getAttribute(ModAttributes.REGENERATION_MANA).get();
+                DotaHero hero = heroComponent.getHero();
+                AbstractTeam team = player.getScoreboardTeam();
                 Set<Integer> blockedSlots = heroComponent.getBlocked();
                 MinecraftClient client = MinecraftClient.getInstance();
 
                 drawHealthBar(context, health, maxHealth, regenHealth, client);
                 drawManaBar(context, mana, maxMana, regenMana, client);
-                drawTexts(context, player.getScoreboardTeam(), blockedSlots, attributes, client);
+                drawTexts(context, hero, team, blockedSlots, attributes, client);
             }
         }
     }

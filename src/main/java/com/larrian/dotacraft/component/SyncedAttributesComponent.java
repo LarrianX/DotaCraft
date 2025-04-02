@@ -1,8 +1,8 @@
 package com.larrian.dotacraft.component;
 
 import com.larrian.dotacraft.attributes.DotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributes;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
+import com.larrian.dotacraft.init.ModRegistries;
 import com.larrian.dotacraft.item.DotaItem;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,12 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 
 /* Component to synchronize player attributes. */
 public class SyncedAttributesComponent implements AttributesComponent, AutoSyncedComponent {
@@ -26,15 +24,15 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     private final PlayerEntity provider;
     private Map<Integer, ItemStack> cache;
     private int level;
-    private final EnumMap<DotaAttributes, IDotaAttribute> attributes = new EnumMap<>(DotaAttributes.class);
+    private final Map<DotaAttribute, DotaAttributeInstance> attributes = new HashMap<>();
 
     public SyncedAttributesComponent(PlayerEntity provider) {
         this.provider = provider;
         this.cache = new HashMap<>();
 
         // Create attribute instances using enum registry
-        for (DotaAttributes type : DotaAttributes.values()) {
-            attributes.put(type, type.createAttribute(provider, this));
+        for (DotaAttribute type : ModRegistries.ATTRIBUTES) {
+            attributes.put(type, new DotaAttributeInstance(type, provider));
         }
     }
 
@@ -121,8 +119,8 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     }
 
     @Override
-    public DotaAttribute getAttribute(DotaAttributes type) {
-        return (DotaAttribute) attributes.get(type);
+    public DotaAttributeInstance getAttribute(DotaAttribute type) {
+        return attributes.get(type);
     }
 
     @Override
@@ -131,9 +129,12 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
         if (tag.contains("attributes", NbtElement.COMPOUND_TYPE)) {
             NbtCompound attrsTag = tag.getCompound("attributes");
-            for (Map.Entry<DotaAttributes, IDotaAttribute> entry : attributes.entrySet()) {
-                if (attrsTag.contains(entry.getKey().name(), NbtElement.DOUBLE_TYPE)) {
-                    entry.getValue().set(attrsTag.getDouble(entry.getKey().name()));
+            for (var entry : attributes.entrySet()) {
+                DotaAttribute type = entry.getKey();
+                DotaAttributeInstance attribute = entry.getValue();
+
+                if (attrsTag.contains(type.getId(), NbtElement.DOUBLE_TYPE)) {
+                    attribute.set(attrsTag.getDouble(type.getId()));
                 }
             }
         }
@@ -144,8 +145,8 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         tag.putInt("level", this.level);
 
         NbtCompound attrsTag = new NbtCompound();
-        for (Map.Entry<DotaAttributes, IDotaAttribute> entry : attributes.entrySet()) {
-            attrsTag.putDouble(entry.getKey().name(), entry.getValue().getBase());
+        for (Map.Entry<DotaAttribute, DotaAttributeInstance> entry : attributes.entrySet()) {
+            attrsTag.putDouble(entry.getKey().getId(), entry.getValue().getBase());
         }
         tag.put("attributes", attrsTag);
     }

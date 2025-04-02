@@ -45,16 +45,12 @@ public class ModItems {
     public static final HeavenHalberdItem HEAVEN_HALBERD = register(new HeavenHalberdItem());
 
 
-    private static <T extends Item> T register(T item) {
-        if (item instanceof Custom) {
-            String id = ((Custom) item).getId();
-            Registry.register(Registries.ITEM, new Identifier(DotaCraft.MOD_ID, id), item);
-        }
+    private static <T extends Item & Custom> T register(T item) {
+        String id = item.getId();
+        Registry.register(Registries.ITEM, new Identifier(DotaCraft.MOD_ID, id), item);
         ITEMS.add(item);
         return item;
     }
 
-    public static void registerModItems() {
-        DotaCraft.LOGGER.info("Registering Mod Items for " + DotaCraft.MOD_ID);
-    }
+    public static void registerModItems() {}
 }

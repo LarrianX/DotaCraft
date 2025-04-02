@@ -1,11 +1,6 @@
 package com.larrian.dotacraft;
 
-import com.larrian.dotacraft.init.ModBlocks;
-import com.larrian.dotacraft.init.ModCommands;
-import com.larrian.dotacraft.init.ModEffects;
-import com.larrian.dotacraft.init.ModEvents;
-import com.larrian.dotacraft.init.ModItemGroups;
-import com.larrian.dotacraft.init.ModItems;
+import com.larrian.dotacraft.init.*;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.ModInitializer;
@@ -40,7 +35,6 @@ public class DotaCraft implements ModInitializer {
     public static final boolean DEBUG = false;
     public static final boolean AUTO_CRAFT = true;
     public static final double ERROR = 0.00000000001;
-//    public static final double ERROR = 0.0000001;
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();
     static {
@@ -99,12 +93,14 @@ public class DotaCraft implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        ModRegistries.registerModRegistries();
+        ModAttributes.registerModAttributes();
+        ModHeroes.registerModHeroes();
         ModItems.registerModItems();
         ModBlocks.registerModBlocks();
         ModItemGroups.registerItemGroups();
         ModEffects.registerModEffects();
         ModCommands.registerModCommands();
-//        ModAttributes.registerModAttributes();
         ModEvents.register();
         ServerLifecycleEvents.SERVER_STARTED.register(this::serverStarted);
     }

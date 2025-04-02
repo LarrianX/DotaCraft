@@ -11,7 +11,7 @@ import static com.larrian.dotacraft.DotaCraft.ERROR;
 
 public class ClarityRegenerationManaEffect extends RegenerationMana implements Custom {
     private static final String ID = "clarity_regeneration_mana";
-    private static final double amplifier = ((double) 150 / 500) + ERROR;
+    private static final double amplifier = ((double) 150 / 25) + ERROR;
 
     public ClarityRegenerationManaEffect() {
         super(StatusEffectCategory.BENEFICIAL, 0xe9b8b3, amplifier);

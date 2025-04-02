@@ -1,7 +1,8 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.attributes.DotaAttributes;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
+import com.larrian.dotacraft.init.ModRegistries;
 import com.larrian.dotacraft.item.DotaItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
@@ -36,11 +37,11 @@ public class AttributesTooltipMixin {
             return;
         }
 
-        EnumMap<DotaAttributes, IDotaAttribute> attributes = new EnumMap<>(DotaAttributes.class);
-        Map<DotaAttributes, Double> modifiersMap = new HashMap<>();
+        Map<DotaAttribute, DotaAttributeInstance> attributes = new HashMap<>();
+        Map<DotaAttribute, Double> modifiersMap = new HashMap<>();
 
-        for (DotaAttributes type : DotaAttributes.values()) {
-            attributes.put(type, new IDotaAttribute() {
+        for (DotaAttribute type : ModRegistries.ATTRIBUTES) {
+            attributes.put(type, new DotaAttributeInstance(type, null) {
                 @Override
                 public void set(double value) {}
 
@@ -74,11 +75,11 @@ public class AttributesTooltipMixin {
 //        tooltip.add(Text.literal("Attributes:").formatted(Formatting.GRAY, Formatting.BOLD));
 
         for (var entry : modifiersMap.entrySet()) {
-            DotaAttributes type = entry.getKey();
+            DotaAttribute type = entry.getKey();
             double value = entry.getValue();
 
             if (value != 0) {
-                tooltip.add(Text.literal(String.format(" +%d %s", (int) value, type.name()))
+                tooltip.add(Text.literal(String.format(" +%d %s", (int) value, type.getId()))
                         .formatted(Formatting.GRAY));
             }
         }

@@ -1,11 +1,11 @@
 package com.larrian.dotacraft.component;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.event.AutoCraft;
 import com.larrian.dotacraft.event.ServerEvents;
 import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.hero.Heroes;
+import com.larrian.dotacraft.init.ModAttributes;
+import com.larrian.dotacraft.init.ModRegistries;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -16,6 +16,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.scoreboard.AbstractTeam;
+import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -49,8 +50,8 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     private void regeneration() {
         AttributesComponent attributes = getAttributesComponent();
-        addHealth(attributes.getAttribute(DotaAttributes.REGENERATION_HEALTH).get() / 20);
-        addMana(attributes.getAttribute(DotaAttributes.REGENERATION_MANA).get() / 20);
+        addHealth(attributes.getAttribute(ModAttributes.REGENERATION_HEALTH).get() / 20);
+        addMana(attributes.getAttribute(ModAttributes.REGENERATION_MANA).get() / 20);
     }
 
     @Override
@@ -101,12 +102,12 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     @Override
     public boolean isFullHealth() {
-        return getHealth() == getAttributesComponent().getAttribute(DotaAttributes.MAX_HEALTH).get();
+        return getHealth() == getAttributesComponent().getAttribute(ModAttributes.MAX_HEALTH).get();
     }
 
     @Override
     public void setHealth(double health) {
-        this.health = Math.max(0, Math.min(health, getAttributesComponent().getAttribute(DotaAttributes.MAX_HEALTH).get()));
+        this.health = Math.max(0, Math.min(health, getAttributesComponent().getAttribute(ModAttributes.MAX_HEALTH).get()));
     }
 
     @Override
@@ -121,12 +122,12 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     @Override
     public boolean isFullMana() {
-        return getMana() == getAttributesComponent().getAttribute(DotaAttributes.MAX_MANA).get();
+        return getMana() == getAttributesComponent().getAttribute(ModAttributes.MAX_MANA).get();
     }
 
     @Override
     public void setMana(double mana) {
-        this.mana = Math.max(0, Math.min(mana, getAttributesComponent().getAttribute(DotaAttributes.MAX_MANA).get()));
+        this.mana = Math.max(0, Math.min(mana, getAttributesComponent().getAttribute(ModAttributes.MAX_MANA).get()));
     }
 
     @Override
@@ -161,7 +162,7 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     @Override
     public void readFromNbt(NbtCompound tag) {
         String heroNbt = tag.getString("hero");
-        this.hero = heroNbt.isEmpty() ? null : Heroes.valueOf(heroNbt).getHero();
+        this.hero = heroNbt.isEmpty() ? null : ModRegistries.HEROES.get(new Identifier(DotaCraft.MOD_ID, heroNbt));
         this.health = tag.getDouble("health");
         this.mana = tag.getDouble("mana");
     }

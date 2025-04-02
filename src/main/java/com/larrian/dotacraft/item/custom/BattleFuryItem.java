@@ -1,14 +1,15 @@
 package com.larrian.dotacraft.item.custom;
 
-import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.attributes.DotaAttributes;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
+
+import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
-import java.util.EnumMap;
+import java.util.Map;
 
-public class BattleFuryItem extends DotaItem implements Custom {
+public class BattleFuryItem extends DotaItem {
     private static final String ID = "battle_fury";
 
     private static final double DAMAGE = 50;
@@ -25,9 +26,9 @@ public class BattleFuryItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
-        attributes.get(DotaAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
-        attributes.get(DotaAttributes.REGENERATION_MANA).addModifier(String.valueOf(slot), REGENERATION_MANA);
+    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
+        attributes.get(ModAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
+        attributes.get(ModAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
+        attributes.get(ModAttributes.REGENERATION_MANA).addModifier(String.valueOf(slot), REGENERATION_MANA);
     }
 }

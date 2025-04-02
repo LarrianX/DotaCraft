@@ -17,7 +17,6 @@ public class ModCommands {
     }
 
     public static void registerModCommands() {
-        DotaCraft.LOGGER.info("Registering Mod commands for " + DotaCraft.MOD_ID);
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> registerCommands(dispatcher)));
     }
 }

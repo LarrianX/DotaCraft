@@ -2,7 +2,11 @@ package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
+
+import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -16,7 +20,7 @@ import net.minecraft.world.World;
 
 import static com.larrian.dotacraft.init.ModEffects.FLASK_REGENERATION_HEALTH;
 
-public class FlaskItem extends DotaItem implements Custom {
+public class FlaskItem extends DotaItem {
     private static final String ID = "flask";
 
     public FlaskItem() {

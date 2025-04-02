@@ -1,11 +1,12 @@
 package com.larrian.dotacraft.item.custom;
 
-import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.component.HeroComponent;
+
+import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -15,12 +16,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import java.util.EnumMap;
+import java.util.Map;
 
 import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 import static com.larrian.dotacraft.init.ModEffects.DISARM_EFFECT;
 
-public class HeavenHalberdItem extends DotaItem implements Custom {
+public class HeavenHalberdItem extends DotaItem {
     private static final String ID = "heaven_halberd";
     // ability
     private static final int COOLDOWN = 360;
@@ -29,7 +30,7 @@ public class HeavenHalberdItem extends DotaItem implements Custom {
     // attributes
     private static final double MAX_HEALTH = 275;
     private static final double REGENERATION_HEALTH = 6;
-    private static final double ALL_ATTRIBUTES = 5;
+    private static final double ALLS = 5;
 
     public HeavenHalberdItem() {
         super(new FabricItemSettings().maxCount(1));
@@ -62,12 +63,12 @@ public class HeavenHalberdItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributes.MAX_HEALTH).addModifier(String.valueOf(slot), MAX_HEALTH);
-        attributes.get(DotaAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
-        attributes.get(DotaAttributes.STRENGTH).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributes.AGILITY).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
-        attributes.get(DotaAttributes.INTELLIGENCE).addModifier(String.valueOf(slot), ALL_ATTRIBUTES);
+    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
+        attributes.get(ModAttributes.MAX_HEALTH).addModifier(String.valueOf(slot), MAX_HEALTH);
+        attributes.get(ModAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
+        attributes.get(ModAttributes.STRENGTH).addModifier(String.valueOf(slot), ALLS);
+        attributes.get(ModAttributes.AGILITY).addModifier(String.valueOf(slot), ALLS);
+        attributes.get(ModAttributes.INTELLIGENCE).addModifier(String.valueOf(slot), ALLS);
     }
 
     @Override

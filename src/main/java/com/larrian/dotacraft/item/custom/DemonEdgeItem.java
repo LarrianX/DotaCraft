@@ -1,14 +1,18 @@
 package com.larrian.dotacraft.item.custom;
 
-import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.attributes.IDotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributes;
+
+
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
+import com.larrian.dotacraft.init.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.attributes.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
-import java.util.EnumMap;
+import java.util.Map;
 
-public class DemonEdgeItem extends DotaItem implements Custom {
+public class DemonEdgeItem extends DotaItem {
     private static final String ID = "demon_edge";
 
     private static final double DAMAGE = 25;
@@ -19,9 +23,9 @@ public class DemonEdgeItem extends DotaItem implements Custom {
     }
 
     @Override
-    public void addModifiers(EnumMap<DotaAttributes, IDotaAttribute> attributes, int slot, int count) {
-        attributes.get(DotaAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
-        attributes.get(DotaAttributes.ATTACK_SPEED).addModifier(String.valueOf(slot), ATTACK_SPEED);
+    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
+        attributes.get(ModAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
+        attributes.get(ModAttributes.ATTACK_SPEED).addModifier(String.valueOf(slot), ATTACK_SPEED);
     }
 
     @Override

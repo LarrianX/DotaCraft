@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.effect;
 
 import com.larrian.dotacraft.Custom;
-import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.init.ModAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -18,19 +18,7 @@ public abstract class RegenerationMana extends StatusEffect implements Custom {
         this.amplifier = amplifier;
     }
 
-    @Override
-    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier_) {
-        super.onApplied(entity, attributes, amplifier_);
-        if (entity instanceof PlayerEntity player) {
-            player.getComponent(ATTRIBUTES_COMPONENT).getAttribute(DotaAttributes.REGENERATION_MANA).addModifier(getId(), amplifier);
-        }
-    }
-
-    @Override
-    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int effectAmplifier) {
-        super.onRemoved(entity, attributes, effectAmplifier);
-        if (entity instanceof PlayerEntity player) {
-            player.getComponent(ATTRIBUTES_COMPONENT).getAttribute(DotaAttributes.REGENERATION_MANA).removeModifier(getId());
-        }
+    public double getAmplifier() {
+        return amplifier;
     }
 }

@@ -1,20 +1,25 @@
 
 package com.larrian.dotacraft.attributes.custom;
 
-import com.larrian.dotacraft.attributes.DotaAttributes;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.attributes.DotaAttribute;
-import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.init.ModAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class MaxHealthAttribute extends DotaAttribute {
+import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
 
-    public MaxHealthAttribute(PlayerEntity provider, AttributesComponent attributes) {
-        super(provider, attributes);
+public class MaxHealthAttribute extends DotaAttribute {
+    private static final String ID = "max_health";
+
+    @Override
+    public double get(PlayerEntity player, double value) {
+        AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
+
+        return value + attributes.getAttribute(ModAttributes.STRENGTH).get() * 22;
     }
 
     @Override
-    public double get() {
-        return super.get() + Math.max(0, attributes.getAttribute(DotaAttributes.STRENGTH).get() * 22);
+    public String getId() {
+        return ID;
     }
 }

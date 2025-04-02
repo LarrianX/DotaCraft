@@ -1,13 +1,12 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.attributes.DotaAttributes;
+import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.attributes.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.hero.Heroes;
+import com.larrian.dotacraft.init.ModRegistries;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.DoubleArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -19,6 +18,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 
@@ -31,13 +31,13 @@ public class BecomeHeroCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralArgumentBuilder<ServerCommandSource> command = CommandManager.literal("become_hero");
 
-        for (Heroes hero : Heroes.values()) {
-            LiteralArgumentBuilder<ServerCommandSource> heroCommand = CommandManager.literal(hero.name());
+        for (DotaHero hero : ModRegistries.HEROES) {
+            LiteralArgumentBuilder<ServerCommandSource> heroCommand = CommandManager.literal(hero.getId());
 
             for (String team : TEAMS) {
                 heroCommand = heroCommand.then(
                         CommandManager.literal(team)
-                                .executes((context) -> execute(context, hero.name(), team))
+                                .executes((context) -> execute(context, hero.getId(), team))
                 );
             }
 
@@ -55,7 +55,7 @@ public class BecomeHeroCommand {
             throw new SimpleCommandExceptionType(Text.literal("Invalid team: " + teamName)).create();
         }
 
-        DotaHero hero = Heroes.valueOf(heroName).getHero();
+        DotaHero hero = ModRegistries.HEROES.get(new Identifier(DotaCraft.MOD_ID, heroName.toLowerCase()));
 
         HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
         heroComponent.setHealth(0);
@@ -65,7 +65,7 @@ public class BecomeHeroCommand {
 
         AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
         attributes.setLevel(1);
-        for (DotaAttributes attribute : DotaAttributes.values()) {
+        for (DotaAttribute attribute : ModRegistries.ATTRIBUTES) {
             attributes.getAttribute(attribute).clearModifiers();
             attributes.getAttribute(attribute).set(0);
         }
