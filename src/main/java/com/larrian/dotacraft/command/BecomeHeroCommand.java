@@ -57,19 +57,19 @@ public class BecomeHeroCommand {
 
         DotaHero hero = ModRegistries.HEROES.get(new Identifier(DotaCraft.MOD_ID, heroName.toLowerCase()));
 
-        HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
-        heroComponent.setHealth(0);
-        heroComponent.setMana(0);
-        heroComponent.setHero(hero);
-        heroComponent.sync();
+        HeroComponent component = player.getComponent(HERO_COMPONENT);
+        component.setHealth(0);
+        component.setMana(0);
+        component.setHero(hero);
+        component.setLevel(1);
+        component.sync();
 
         AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
-        attributes.setLevel(1);
         for (DotaAttribute attribute : ModRegistries.ATTRIBUTES) {
             attributes.getAttribute(attribute).clearModifiers();
             attributes.getAttribute(attribute).set(0);
         }
-        heroComponent.getHero().setAttributes(attributes);
+        component.getHero().setAttributes(attributes);
         attributes.sync();
 
         assignPlayerToTeam(context.getSource().getServer(), player, teamName);

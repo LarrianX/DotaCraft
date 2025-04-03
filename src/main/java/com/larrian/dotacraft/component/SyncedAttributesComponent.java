@@ -18,12 +18,8 @@ import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
 
 /* Component to synchronize player attributes. */
 public class SyncedAttributesComponent implements AttributesComponent, AutoSyncedComponent {
-    private static final int LEVEL_LIMIT = 30;
-    public static final double LEVEL_BOOST = 2;
-
     private final PlayerEntity provider;
     private Map<Integer, ItemStack> cache;
-    private int level;
     private final Map<DotaAttribute, DotaAttributeInstance> attributes = new HashMap<>();
 
     public SyncedAttributesComponent(PlayerEntity provider) {
@@ -103,20 +99,6 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
         item.addModifiers(this.attributes, slot, count);
     }
 
-    @Override
-    public int getLevel() {
-        return this.level;
-    }
-
-    @Override
-    public void setLevel(int level) {
-        this.level = Math.max(0, Math.min(level, LEVEL_LIMIT));
-    }
-
-    @Override
-    public void addLevel(int add) {
-        setLevel(getLevel() + add);
-    }
 
     @Override
     public DotaAttributeInstance getAttribute(DotaAttribute type) {
@@ -125,8 +107,6 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        this.level = tag.getInt("level");
-
         if (tag.contains("attributes", NbtElement.COMPOUND_TYPE)) {
             NbtCompound attrsTag = tag.getCompound("attributes");
             for (var entry : attributes.entrySet()) {
@@ -142,8 +122,6 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putInt("level", this.level);
-
         NbtCompound attrsTag = new NbtCompound();
         for (Map.Entry<DotaAttribute, DotaAttributeInstance> entry : attributes.entrySet()) {
             attrsTag.putDouble(entry.getKey().getId(), entry.getValue().getBase());

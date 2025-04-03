@@ -1,10 +1,9 @@
-package com.larrian.dotacraft.event.common;
+package com.larrian.dotacraft.event.server;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
 import static com.larrian.dotacraft.init.ModEffects.DISARM_EFFECT;
 
 public class AllowDamageEvent {

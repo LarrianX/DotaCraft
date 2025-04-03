@@ -28,10 +28,10 @@ public class ResetCommand {
             HeroComponent heroComponent = player.getComponent(HERO_COMPONENT);
             heroComponent.setHealth(0);
             heroComponent.setMana(0);
+            heroComponent.setLevel(0);
             heroComponent.sync();
 
             AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
-            attributes.setLevel(1);
             for (DotaAttribute attribute : ModRegistries.ATTRIBUTES) {
                 attributes.getAttribute(attribute).clearModifiers();
                 attributes.getAttribute(attribute).set(0);

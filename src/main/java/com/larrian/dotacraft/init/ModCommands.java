@@ -1,6 +1,5 @@
 package com.larrian.dotacraft.init;
 
-import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.command.*;
 import com.mojang.brigadier.CommandDispatcher;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -12,7 +11,7 @@ public class ModCommands {
         UndoCommand.register(dispatcher);
         SetAttributesCommand.register(dispatcher);
         SyncCommand.register(dispatcher);
-        UpCommand.register(dispatcher);
+        LevelCommand.register(dispatcher);
         ResetCommand.register(dispatcher);
     }
 

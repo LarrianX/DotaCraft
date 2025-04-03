@@ -17,13 +17,12 @@ public class IntelligenceAttribute extends DotaAttribute {
     @Override
     public double get(PlayerEntity player, double value) {
         HeroComponent component = player.getComponent(HERO_COMPONENT);
-        AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
 
         double levelBonus = component.isHero() ? component.getHero().getIntelligenceLevelBonus() : 0;
         double bonus = component.isHero() && component.getHero().equals(PUDGE) &&
-                attributes.getLevel() >= 17 ? 2 : 0;
+                component.getLevel() >= 17 ? 2 : 0;
 
-        return value + ((attributes.getLevel() - 1) * levelBonus) + bonus;
+        return value + ((component.getLevel() - 1) * levelBonus) + bonus;
     }
 
     @Override

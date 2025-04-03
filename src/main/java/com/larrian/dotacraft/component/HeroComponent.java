@@ -1,6 +1,7 @@
 package com.larrian.dotacraft.component;
 
 import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.hero.Skill;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
@@ -9,6 +10,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.scoreboard.AbstractTeam;
 
+import java.util.EnumMap;
 import java.util.Set;
 
 public interface HeroComponent extends ComponentV3, ServerTickingComponent, ClientTickingComponent {
@@ -34,9 +36,15 @@ public interface HeroComponent extends ComponentV3, ServerTickingComponent, Clie
 
     void addMana(double amount);
 
-    AbstractTeam getTeam();
+    int getLevel();
+    void setLevel(int level);
+    void addLevel(int level);
+
+    EnumMap<Skill.Type, Integer> getSkillCooldowns();
 
     void sync();
+
+    void useSkill(Skill.Type type);
 
     @Environment(EnvType.CLIENT)
     void setBlock(int slot, boolean blocked);

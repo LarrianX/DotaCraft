@@ -16,10 +16,9 @@ public class StrengthAttribute extends DotaAttribute {
     @Override
     public double get(PlayerEntity player, double value) {
         HeroComponent component = player.getComponent(HERO_COMPONENT);
-        AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
 
         double levelBonus = component.isHero() ? component.getHero().getStrengthLevelBonus() : 0;
-        return value + (attributes.getLevel() - 1) * levelBonus;
+        return value + (component.getLevel() - 1) * levelBonus;
     }
 
     @Override
