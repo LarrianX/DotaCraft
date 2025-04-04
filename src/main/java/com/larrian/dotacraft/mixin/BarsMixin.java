@@ -218,9 +218,9 @@ public class BarsMixin {
         for (var type : Skill.Type.values()) {
             Skill skill = hero.getSkill(type);
             // Display skill type, mana cost and cooldown at level 1 (for example)
-            String skillInfo = "Mana: " + (int) skill.getMana()
-                    + ", Cooldown: " + skillCooldowns.get(type) / 20 + "/" + skill.getCooldown(level) / 20;
-            drawTextPair(context, client, "Skill " + type.name() + ":", skillInfo, x, y, 70);
+            String skillInfo = "Mana: " + (int) skill.getMana(level)
+                    + ", Cooldown: " + (int)(skillCooldowns.get(type) / 20. + 0.9) + "/" + skill.getCooldown(level) / 20;
+            drawTextPair(context, client, "Skill " + skill.getClass().getSimpleName() + ":", skillInfo, x, y, 100);
             y += 10;
         }
     }

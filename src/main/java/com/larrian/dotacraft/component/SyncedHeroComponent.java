@@ -184,9 +184,9 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     public void useSkill(Skill.Type type) {
         if (isHero()) {
             Skill skill = hero.getSkill(type);
-            if (skillCooldowns.get(type) == 0 && getMana() >= skill.getMana()) {
+            if (skillCooldowns.get(type) == 0 && getMana() >= skill.getMana(getLevel())) {
                 skillCooldowns.put(type, skill.getCooldown(getLevel()));
-                addMana(-skill.getMana());
+                addMana(-skill.getMana(getLevel()));
                 if (provider.getWorld().isClient) {
                     ClientPlayNetworking.send(ServerEvents.SKILL_PACKET,
                             new SkillPacket(type).toPacketByteBuf());

@@ -16,22 +16,82 @@ public class Pudge extends DotaHero {
     private static final String ID = "pudge";
 
     private static class MeatHook extends Skill {
-        private static final Skill.Type type = Skill.Type.FIRST;
-        private static final double mana = 110;
+        private static final double MANA = 110;
+        private static final int COOLDOWN = 12;
 
-        public MeatHook() {
-            super(type, mana);
+        @Override
+        public double getMana(int level) {
+            return MANA;
         }
 
         @Override
         public int getCooldown(int level) {
-            return 18 * 20;
+            return COOLDOWN * 20;
         }
 
         @Override
-        public boolean use(PlayerEntity source) {
+        public void use(PlayerEntity source) {
             source.sendMessage(Text.literal("first skill"));
-            return true;
+        }
+    }
+
+    private static class Rot extends Skill {
+        private static final double MANA = 80;
+        private static final int COOLDOWN = 1;
+
+        @Override
+        public double getMana(int level) {
+            return MANA;
+        }
+
+        @Override
+        public int getCooldown(int level) {
+            return COOLDOWN * 20;
+        }
+
+        @Override
+        public void use(PlayerEntity source) {
+            source.sendMessage(Text.literal("second skill"));
+        }
+    }
+
+    private static class MeatShield extends Skill {
+        private static final double MANA = 80;
+        private static final int COOLDOWN = 17;
+
+        @Override
+        public double getMana(int level) {
+            return MANA;
+        }
+
+        @Override
+        public int getCooldown(int level) {
+            return COOLDOWN * 20;
+        }
+
+        @Override
+        public void use(PlayerEntity source) {
+            source.sendMessage(Text.literal("third skill"));
+        }
+    }
+
+    private static class Dismember extends Skill {
+        private static final double MANA = 170;
+        private static final int COOLDOWN = 20;
+
+        @Override
+        public double getMana(int level) {
+            return MANA;
+        }
+
+        @Override
+        public int getCooldown(int level) {
+            return COOLDOWN * 20;
+        }
+
+        @Override
+        public void use(PlayerEntity source) {
+            source.sendMessage(Text.literal("super"));
         }
     }
 
@@ -41,9 +101,9 @@ public class Pudge extends DotaHero {
     private static final double INTELLIGENCE_BONUS = 1.8;
 
     private static final Skill FIRST = new MeatHook();
-    private static final Skill SECOND = new MeatHook();
-    private static final Skill THIRD = new MeatHook();
-    private static final Skill SUPER = new MeatHook();
+    private static final Skill SECOND = new Rot();
+    private static final Skill THIRD = new MeatShield();
+    private static final Skill SUPER = new Dismember();
 
     private static final EnumMap<Skill.Type, Skill> skills = new EnumMap<>(Skill.Type.class);
 
