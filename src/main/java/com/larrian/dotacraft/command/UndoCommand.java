@@ -9,7 +9,7 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
 
 public class UndoCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

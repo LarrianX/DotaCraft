@@ -20,10 +20,10 @@
       "com.larrian.dotacraft.DotaCraft"
     ],
     "client": [
-      "com.larrian.dotacraft.DotaCraftClient"
+      "com.larrian.dotacraft.client.DotaCraftClient"
     ],
     "cardinal-components": [
-      "com.larrian.dotacraft.init.ModComponents"
+      "com.larrian.dotacraft.ModComponents"
     ]
   },
   "mixins": [
@@ -42,9 +42,6 @@
   "custom": {
     "cardinal-components": [
       "dotacraft:hero",
-      "dotacraft:old_values",
-      "dotacraft:mana",
-      "dotacraft:health",
       "dotacraft:attributes"
     ]
   }

@@ -1,6 +1,6 @@
 package com.larrian.dotacraft;
 
-import com.larrian.dotacraft.init.*;
+import com.larrian.dotacraft.event.ServerEvents;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.ModInitializer;
@@ -23,15 +23,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import static com.larrian.dotacraft.init.ModItems.*;
+import static com.larrian.dotacraft.ModItems.*;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final Random RANDOM = new Random();
-//    public static final Object o = EntityAttributes.GENERIC_MAX_HEALTH
 
-    // Константы
+    // Constants
     public static final boolean DEBUG = false;
     public static final boolean AUTO_CRAFT = true;
     public static final double ERROR = 0.00000000001;
@@ -96,12 +94,13 @@ public class DotaCraft implements ModInitializer {
         ModRegistries.registerModRegistries();
         ModAttributes.registerModAttributes();
         ModHeroes.registerModHeroes();
+        ModEntities.registerModEntities();
         ModItems.registerModItems();
         ModBlocks.registerModBlocks();
         ModItemGroups.registerItemGroups();
         ModEffects.registerModEffects();
         ModCommands.registerModCommands();
-        ModEvents.register();
+        ServerEvents.register();
         ServerLifecycleEvents.SERVER_STARTED.register(this::serverStarted);
     }
 }

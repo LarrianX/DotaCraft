@@ -1,13 +1,13 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.attributes.DotaAttributeInstance;
-import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.dota.DotaAttributeInstance;
+import com.larrian.dotacraft.dota.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.hero.Skill;
-import com.larrian.dotacraft.init.ModAttributes;
-import com.larrian.dotacraft.init.ModRegistries;
+import com.larrian.dotacraft.dota.DotaHero;
+import com.larrian.dotacraft.dota.Skill;
+import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.ModRegistries;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -23,11 +23,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
 import java.util.EnumMap;
-import java.util.Map;
 import java.util.Set;
 
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
 
 @Mixin(InGameHud.class)
 public class BarsMixin {
@@ -194,7 +193,7 @@ public class BarsMixin {
         for (DotaAttribute type : ModRegistries.ATTRIBUTES) {
             DotaAttributeInstance attribute = attributes.getAttribute(type);
             String value = ATTRIBUTES_FORMAT.format(attribute.getBase()) + " -> " + ATTRIBUTES_FORMAT.format(attribute.get());
-            drawTextPair(context, client, type.getId().toLowerCase() + ":", value, x, y, 120);
+            drawTextPair(context, client, type.getCustomId().toLowerCase() + ":", value, x, y, 120);
             y += 10;
         }
     }
@@ -210,7 +209,7 @@ public class BarsMixin {
 
         // Draw hero name
         if (team != null) {
-            context.drawTextWithShadow(client.textRenderer, (capitalize(hero.getId()) + " (" + team.getName().toLowerCase() + ")"), x, y, 16777215);
+            context.drawTextWithShadow(client.textRenderer, (capitalize(hero.getCustomId()) + " (" + team.getName().toLowerCase() + ")"), x, y, 16777215);
             y += 10;
         }
 

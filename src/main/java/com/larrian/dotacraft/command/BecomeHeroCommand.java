@@ -1,11 +1,11 @@
 package com.larrian.dotacraft.command;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.dota.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.init.ModRegistries;
+import com.larrian.dotacraft.dota.DotaHero;
+import com.larrian.dotacraft.ModRegistries;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -22,8 +22,8 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
 
 public class BecomeHeroCommand {
     private static final List<String> TEAMS = List.of("Radiant", "Dire");
@@ -32,12 +32,12 @@ public class BecomeHeroCommand {
         LiteralArgumentBuilder<ServerCommandSource> command = CommandManager.literal("become_hero");
 
         for (DotaHero hero : ModRegistries.HEROES) {
-            LiteralArgumentBuilder<ServerCommandSource> heroCommand = CommandManager.literal(hero.getId());
+            LiteralArgumentBuilder<ServerCommandSource> heroCommand = CommandManager.literal(hero.getCustomId());
 
             for (String team : TEAMS) {
                 heroCommand = heroCommand.then(
                         CommandManager.literal(team)
-                                .executes((context) -> execute(context, hero.getId(), team))
+                                .executes((context) -> execute(context, hero.getCustomId(), team))
                 );
             }
 

@@ -14,7 +14,7 @@ public class PortalBlock extends Block implements Custom {
     }
 
     @Override
-    public String getId() {
+    public String getCustomId() {
         return ID;
     }
 }

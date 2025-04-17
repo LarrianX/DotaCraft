@@ -1,14 +1,12 @@
 package com.larrian.dotacraft.component;
 
-import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.hero.Skill;
+import com.larrian.dotacraft.dota.DotaHero;
+import com.larrian.dotacraft.dota.Skill;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
-import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.scoreboard.AbstractTeam;
 
 import java.util.EnumMap;
 import java.util.Set;

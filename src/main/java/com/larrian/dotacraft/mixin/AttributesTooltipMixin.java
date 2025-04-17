@@ -1,9 +1,9 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.attributes.DotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributeInstance;
-import com.larrian.dotacraft.init.ModRegistries;
-import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.dota.DotaAttribute;
+import com.larrian.dotacraft.dota.DotaAttributeInstance;
+import com.larrian.dotacraft.ModRegistries;
+import com.larrian.dotacraft.DotaItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +78,7 @@ public class AttributesTooltipMixin {
             double value = entry.getValue();
 
             if (value != 0) {
-                tooltip.add(Text.literal(String.format(" +%d %s", (int) value, type.getId()))
+                tooltip.add(Text.literal(String.format(" +%d %s", (int) value, type.getCustomId()))
                         .formatted(Formatting.GRAY));
             }
         }

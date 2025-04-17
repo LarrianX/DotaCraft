@@ -1,18 +1,18 @@
 package com.larrian.dotacraft.command;
 
-import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.dota.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.init.ModRegistries;
+import com.larrian.dotacraft.dota.DotaHero;
+import com.larrian.dotacraft.ModRegistries;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
 
 public class ResetCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {

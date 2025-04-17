@@ -1,10 +1,10 @@
 package com.larrian.dotacraft.command;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.attributes.DotaAttribute;
+import com.larrian.dotacraft.dota.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.init.ModRegistries;
+import com.larrian.dotacraft.ModRegistries;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
@@ -18,17 +18,17 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
 
 public class SetAttributesCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralArgumentBuilder<ServerCommandSource> command = CommandManager.literal("set");
         for (DotaAttribute type : ModRegistries.ATTRIBUTES) {
             command.then(
-                    CommandManager.literal(type.getId())
+                    CommandManager.literal(type.getCustomId())
                             .then(CommandManager.argument("value", DoubleArgumentType.doubleArg())
-                                    .executes((context -> execute(context, type.getId())))));
+                                    .executes((context -> execute(context, type.getCustomId())))));
         }
         command.then(
                 CommandManager.literal("health")

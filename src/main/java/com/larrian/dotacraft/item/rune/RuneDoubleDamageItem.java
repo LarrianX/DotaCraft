@@ -1,14 +1,13 @@
 package com.larrian.dotacraft.item.rune;
 
-import com.larrian.dotacraft.item.RuneItem;
-import com.larrian.dotacraft.rune.DotaRune;
-import com.larrian.dotacraft.rune.Runes;
+import com.larrian.dotacraft.RuneItem;
+import com.larrian.dotacraft.dota.DotaRune;
+import com.larrian.dotacraft.dota.Runes;
 
 public class RuneDoubleDamageItem extends RuneItem {
     private static final DotaRune RUNE = Runes.double_damage.getRune();
 
-    @Override
-    public DotaRune getRune() {
-        return RUNE;
+    public RuneDoubleDamageItem() {
+        super(RUNE);
     }
 }

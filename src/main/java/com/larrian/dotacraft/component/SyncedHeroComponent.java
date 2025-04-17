@@ -1,13 +1,13 @@
 package com.larrian.dotacraft.component;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.event.AutoCraftPacket;
+import com.larrian.dotacraft.event.network.AutoCraftPacket;
 import com.larrian.dotacraft.event.ServerEvents;
-import com.larrian.dotacraft.event.SkillPacket;
-import com.larrian.dotacraft.hero.DotaHero;
-import com.larrian.dotacraft.hero.Skill;
-import com.larrian.dotacraft.init.ModAttributes;
-import com.larrian.dotacraft.init.ModRegistries;
+import com.larrian.dotacraft.event.network.SkillPacket;
+import com.larrian.dotacraft.dota.DotaHero;
+import com.larrian.dotacraft.dota.Skill;
+import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.ModRegistries;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,8 +22,8 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
 
 public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     private static final int LEVEL_LIMIT = 30;
@@ -33,19 +33,22 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
     private double health;
     private double mana;
     private int level;
-    private EnumMap<Skill.Type, Integer> skillCooldowns;
-    private final Set<Integer> clientBlockedSlots;
+    private final EnumMap<Skill.Type, Integer> skillCooldowns;
+    @Environment(EnvType.CLIENT)
+    private Set<Integer> clientBlockedSlots;
 
     private NbtList cache;
 
     public SyncedHeroComponent(PlayerEntity provider) {
         this.provider = provider;
         this.skillCooldowns = new EnumMap<>(Skill.Type.class);
+        this.cache = new NbtList();
         for (var type : Skill.Type.values()) {
             skillCooldowns.put(type, 0);
         }
-        this.clientBlockedSlots = new HashSet<>();
-        this.cache = new NbtList();
+        if (provider.getWorld().isClient) {
+            this.clientBlockedSlots = new HashSet<>();
+        }
     }
 
     private AttributesComponent getAttributesComponent() {
@@ -217,7 +220,7 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        String heroNbt = isHero() ? hero.getId() : "";
+        String heroNbt = isHero() ? hero.getCustomId() : "";
         tag.putString("hero", heroNbt);
         tag.putDouble("health", health);
         tag.putDouble("mana", mana);

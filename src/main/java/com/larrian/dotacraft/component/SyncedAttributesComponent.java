@@ -1,9 +1,9 @@
 package com.larrian.dotacraft.component;
 
-import com.larrian.dotacraft.attributes.DotaAttribute;
-import com.larrian.dotacraft.attributes.DotaAttributeInstance;
-import com.larrian.dotacraft.init.ModRegistries;
-import com.larrian.dotacraft.item.DotaItem;
+import com.larrian.dotacraft.dota.DotaAttribute;
+import com.larrian.dotacraft.dota.DotaAttributeInstance;
+import com.larrian.dotacraft.ModRegistries;
+import com.larrian.dotacraft.DotaItem;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,7 +14,7 @@ import net.minecraft.nbt.NbtElement;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
 
 /* Component to synchronize player attributes. */
 public class SyncedAttributesComponent implements AttributesComponent, AutoSyncedComponent {
@@ -113,8 +113,8 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
                 DotaAttribute type = entry.getKey();
                 DotaAttributeInstance attribute = entry.getValue();
 
-                if (attrsTag.contains(type.getId(), NbtElement.DOUBLE_TYPE)) {
-                    attribute.set(attrsTag.getDouble(type.getId()));
+                if (attrsTag.contains(type.getCustomId(), NbtElement.DOUBLE_TYPE)) {
+                    attribute.set(attrsTag.getDouble(type.getCustomId()));
                 }
             }
         }
@@ -124,7 +124,7 @@ public class SyncedAttributesComponent implements AttributesComponent, AutoSynce
     public void writeToNbt(NbtCompound tag) {
         NbtCompound attrsTag = new NbtCompound();
         for (Map.Entry<DotaAttribute, DotaAttributeInstance> entry : attributes.entrySet()) {
-            attrsTag.putDouble(entry.getKey().getId(), entry.getValue().getBase());
+            attrsTag.putDouble(entry.getKey().getCustomId(), entry.getValue().getBase());
         }
         tag.put("attributes", attrsTag);
     }

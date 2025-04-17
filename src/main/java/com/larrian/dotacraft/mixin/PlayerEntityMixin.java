@@ -2,7 +2,7 @@ package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.component.AttributesComponent;
-import com.larrian.dotacraft.init.ModAttributes;
+import com.larrian.dotacraft.ModAttributes;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import static com.larrian.dotacraft.init.ModComponents.ATTRIBUTES_COMPONENT;
-import static com.larrian.dotacraft.init.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
