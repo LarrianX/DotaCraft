@@ -10,7 +10,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "AttributesTooltipMixin",
     "BarsMixin",
     "ClientPlayerEntityMixin",
     "ClientPlayerInteractionManagerMixin",

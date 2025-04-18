@@ -18,13 +18,13 @@ public class KeyInputHandler {
     public static final String KEY_FIRST_SKILL = "key.dotacraft.first_skill";
     public static final String KEY_SECOND_SKILL = "key.dotacraft.second_skill";
     public static final String KEY_THIRD_SKILL = "key.dotacraft.third_skill";
-    public static final String KEY_SUPER = "key.dotacraft.super";
+    public static final String KEY_ULT = "key.dotacraft.ult";
 
     public static KeyBinding blockSlotKey;
     public static KeyBinding firstSkillKey;
     public static KeyBinding secondSkillKey;
     public static KeyBinding thirdSkillKey;
-    public static KeyBinding superKey;
+    public static KeyBinding ultKey;
 
     public static void register() {
         blockSlotKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -51,8 +51,8 @@ public class KeyInputHandler {
                 GLFW.GLFW_KEY_C,
                 KEY_CATEGORY
         ));
-        superKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                KEY_SUPER,
+        ultKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                KEY_ULT,
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_V,
                 KEY_CATEGORY
@@ -82,8 +82,8 @@ public class KeyInputHandler {
             if (thirdSkillKey.wasPressed()) {
                 component.useSkill(Skill.Type.THIRD);
             }
-            if (superKey.wasPressed()) {
-                component.useSkill(Skill.Type.SUPER);
+            if (ultKey.wasPressed()) {
+                component.useSkill(Skill.Type.ULT);
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.larrian.dotacraft;
 
+import com.larrian.dotacraft.dota.ModAttributes;
+import com.larrian.dotacraft.dota.ModHeroes;
 import com.larrian.dotacraft.event.ServerEvents;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

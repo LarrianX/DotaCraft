@@ -8,7 +8,7 @@ import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
 import static com.larrian.dotacraft.ModEffects.RUNE_REGENERATION;
 
 import com.larrian.dotacraft.effect.RegenerationHealthEffect;
-import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.dota.ModAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 

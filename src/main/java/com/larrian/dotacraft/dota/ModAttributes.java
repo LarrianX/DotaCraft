@@ -1,6 +1,7 @@
-package com.larrian.dotacraft;
+package com.larrian.dotacraft.dota;
 
-import com.larrian.dotacraft.dota.DotaAttribute;
+import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.ModRegistries;
 import com.larrian.dotacraft.dota.attribute.*;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;

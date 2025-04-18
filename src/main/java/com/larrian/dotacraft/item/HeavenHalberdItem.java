@@ -3,7 +3,7 @@ package com.larrian.dotacraft.item;
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.component.HeroComponent;
 
-import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.dota.ModAttributes;
 import com.larrian.dotacraft.DotaItem;
 import com.larrian.dotacraft.dota.DotaAttribute;
 import com.larrian.dotacraft.dota.DotaAttributeInstance;

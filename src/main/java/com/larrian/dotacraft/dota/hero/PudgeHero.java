@@ -4,13 +4,15 @@ import com.larrian.dotacraft.dota.DotaAttribute;
 import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.dota.DotaHero;
 import com.larrian.dotacraft.dota.Skill;
-import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.dota.ModAttributes;
+import com.larrian.dotacraft.entity.MeatHookEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumMap;
 
-import static com.larrian.dotacraft.ModAttributes.STRENGTH;
+import static com.larrian.dotacraft.dota.ModAttributes.STRENGTH;
 
 public class PudgeHero extends DotaHero {
     private static final String ID = "pudge";
@@ -31,7 +33,17 @@ public class PudgeHero extends DotaHero {
 
         @Override
         public void use(PlayerEntity source) {
-            source.sendMessage(Text.literal("first skill"));
+            if (source.getWorld() instanceof ServerWorld world) {
+                Vec3d direction = source.getRotationVector(); // normalized look vector
+                double speed = 0.7; // constant projectile speed
+
+                MeatHookEntity entity = new MeatHookEntity(world, source);
+                entity.setPos(source.getX(), source.getY() + 0.1F, source.getZ()); // более реалистичный старт
+                entity.setNoGravity(true);
+                entity.setVelocity(direction.multiply(speed)); // apply velocity in look direction
+
+                world.spawnEntity(entity);
+            }
         }
     }
 
@@ -51,7 +63,6 @@ public class PudgeHero extends DotaHero {
 
         @Override
         public void use(PlayerEntity source) {
-            source.sendMessage(Text.literal("second skill"));
         }
     }
 
@@ -71,7 +82,6 @@ public class PudgeHero extends DotaHero {
 
         @Override
         public void use(PlayerEntity source) {
-            source.sendMessage(Text.literal("third skill"));
         }
     }
 
@@ -91,7 +101,6 @@ public class PudgeHero extends DotaHero {
 
         @Override
         public void use(PlayerEntity source) {
-            source.sendMessage(Text.literal("super"));
         }
     }
 
@@ -105,7 +114,7 @@ public class PudgeHero extends DotaHero {
     private static final MeatHookSkill FIRST = put(Skill.Type.FIRST, new MeatHookSkill());
     private static final RotSkill SECOND = put(Skill.Type.SECOND, new RotSkill());
     private static final MeatShieldSkill THIRD = put(Skill.Type.THIRD, new MeatShieldSkill());
-    private static final DismemberSkill SUPER = put(Skill.Type.SUPER, new DismemberSkill());
+    private static final DismemberSkill ULT = put(Skill.Type.ULT, new DismemberSkill());
 
     private static <T extends Skill> T put(Skill.Type type, T skill) {
         SKILLS.put(type, skill);

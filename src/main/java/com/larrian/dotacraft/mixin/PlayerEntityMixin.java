@@ -2,7 +2,7 @@ package com.larrian.dotacraft.mixin;
 
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.component.AttributesComponent;
-import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.dota.ModAttributes;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;

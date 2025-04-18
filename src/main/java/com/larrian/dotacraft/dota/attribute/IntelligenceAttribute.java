@@ -6,7 +6,7 @@ import com.larrian.dotacraft.component.HeroComponent;
 import net.minecraft.entity.player.PlayerEntity;
 
 import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.ModHeroes.PUDGE;
+import static com.larrian.dotacraft.dota.ModHeroes.PUDGE;
 
 public class IntelligenceAttribute extends DotaAttribute {
     private static final String ID = "intelligence";

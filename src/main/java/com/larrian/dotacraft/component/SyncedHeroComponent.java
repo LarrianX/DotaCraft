@@ -6,7 +6,7 @@ import com.larrian.dotacraft.event.ServerEvents;
 import com.larrian.dotacraft.event.network.SkillPacket;
 import com.larrian.dotacraft.dota.DotaHero;
 import com.larrian.dotacraft.dota.Skill;
-import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.dota.ModAttributes;
 import com.larrian.dotacraft.ModRegistries;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.fabricmc.api.EnvType;
@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.EnumMap;
@@ -188,11 +189,14 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
         if (isHero()) {
             Skill skill = hero.getSkill(type);
             if (skillCooldowns.get(type) == 0 && getMana() >= skill.getMana(getLevel())) {
-                skillCooldowns.put(type, skill.getCooldown(getLevel()));
-                addMana(-skill.getMana(getLevel()));
+                if (!provider.isCreative()) {
+                    skillCooldowns.put(type, skill.getCooldown(getLevel()));
+                    addMana(-skill.getMana(getLevel()));
+                }
                 if (provider.getWorld().isClient) {
                     ClientPlayNetworking.send(ServerEvents.SKILL_PACKET,
                             new SkillPacket(type).toPacketByteBuf());
+                    provider.sendMessage(Text.literal("Used " + type.name().toLowerCase() + " skill"));
                 } else {
                     skill.use(provider);
                 }

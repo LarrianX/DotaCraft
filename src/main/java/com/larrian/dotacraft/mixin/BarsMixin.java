@@ -6,7 +6,7 @@ import com.larrian.dotacraft.component.AttributesComponent;
 import com.larrian.dotacraft.component.HeroComponent;
 import com.larrian.dotacraft.dota.DotaHero;
 import com.larrian.dotacraft.dota.Skill;
-import com.larrian.dotacraft.ModAttributes;
+import com.larrian.dotacraft.dota.ModAttributes;
 import com.larrian.dotacraft.ModRegistries;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
@@ -30,16 +30,12 @@ import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
 
 @Mixin(InGameHud.class)
 public class BarsMixin {
-
     @Unique
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
-
     @Unique
     private static final int MAX_PIXELS = 88;
-
     @Unique
     private static final DecimalFormat OUTPUT_FORMAT = new DecimalFormat("00");
-
     @Unique
     private static final DecimalFormat ATTRIBUTES_FORMAT = new DecimalFormat("#.##########");
 
@@ -235,6 +231,17 @@ public class BarsMixin {
             HeroComponent component = player.getComponent(HERO_COMPONENT);
             if (component.isHero()) {
                 ci.cancel();
+            }
+        }
+    }
+
+    @Inject(method = "render(Lnet/minecraft/client/gui/DrawContext;F)V",
+            at = @At(value = "HEAD"))
+    private void onRender(DrawContext context, float tickDelta, CallbackInfo ci) {
+        PlayerEntity player = MinecraftClient.getInstance().player;
+        if (player != null) {
+            HeroComponent component = player.getComponent(HERO_COMPONENT);
+            if (component.isHero()) {
                 AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
 
                 int health = (int) component.getHealth();
@@ -256,4 +263,6 @@ public class BarsMixin {
             }
         }
     }
+
+
 }

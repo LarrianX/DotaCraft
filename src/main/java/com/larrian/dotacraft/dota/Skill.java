@@ -13,6 +13,6 @@ public abstract class Skill {
         FIRST,
         SECOND,
         THIRD,
-        SUPER
+        ULT
     }
 }

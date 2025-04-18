@@ -1,21 +1,62 @@
 package com.larrian.dotacraft.client.renderer;
 
+import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.client.ModRenderers;
 import com.larrian.dotacraft.entity.MeatHookEntity;
 import com.larrian.dotacraft.entity.model.MeatHookEntityModel;
+import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
-import static com.larrian.dotacraft.client.ModRenderers.MODEL_CUBE_LAYER;
-
-public class MeatHookRenderer extends LivingEntityRenderer<MeatHookEntity, MeatHookEntityModel> {
+public class MeatHookRenderer extends EntityRenderer<MeatHookEntity> {
+    private final MeatHookEntityModel model;
+    private static final Identifier TEXTURE = new Identifier(DotaCraft.MOD_ID, "textures/entity/" + MeatHookEntity.ID + ".png");
 
     public MeatHookRenderer(EntityRendererFactory.Context context) {
-        super(context, new MeatHookEntityModel(context.getPart(MODEL_CUBE_LAYER)), 0.5f);
+        super(context);
+        this.model = new MeatHookEntityModel(context.getPart(ModRenderers.MEAT_HOOK));
     }
 
     @Override
+    public void render(MeatHookEntity entity, float yaw, float tickDelta, MatrixStack matrices,
+                       VertexConsumerProvider vertexConsumers, int light) {
+        matrices.push();
+
+        float interpolatedYaw = MathHelper.lerp(tickDelta, entity.prevYaw, entity.getYaw());
+        float interpolatedPitch = MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch());
+
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(interpolatedYaw));
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(interpolatedPitch));
+
+        float shake = entity.shake - tickDelta;
+        if (shake > 0.0F) {
+            float shakeAngle = -MathHelper.sin(shake * 3.0F) * shake;
+            matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(shakeAngle));
+        }
+
+        matrices.translate(0.0, 1.5, 0.0);
+        matrices.scale(-1.0F, -1.0F, 1.0F);
+
+        model.render(matrices, vertexConsumers.getBuffer(model.getLayer(TEXTURE)), light,
+                net.minecraft.client.render.OverlayTexture.DEFAULT_UV,
+                1.0F, 1.0F, 1.0F, 1.0F);
+
+        matrices.pop();
+        super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+    }
+
+
+    @Override
     public Identifier getTexture(MeatHookEntity entity) {
-        return new Identifier("entitytesting", "textures/entity/meat_hook.png");
+        return TEXTURE;
     }
 }

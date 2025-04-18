@@ -1,6 +1,7 @@
-package com.larrian.dotacraft;
+package com.larrian.dotacraft.dota;
 
-import com.larrian.dotacraft.dota.DotaHero;
+import com.larrian.dotacraft.DotaCraft;
+import com.larrian.dotacraft.ModRegistries;
 import com.larrian.dotacraft.dota.hero.PudgeHero;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
