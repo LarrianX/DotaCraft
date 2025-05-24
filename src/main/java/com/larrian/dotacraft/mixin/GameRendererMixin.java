@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.custom.HeroComponent;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.entity.Entity;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.function.Predicate;
 
-import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {

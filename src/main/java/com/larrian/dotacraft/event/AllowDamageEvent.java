@@ -4,7 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 
-import static com.larrian.dotacraft.ModEffects.DISARM;
+import static com.larrian.dotacraft.effect.ModEffects.DISARM;
 
 public class AllowDamageEvent {
     public static boolean event(LivingEntity entity, DamageSource source, float amount) {

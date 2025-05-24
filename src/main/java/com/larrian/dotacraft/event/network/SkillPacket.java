@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.event.network;
 
-import com.larrian.dotacraft.dota.Skill;
+import com.larrian.dotacraft.hero.Skill;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.PacketByteBuf;
 

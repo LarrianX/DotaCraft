@@ -1,12 +1,12 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.dota.DotaAttributeInstance;
-import com.larrian.dotacraft.dota.DotaAttribute;
-import com.larrian.dotacraft.component.AttributesComponent;
-import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.dota.DotaHero;
-import com.larrian.dotacraft.dota.Skill;
-import com.larrian.dotacraft.dota.ModAttributes;
+import com.larrian.dotacraft.attribute.DotaAttributeInstance;
+import com.larrian.dotacraft.attribute.DotaAttribute;
+import com.larrian.dotacraft.component.custom.AttributesComponent;
+import com.larrian.dotacraft.component.custom.HeroComponent;
+import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.hero.Skill;
+import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.ModRegistries;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
@@ -25,8 +25,8 @@ import java.text.DecimalFormat;
 import java.util.EnumMap;
 import java.util.Set;
 
-import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.ModComponents.ATTRIBUTES_COMPONENT;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.component.ModComponents.ATTRIBUTES_COMPONENT;
 
 @Mixin(InGameHud.class)
 public class BarsMixin {
@@ -170,7 +170,7 @@ public class BarsMixin {
      */
     @Unique
     private void drawTexts(DrawContext context, int level, Set<Integer> blockedSlots, AttributesComponent attributes, MinecraftClient client) {
-        int x = context.getScaledWindowWidth() / 2 - 98;
+        int x = context.getScaledWindowWidth() / 2 - 102;
         int y = context.getScaledWindowHeight() - 39;
         // Draw level
         context.drawTextWithShadow(client.textRenderer, String.valueOf(level), x, y, 16777215);
@@ -211,10 +211,10 @@ public class BarsMixin {
 
         // Assuming hero.getSkills() returns a Map<Skill.Type, Skill>
         for (var type : Skill.Type.values()) {
-            Skill skill = hero.getSkill(type);
+            Skill skill = hero.getType().getSkill(type);
             // Display skill type, mana cost and cooldown at level 1 (for example)
             String skillInfo = "Mana: " + (int) skill.getMana(level)
-                    + ", Cooldown: " + (int)(skillCooldowns.get(type) / 20. + 0.9) + "/" + skill.getCooldown(level) / 20;
+                    + ", Cooldown: " + (int)(skillCooldowns.get(type) / 20F + 0.9) + "/" + skill.getCooldown(level) / 20;
             drawTextPair(context, client, "Skill " + skill.getClass().getSimpleName() + ":", skillInfo, x, y, 100);
             y += 10;
         }

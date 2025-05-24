@@ -1,14 +1,14 @@
 package com.larrian.dotacraft.client.event;
 
-import com.larrian.dotacraft.component.HeroComponent;
-import com.larrian.dotacraft.dota.Skill;
+import com.larrian.dotacraft.component.custom.HeroComponent;
+import com.larrian.dotacraft.hero.Skill;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
-import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
 public class KeyInputHandler {
     private static HeroComponent component;

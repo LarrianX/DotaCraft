@@ -1,13 +1,10 @@
 package com.larrian.dotacraft.entity.model;
 
-import com.larrian.dotacraft.entity.MeatHookEntity;
+import com.larrian.dotacraft.entity.custom.MeatHookEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
-import org.spongepowered.include.com.google.common.collect.ImmutableList;
 
 public class MeatHookEntityModel extends EntityModel<MeatHookEntity> {
     private final ModelPart bb_main;

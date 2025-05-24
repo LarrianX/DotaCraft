@@ -1,8 +1,14 @@
 package com.larrian.dotacraft;
 
-import com.larrian.dotacraft.dota.ModAttributes;
-import com.larrian.dotacraft.dota.ModHeroes;
+import com.larrian.dotacraft.attribute.ModAttributes;
+import com.larrian.dotacraft.block.ModBlocks;
+import com.larrian.dotacraft.command.ModCommands;
+import com.larrian.dotacraft.effect.ModEffects;
+import com.larrian.dotacraft.entity.ModEntities;
 import com.larrian.dotacraft.event.ServerEvents;
+import com.larrian.dotacraft.hero.ModHeroes;
+import com.larrian.dotacraft.item.ModItemGroups;
+import com.larrian.dotacraft.item.ModItems;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.fabricmc.api.ModInitializer;
@@ -25,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import static com.larrian.dotacraft.ModItems.*;
+import static com.larrian.dotacraft.item.ModItems.*;
 
 public class DotaCraft implements ModInitializer {
     public static final String MOD_ID = "dotacraft";

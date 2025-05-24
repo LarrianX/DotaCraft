@@ -1,6 +1,6 @@
 package com.larrian.dotacraft.mixin;
 
-import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.custom.HeroComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {

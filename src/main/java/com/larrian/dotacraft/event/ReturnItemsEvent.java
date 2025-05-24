@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.event;
 
-import com.larrian.dotacraft.ModItems;
-import com.larrian.dotacraft.item.BottleItem;
+import com.larrian.dotacraft.item.ModItems;
+import com.larrian.dotacraft.item.custom.BottleItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;

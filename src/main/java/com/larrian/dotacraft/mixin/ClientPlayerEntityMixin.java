@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
-import static com.larrian.dotacraft.ModEffects.RUNE_INVISIBILITY;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.effect.ModEffects.RUNE_INVISIBILITY;
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin {

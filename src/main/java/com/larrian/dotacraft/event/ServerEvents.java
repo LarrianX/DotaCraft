@@ -1,7 +1,7 @@
 package com.larrian.dotacraft.event;
 
 import com.larrian.dotacraft.DotaCraft;
-import com.larrian.dotacraft.component.HeroComponent;
+import com.larrian.dotacraft.component.custom.HeroComponent;
 import com.larrian.dotacraft.event.network.AutoCraftPacket;
 import com.larrian.dotacraft.event.network.SkillPacket;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -14,7 +14,7 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
-import static com.larrian.dotacraft.ModComponents.HERO_COMPONENT;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
 public class ServerEvents {
     public static final Identifier AUTO_CRAFT_PACKET = new Identifier(DotaCraft.MOD_ID, "auto_craft");
