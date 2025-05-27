@@ -2,6 +2,7 @@ package com.larrian.dotacraft.entity.custom;
 
 import com.larrian.dotacraft.Custom;
 import com.larrian.dotacraft.entity.ModEntities;
+import com.larrian.dotacraft.hero.Skill;
 import net.minecraft.entity.*;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -10,6 +11,8 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
 public class MeatHookEntity extends PersistentProjectileEntity implements Custom {
     public static final String ID = "meat_hook";
@@ -31,21 +34,28 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
         if (!world.isClient && this.getOwner() != null) {
             Vec3d direction = this.getOwner().getPos().subtract(hit.getPos()).normalize().multiply(3);
             hit.addVelocity(direction.x, direction.y, direction.z);
-            this.discard();
+            _discard();
         }
     }
 
     @Override
     protected void onBlockHit(BlockHitResult blockHitResult) {
         super.onBlockHit(blockHitResult);
+        _discard();
+    }
+    
+    private void _discard() {
+        if (this.getOwner() != null) {
+            this.getOwner().getComponent(HERO_COMPONENT).deactivateSkill(Skill.Type.FIRST);
+        }
         this.discard();
     }
-
+    
     @Override
     public void tick() {
         super.tick();
         if (age >= 40) {
-            this.discard();
+            _discard();
         }
     }
 

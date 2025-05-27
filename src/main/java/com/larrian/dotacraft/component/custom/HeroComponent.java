@@ -35,6 +35,8 @@ public interface HeroComponent extends ComponentV3, ServerTickingComponent, Clie
     void addLevel(int level);
     EnumMap<Skill.Type, Integer> getSkillCooldowns();
     void useSkill(Skill.Type skillType);
+    void deactivateSkill(Skill.Type skillType);
+    boolean isSkillActive(Skill.Type skillType);
     @Environment(EnvType.CLIENT)
     void setBlock(int slot, boolean blocked);
     @Environment(EnvType.CLIENT)

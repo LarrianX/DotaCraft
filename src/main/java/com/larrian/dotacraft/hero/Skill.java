@@ -3,7 +3,7 @@ package com.larrian.dotacraft.hero;
 import net.minecraft.entity.player.PlayerEntity;
 
 public abstract class Skill {
-    abstract public void use(PlayerEntity source);
+    abstract public void use(PlayerEntity source, DotaHero hero);
 
     abstract public int getCooldown(int level);
 

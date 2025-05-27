@@ -140,6 +140,14 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
         getHero().useSkill(skillType);
     }
 
+    public void deactivateSkill(Skill.Type skillType) {
+        getHero().deactivateSkill(skillType);
+    }
+
+    public boolean isSkillActive(Skill.Type skillType) {
+        return getHero().isSkillActive(skillType);
+    }
+
     @Override
     @Environment(EnvType.CLIENT)
     public void setBlock(int slot, boolean blocked) {

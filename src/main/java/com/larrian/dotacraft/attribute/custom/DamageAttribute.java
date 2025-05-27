@@ -31,7 +31,7 @@ public class DamageAttribute extends DotaAttribute {
             if (attribute != null) {
                 value += attributes.getAttribute(attribute).get();
             } else {
-                // TODO
+                // TODO: universal main attribute
             }
         }
 

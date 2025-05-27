@@ -1,20 +1,22 @@
 package com.larrian.dotacraft.hero.custom;
 
-import com.larrian.dotacraft.attribute.DotaAttribute;
-import com.larrian.dotacraft.hero.DotaHero;
+import com.larrian.dotacraft.hero.*;
 import com.larrian.dotacraft.attribute.ModAttributes;
-import com.larrian.dotacraft.hero.DotaHeroType;
-import com.larrian.dotacraft.hero.MainAttributes;
-import com.larrian.dotacraft.hero.Skill;
 import com.larrian.dotacraft.component.custom.AttributesComponent;
 import com.larrian.dotacraft.entity.custom.MeatHookEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.EnumMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.larrian.dotacraft.attribute.ModAttributes.STRENGTH;
+import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
 public class PudgeHero extends DotaHero {
     public static final String ID = "pudge";
@@ -51,7 +53,7 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source) {
+        public void use(PlayerEntity source, DotaHero hero) {
             if (source.getWorld() instanceof ServerWorld world) {
                 float yaw = source.getYaw();
 
@@ -70,9 +72,9 @@ public class PudgeHero extends DotaHero {
         }
     }
 
-    private static class RotSkill extends Skill {
-        private static final double MANA = 80;
-        private static final int COOLDOWN = 1;
+    private static class RotSkill extends ToggleSkill {
+        private static final double MANA = 0;
+        private static final int COOLDOWN = 0;
 
         @Override
         public double getMana(int level) {
@@ -85,8 +87,7 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source) {
-        }
+        public void use(PlayerEntity source, DotaHero hero) {}
     }
 
     private static class MeatShieldSkill extends Skill {
@@ -104,7 +105,8 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source) {
+        public void use(PlayerEntity source, DotaHero hero) {
+            hero.deactivateSkill(Type.THIRD);
         }
     }
 
@@ -123,11 +125,13 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source) {
+        public void use(PlayerEntity source, DotaHero hero) {
+            hero.deactivateSkill(Type.ULT);
         }
     }
 
     PlayerEntity provider;
+    int delayTick;
 
     public PudgeHero(DotaHeroType<PudgeHero> type, AttributesComponent attributes,
                      PlayerEntity provider) {
@@ -148,5 +152,53 @@ public class PudgeHero extends DotaHero {
         attributes.getAttribute(ModAttributes.REGENERATION_MANA).set(0);
 
         this.provider = provider;
+    }
+
+    public static List<PlayerEntity> getPlayersInCircle(PlayerEntity playerSource, double radius) {
+        World world = playerSource.getWorld();
+
+        Box box = new Box(
+                playerSource.getX() - radius, playerSource.getY() - radius, playerSource.getZ() - radius,
+                playerSource.getX() + radius, playerSource.getY() + radius, playerSource.getZ() + radius
+        );
+
+        List<PlayerEntity> playersInBox = world.getEntitiesByClass(PlayerEntity.class, box, entity -> true);
+
+        Vec3d playerPos = playerSource.getPos();
+        return playersInBox.stream()
+                .filter(player -> {
+                    double distanceXZ = Math.sqrt(
+                            Math.pow(playerPos.x - player.getX(), 2) +
+                                    Math.pow(playerPos.z - player.getZ(), 2)
+                    );
+
+                    return distanceXZ <= radius && !player.isTeammate(playerSource) &&
+                            player.getComponent(HERO_COMPONENT).isHero();
+                })
+                .collect(Collectors.toList());
+    }
+
+    private void tick() {
+        if (isSkillActive(Skill.Type.SECOND)) {
+            if (delayTick == 0) {
+                for (PlayerEntity playerTarget : getPlayersInCircle(provider, 5.0)) {
+                    playerTarget.getComponent(HERO_COMPONENT).addHealth(
+                            -3 * getLevel()
+                    );
+                }
+                delayTick = 2;
+            }
+            delayTick--;
+        }
+    }
+
+    @Override
+    public void serverTick() {
+        tick();
+    }
+
+    @Override
+    public void clientTick() {
+        tick();
     }
 }
