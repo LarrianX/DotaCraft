@@ -75,7 +75,10 @@ public class BarsMixin {
      * Draws the health bar.
      */
     @Unique
-    private void drawHealthBar(DrawContext context, int health, int maxHealth, double regenHealth, MinecraftClient client) {
+    private void drawHealthBar(DrawContext context, HeroComponent component, AttributesComponent attributes, MinecraftClient client) {
+        int health = (int) component.getHealth();
+        int maxHealth = (int) attributes.getAttribute(ModAttributes.MAX_HEALTH).get();
+        double regenHealth = attributes.getAttribute(ModAttributes.REGENERATION_HEALTH).get();
         int x = context.getScaledWindowWidth() / 2 - 91;
         int y = context.getScaledWindowHeight() - 39;
         int pixels = calculatePixels(health, maxHealth);
@@ -117,7 +120,10 @@ public class BarsMixin {
      * Draws the mana bar.
      */
     @Unique
-    private void drawManaBar(DrawContext context, int mana, int maxMana, double regenMana, MinecraftClient client) {
+    private void drawManaBar(DrawContext context, HeroComponent component, AttributesComponent attributes, MinecraftClient client) {
+        int mana = (int) component.getMana();
+        int maxMana = (int) attributes.getAttribute(ModAttributes.MAX_MANA).get();
+        double regenMana = attributes.getAttribute(ModAttributes.REGENERATION_MANA).get();
         int x = context.getScaledWindowWidth() / 2 + 1;
         int y = context.getScaledWindowHeight() - 39;
         int pixels = calculatePixels(mana, maxMana);
@@ -165,11 +171,12 @@ public class BarsMixin {
     }
 
     /**
-     * Draws the right side texts: level, blocked slots and attributes.
-     * Note: Hero name has been moved to drawSkills.
+     * Draws the right side texts: level, blocked slots, and attributes.
      */
     @Unique
-    private void drawTexts(DrawContext context, int level, Set<Integer> blockedSlots, AttributesComponent attributes, MinecraftClient client) {
+    private void drawTexts(DrawContext context, HeroComponent component, AttributesComponent attributes, MinecraftClient client) {
+        int level = component.getLevel();
+        Set<Integer> blockedSlots = component.getBlocked();
         int x = context.getScaledWindowWidth() / 2 - 102;
         int y = context.getScaledWindowHeight() - 39;
         // Draw level
@@ -198,29 +205,29 @@ public class BarsMixin {
      * Draws the left side texts: hero name and skills information for debugging.
      */
     @Unique
-    private void drawSkills(DrawContext context, AbstractTeam team, EnumMap<Skill.Type, Integer> skillCooldowns, int level, DotaHero hero, MinecraftClient client) {
-        // Starting position on the left side of the screen
+    private void drawSkills(DrawContext context, HeroComponent component, AbstractTeam team, MinecraftClient client) {
+        EnumMap<Skill.Type, Integer> skillCooldowns = component.getSkillCooldowns();
+        int level = component.getLevel();
         int x = context.getScaledWindowWidth() / 2 - 320;
         int y = context.getScaledWindowHeight() - 150;
 
         // Draw hero name
         if (team != null) {
-            context.drawTextWithShadow(client.textRenderer, (capitalize(hero.getCustomId()) + " (" + team.getName().toLowerCase() + ")"), x, y, 16777215);
+            context.drawTextWithShadow(client.textRenderer, (capitalize(component.getHero().getCustomId()) + " (" + team.getName().toLowerCase() + ")"), x, y, 16777215);
             y += 10;
         }
 
         // Assuming hero.getSkills() returns a Map<Skill.Type, Skill>
         for (var type : Skill.Type.values()) {
-            Skill skill = hero.getType().getSkill(type);
-            // Display skill type, mana cost and cooldown at level 1 (for example)
-            String skillInfo = "Active: " + (hero.isSkillActive(type) ? "true" : "false") + ", " +
+            Skill skill = component.getHero().getType().getSkill(type);
+            String skillInfo = "Active: " + (component.isSkillActive(type) ? "true" : "false") + ", " +
                     "mana: " + (int) skill.getMana(level) + ", cooldown: " + (int)(skillCooldowns.get(type) / 20F + 0.9) + "/" + skill.getCooldown(level) / 20;
             drawTextPair(context, client, "Skill " + skill.getClass().getSimpleName() + ":", skillInfo, x, y, 110);
             y += 10;
         }
 
         // Additional hero information
-        String info = hero.getAdditionalInfo();
+        String info = component.getHero().getAdditionalInfo();
         if (!info.isEmpty()) {
             context.drawTextWithShadow(client.textRenderer, info, x, y, 16777215);
             y += 10;
@@ -250,26 +257,13 @@ public class BarsMixin {
             HeroComponent component = player.getComponent(HERO_COMPONENT);
             if (component.isHero()) {
                 AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
-
-                int health = (int) component.getHealth();
-                int mana = (int) component.getMana();
-                int maxHealth = (int) attributes.getAttribute(ModAttributes.MAX_HEALTH).get();
-                int maxMana = (int) attributes.getAttribute(ModAttributes.MAX_MANA).get();
-                double regenHealth = attributes.getAttribute(ModAttributes.REGENERATION_HEALTH).get();
-                double regenMana = attributes.getAttribute(ModAttributes.REGENERATION_MANA).get();
-                int level = component.getLevel();
-                DotaHero hero = component.getHero();
-                AbstractTeam team = player.getScoreboardTeam();
-                Set<Integer> blockedSlots = component.getBlocked();
                 MinecraftClient client = MinecraftClient.getInstance();
 
-                drawHealthBar(context, health, maxHealth, regenHealth, client);
-                drawManaBar(context, mana, maxMana, regenMana, client);
-                drawSkills(context, team, component.getSkillCooldowns(), level, hero, client);
-                drawTexts(context, level, blockedSlots, attributes, client);
+                drawHealthBar(context, component, attributes, client);
+                drawManaBar(context, component, attributes, client);
+                drawSkills(context, component, player.getScoreboardTeam(), client);
+                drawTexts(context, component, attributes, client);
             }
         }
     }
-
-
 }

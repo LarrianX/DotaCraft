@@ -32,7 +32,7 @@ public class BecomeHeroCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralArgumentBuilder<ServerCommandSource> command = CommandManager.literal("become_hero");
 
-        for (DotaHeroType<?> heroType : ModRegistries.HEROES) {
+        for (DotaHeroType<?> heroType : ModRegistries.HERO_TYPES) {
             LiteralArgumentBuilder<ServerCommandSource> heroCommand = CommandManager.literal(heroType.getCustomId());
 
             for (String team : TEAMS) {
@@ -57,7 +57,7 @@ public class BecomeHeroCommand {
         }
 
         HeroComponent component = player.getComponent(HERO_COMPONENT);
-        DotaHeroType<?> heroType = ModRegistries.HEROES.get(new Identifier(DotaCraft.MOD_ID, heroName.toLowerCase()));
+        DotaHeroType<?> heroType = ModRegistries.HERO_TYPES.get(new Identifier(DotaCraft.MOD_ID, heroName.toLowerCase()));
         if (heroType != null) {
             AttributesComponent attributes = player.getComponent(ATTRIBUTES_COMPONENT);
             for (DotaAttribute attribute : ModRegistries.ATTRIBUTES) {
@@ -66,10 +66,9 @@ public class BecomeHeroCommand {
             }
             DotaHero hero = heroType.become(player);
             component.setHero(hero);
-
-            hero.setHealth(0);
-            hero.setMana(0);
-            hero.setLevel(1);
+            component.setHealth(0);
+            component.setMana(0);
+            component.setLevel(1);
             attributes.sync();
             component.sync();
 

@@ -23,7 +23,7 @@ public class ModHeroes {
             String id, DotaHeroType.HeroFactory<T> factory, EnumMap<Skill.Type, Skill> skills, MainAttributes mainAttribute,
             double strengthBonus, double agilityBonus, double intelligenceBonus) {
         return Registry.register(
-                ModRegistries.HEROES,
+                ModRegistries.HERO_TYPES,
                 new Identifier(DotaCraft.MOD_ID, id),
                 new DotaHeroType<>(id, factory, skills, mainAttribute, strengthBonus, agilityBonus, intelligenceBonus)
         );

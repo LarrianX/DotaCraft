@@ -1,12 +1,25 @@
 package com.larrian.dotacraft.hero.custom;
 
+import com.larrian.dotacraft.component.custom.HeroComponent;
 import com.larrian.dotacraft.hero.*;
 import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.component.custom.AttributesComponent;
 import com.larrian.dotacraft.entity.custom.MeatHookEntity;
+import com.larrian.dotacraft.hero.tick.CommonTickingHero;
+import com.larrian.dotacraft.hero.tick.ServerTickingHero;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageSources;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -18,7 +31,7 @@ import java.util.stream.Collectors;
 import static com.larrian.dotacraft.attribute.ModAttributes.STRENGTH;
 import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 
-public class PudgeHero extends DotaHero {
+public class PudgeHero extends DotaHero implements ServerTickingHero {
     public static final String ID = "pudge";
 
     public static final MainAttributes MAIN_ATTRIBUTE = MainAttributes.STRENGTH;
@@ -53,7 +66,7 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source, DotaHero hero) {
+        public void use(PlayerEntity source, HeroComponent component) {
             if (source.getWorld() instanceof ServerWorld world) {
                 float yaw = source.getYaw();
 
@@ -87,7 +100,7 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source, DotaHero hero) {}
+        public void use(PlayerEntity source, HeroComponent component) {}
     }
 
     private static class MeatShieldSkill extends Skill {
@@ -105,8 +118,8 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source, DotaHero hero) {
-            hero.deactivateSkill(Type.THIRD);
+        public void use(PlayerEntity source, HeroComponent component) {
+            component.deactivateSkill(Type.THIRD);
         }
     }
 
@@ -125,13 +138,15 @@ public class PudgeHero extends DotaHero {
         }
 
         @Override
-        public void use(PlayerEntity source, DotaHero hero) {
-            hero.deactivateSkill(Type.ULT);
+        public void use(PlayerEntity source, HeroComponent component) {
+            component.deactivateSkill(Type.ULT);
         }
     }
 
     PlayerEntity provider;
-    int delayTick;
+
+    byte delayTick;
+    HeroComponent _component; // cache
 
     public PudgeHero(DotaHeroType<PudgeHero> type, AttributesComponent attributes,
                      PlayerEntity provider) {
@@ -152,9 +167,10 @@ public class PudgeHero extends DotaHero {
         attributes.getAttribute(ModAttributes.REGENERATION_MANA).set(0);
 
         this.provider = provider;
+        this._component = provider.getComponent(HERO_COMPONENT);
     }
 
-    public static List<PlayerEntity> getPlayersInCircle(PlayerEntity playerSource, double radius) {
+    public static List<Entity> getEntitiesInCircle(PlayerEntity playerSource, double radius) {
         World world = playerSource.getWorld();
 
         Box box = new Box(
@@ -162,43 +178,45 @@ public class PudgeHero extends DotaHero {
                 playerSource.getX() + radius, playerSource.getY() + radius, playerSource.getZ() + radius
         );
 
-        List<PlayerEntity> playersInBox = world.getEntitiesByClass(PlayerEntity.class, box, entity -> true);
+        List<LivingEntity> entitiesInBox = world.getEntitiesByClass(LivingEntity.class, box, entity -> true);
 
         Vec3d playerPos = playerSource.getPos();
-        return playersInBox.stream()
-                .filter(player -> {
+        return entitiesInBox.stream()
+                .filter(entity -> {
                     double distanceXZ = Math.sqrt(
-                            Math.pow(playerPos.x - player.getX(), 2) +
-                                    Math.pow(playerPos.z - player.getZ(), 2)
+                            Math.pow(playerPos.x - entity.getX(), 2) +
+                                    Math.pow(playerPos.z - entity.getZ(), 2)
                     );
+                    if (entity instanceof PlayerEntity player && player.isTeammate(playerSource)) {
+                        return false;
+                    }
 
-                    return distanceXZ <= radius && !player.isTeammate(playerSource) &&
-                            player.getComponent(HERO_COMPONENT).isHero();
+                    return distanceXZ <= radius;
                 })
                 .collect(Collectors.toList());
     }
 
-    private void tick() {
-        if (isSkillActive(Skill.Type.SECOND)) {
+    public void serverTick() {
+        // damage per 2 ticks
+        if (_component.isSkillActive(Skill.Type.SECOND)) {
             if (delayTick == 0) {
-                for (PlayerEntity playerTarget : getPlayersInCircle(provider, 5.0)) {
-                    playerTarget.getComponent(HERO_COMPONENT).addHealth(
-                            -3 * getLevel()
-                    );
+                for (Entity entity : getEntitiesInCircle(provider, 5.0)) {
+                    DamageSources damageSources = provider.getWorld().getDamageSources();
+                    DamageSource damageSource = damageSources.create(DamageTypes.PLAYER_ATTACK, provider);
+                    entity.damage(damageSource, (float)(3 * _component.getLevel()));
                 }
-                delayTick = 2;
+                delayTick = 1;
+            } else {
+                delayTick--;
             }
-            delayTick--;
         }
     }
 
-    @Override
-    public void serverTick() {
-        tick();
+    public void readFromNbt(NbtCompound tag) {
+         delayTick = tag.getByte("delayTick");
     }
 
-    @Override
-    public void clientTick() {
-        tick();
+    public void writeToNbt(NbtCompound tag) {
+        tag.putByte("delayTick", delayTick);
     }
 }
