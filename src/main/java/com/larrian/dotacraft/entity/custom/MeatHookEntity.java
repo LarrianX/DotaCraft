@@ -31,7 +31,8 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
     }
 
     @Override
-    protected void onHit(LivingEntity hit) {
+    protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
+        Entity hit = entityHitResult.getEntity();
         if (!world.isClient && this.getOwner() != null) {
             Vec3d direction = this.getOwner().getPos().subtract(hit.getPos()).normalize().multiply(3);
             hit.addVelocity(direction.x, direction.y, direction.z);
@@ -40,12 +41,13 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
     }
 
     @Override
-    protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
-    }
-
-    @Override
-    public void onPlayerCollision(PlayerEntity player) {
-        super.onPlayerCollision(player);
+    public void onPlayerCollision(PlayerEntity hit) {
+        super.onPlayerCollision(hit);
+        if (!world.isClient && this.getOwner() != null) {
+            Vec3d direction = this.getOwner().getPos().subtract(hit.getPos()).normalize().multiply(3);
+            hit.addVelocity(direction.x, direction.y, direction.z);
+            _discard();
+        }
     }
 
     @Override
@@ -53,7 +55,7 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
         super.onBlockHit(blockHitResult);
         _discard();
     }
-    
+
     private void _discard() {
         if (this.getOwner() != null) {
             HeroComponent component = this.getOwner().getComponent(HERO_COMPONENT);

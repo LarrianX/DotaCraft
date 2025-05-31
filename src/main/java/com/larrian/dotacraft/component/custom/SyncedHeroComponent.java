@@ -189,11 +189,11 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
             Skill skill = hero.getType().getSkill(skillType);
             SkillInstance skillInstance = getSkillInstance(skillType);
 
-            if (skill != null && ((skillInstance.getCooldown() == 0 && mana >= skill.getMana(level)) || provider.isCreative()) &&
+            if (skill != null && ((skillInstance.getCooldown() == 0 && mana >= skill.getMana(skillInstance.getLevel())) || provider.isCreative()) &&
                     (skill instanceof ToggleSkill || !skillInstance.isActive())) {
                 if (!provider.isCreative()) {
                     skillInstance.setCooldown(skill.getCooldowns()[skillInstance.getLevel() - 1] * TICKS_PER_SECOND);
-                    addMana(-skill.getMana(level));
+                    addMana(-skill.getMana(skillInstance.getLevel()));
                 }
                 if (skill instanceof ToggleSkill)
                     skillInstance.setActive(!skillInstance.isActive());
