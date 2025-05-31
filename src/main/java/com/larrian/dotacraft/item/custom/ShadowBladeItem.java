@@ -1,11 +1,9 @@
 package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.component.custom.HeroComponent;
-
 import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
 import com.larrian.dotacraft.attribute.DotaAttribute;
-import com.larrian.dotacraft.attribute.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -23,12 +21,15 @@ import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 public class ShadowBladeItem extends DotaItem {
     private static final String ID = "shadow_blade";
     private static final int MINUS_MANA = 75;
-
     private static final double DAMAGE = 25;
     private static final double ATTACK_SPEED = 35;
+    private static final Map<DotaAttribute, Double> MODIFIERS = Map.of(
+            ModAttributes.DAMAGE, DAMAGE,
+            ModAttributes.ATTACK_SPEED, ATTACK_SPEED
+    );
 
     public ShadowBladeItem() {
-        super(new FabricItemSettings().maxCount(1), ID);
+        super(new FabricItemSettings().maxCount(1), MODIFIERS, ID);
     }
 
     @Override
@@ -54,11 +55,5 @@ public class ShadowBladeItem extends DotaItem {
                 StatusEffects.INVISIBILITY, 340, 0, false, false
         );
         player.addStatusEffect(invisibilityEffect);
-    }
-
-    @Override
-    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
-        attributes.get(ModAttributes.DAMAGE).addModifier(String.valueOf(slot), DAMAGE);
-        attributes.get(ModAttributes.ATTACK_SPEED).addModifier(String.valueOf(slot), ATTACK_SPEED);
     }
 }

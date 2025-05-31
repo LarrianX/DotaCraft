@@ -4,32 +4,36 @@ import com.larrian.dotacraft.attribute.DotaAttributeInstance;
 import com.larrian.dotacraft.attribute.DotaAttribute;
 import com.larrian.dotacraft.component.custom.AttributesComponent;
 import com.larrian.dotacraft.component.custom.HeroComponent;
-import com.larrian.dotacraft.hero.DotaHero;
 import com.larrian.dotacraft.hero.Skill;
 import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.ModRegistries;
+import com.larrian.dotacraft.hero.SkillInstance;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.util.Identifier;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.text.DecimalFormat;
-import java.util.EnumMap;
 import java.util.Set;
 
+import static com.larrian.dotacraft.DotaCraft.TICKS_PER_SECOND;
 import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 import static com.larrian.dotacraft.component.ModComponents.ATTRIBUTES_COMPONENT;
 
 @Mixin(InGameHud.class)
-public class BarsMixin {
+public class StatusBarsMixin {
     @Unique
     private static final Identifier ICONS = new Identifier("dotacraft:textures/icons.png");
     @Unique
@@ -83,17 +87,10 @@ public class BarsMixin {
         int y = context.getScaledWindowHeight() - 39;
         int pixels = calculatePixels(health, maxHealth);
 
-        // Left border
-        context.drawTexture(ICONS, x, y, 0, 0, 1, 9);
-        x += 1;
         // Filled part
-        context.drawTexture(ICONS, x, y, 1, 0, pixels, 9);
-        x += pixels;
+        context.drawTexture(ICONS, x, y, 1, 0, pixels + 1, 9);
         // Unfilled part
-        context.drawTexture(ICONS, x, y, 1 + pixels, 9, MAX_PIXELS - pixels, 9);
-        x += MAX_PIXELS - pixels;
-        // Right border
-        context.drawTexture(ICONS, x, y, MAX_PIXELS + 1, 0, 1, 9);
+        context.drawTexture(ICONS, x + pixels, y, 1 + pixels, 9, MAX_PIXELS - pixels + 1, 9);
 
         drawHealthText(context, health, maxHealth, regenHealth, client);
     }
@@ -128,17 +125,10 @@ public class BarsMixin {
         int y = context.getScaledWindowHeight() - 39;
         int pixels = calculatePixels(mana, maxMana);
 
-        // Left border
-        context.drawTexture(ICONS, x, y, 0, 18, 1, 9);
-        x += 1;
         // Filled part
-        context.drawTexture(ICONS, x, y, 1, 18, pixels, 9);
-        x += pixels;
+        context.drawTexture(ICONS, x, y, 1, 18, pixels + 1, 9);
         // Unfilled part
-        context.drawTexture(ICONS, x, y, 1 + pixels, 27, MAX_PIXELS - pixels, 9);
-        x += MAX_PIXELS - pixels;
-        // Right border
-        context.drawTexture(ICONS, x, y, MAX_PIXELS + 1, 18, 1, 9);
+        context.drawTexture(ICONS, x + pixels, y, 1 + pixels, 27, MAX_PIXELS - pixels + 1, 9);
 
         drawManaText(context, mana, maxMana, regenMana, client);
     }
@@ -175,16 +165,16 @@ public class BarsMixin {
      */
     @Unique
     private void drawTexts(DrawContext context, HeroComponent component, AttributesComponent attributes, MinecraftClient client) {
-        int level = component.getLevel();
+//        int level = component.getLevel();
         Set<Integer> blockedSlots = component.getBlocked();
-        int x = context.getScaledWindowWidth() / 2 - 102;
-        int y = context.getScaledWindowHeight() - 39;
+//        int x = context.getScaledWindowWidth() / 2 - 102;
+//        int y = context.getScaledWindowHeight() - 39;
         // Draw level
-        context.drawTextWithShadow(client.textRenderer, String.valueOf(level), x, y, 16777215);
+//        context.drawTextWithShadow(client.textRenderer, String.valueOf(level), x, y, 16777215);
 
         // Draw blocked slots and attributes on the right side
-        x = context.getScaledWindowWidth() / 2 + 110;
-        y = context.getScaledWindowHeight() - 150;
+        int x = context.getScaledWindowWidth() / 2 + 110;
+        int y = context.getScaledWindowHeight() - 150;
 
         // Draw blocked slots
         for (Integer slot : blockedSlots) {
@@ -206,8 +196,6 @@ public class BarsMixin {
      */
     @Unique
     private void drawSkills(DrawContext context, HeroComponent component, AbstractTeam team, MinecraftClient client) {
-        EnumMap<Skill.Type, Integer> skillCooldowns = component.getSkillCooldowns();
-        int level = component.getLevel();
         int x = context.getScaledWindowWidth() / 2 - 320;
         int y = context.getScaledWindowHeight() - 150;
 
@@ -220,8 +208,16 @@ public class BarsMixin {
         // Assuming hero.getSkills() returns a Map<Skill.Type, Skill>
         for (var type : Skill.Type.values()) {
             Skill skill = component.getHero().getType().getSkill(type);
-            String skillInfo = "Active: " + (component.isSkillActive(type) ? "true" : "false") + ", " +
-                    "mana: " + (int) skill.getMana(level) + ", cooldown: " + (int)(skillCooldowns.get(type) / 20F + 0.9) + "/" + skill.getCooldown(level) / 20;
+            SkillInstance skillInstance = component.getSkillInstance(type);
+
+            String skillInfo = "Active: " + (skillInstance.isActive() ? "true" : "false") + ", level: " + skillInstance.getLevel();
+
+            int mana = (int) skill.getMana(skillInstance.getLevel());
+            if (mana != 0)
+                skillInfo += ", mana: " + mana;
+            int cooldown = skill.getCooldowns()[skillInstance.getLevel() - 1];
+            if (cooldown != 0)
+                skillInfo += ", cooldown: " + (int)((double) skillInstance.getCooldown() / TICKS_PER_SECOND + 0.9) + "/" + cooldown;
             drawTextPair(context, client, "Skill " + skill.getClass().getSimpleName() + ":", skillInfo, x, y, 110);
             y += 10;
         }
@@ -232,6 +228,57 @@ public class BarsMixin {
             context.drawTextWithShadow(client.textRenderer, info, x, y, 16777215);
             y += 10;
         }
+    }
+
+    @Redirect(
+            method = "renderExperienceBar",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/network/ClientPlayerEntity;experienceLevel:I",
+                    opcode = Opcodes.GETFIELD
+            )
+    )
+    private int redirectExperienceLevel(ClientPlayerEntity player) {
+        HeroComponent component = player.getComponent(HERO_COMPONENT);
+        if (component.isHero())
+            return component.getLevel();
+        else
+            return player.experienceLevel;
+    }
+
+    @Redirect(
+            method = "renderExperienceBar",
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/network/ClientPlayerEntity;experienceProgress:F",
+                    opcode = Opcodes.GETFIELD
+            )
+    )
+    private float redirectExperienceProgress(ClientPlayerEntity player) {
+        if (player.getComponent(HERO_COMPONENT).isHero())
+            return 1f;
+        else
+            return player.experienceProgress;
+    }
+
+    @Redirect(
+            method = "renderExperienceBar",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/network/ClientPlayerEntity;getNextLevelExperience()I"
+            )
+    )
+    private int redirectGetNextLevelExperience(ClientPlayerEntity player) {
+        HeroComponent component = player.getComponent(HERO_COMPONENT);
+        
+        if (component.isHero())
+            if (component.getLevel() >= 30) {
+                return 112 + (component.getLevel() - 30) * 9;
+            } else {
+                return component.getLevel() >= 15 ? 37 + (component.getLevel() - 15) * 5 : 7 + component.getLevel() * 2;
+            }
+        else
+            return player.getNextLevelExperience();
     }
 
     /**
@@ -252,7 +299,7 @@ public class BarsMixin {
     @Inject(method = "render(Lnet/minecraft/client/gui/DrawContext;F)V",
             at = @At(value = "HEAD"))
     private void onRender(DrawContext context, float tickDelta, CallbackInfo ci) {
-        PlayerEntity player = MinecraftClient.getInstance().player;
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null) {
             HeroComponent component = player.getComponent(HERO_COMPONENT);
             if (component.isHero()) {

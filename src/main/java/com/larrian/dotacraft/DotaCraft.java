@@ -43,6 +43,8 @@ public class DotaCraft implements ModInitializer {
     public static final double ERROR = 0.00000000001;
 
     public static final HashMap<Item[], Item> RECIPES = new HashMap<>();
+    public static final int TICKS_PER_SECOND = 20;
+
     static {
         RECIPES.put(new Item[]{DEMON_EDGE, CRYSTALYS, REC_DAEDALUS}, DAEDALUS);
 //        RECIPES.put(new Item[]{DEMON_EDGE}, DEMON_EDGE);

@@ -5,21 +5,15 @@ import com.larrian.dotacraft.hero.*;
 import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.component.custom.AttributesComponent;
 import com.larrian.dotacraft.entity.custom.MeatHookEntity;
-import com.larrian.dotacraft.hero.tick.CommonTickingHero;
 import com.larrian.dotacraft.hero.tick.ServerTickingHero;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
-import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -59,14 +53,12 @@ public class PudgeHero extends DotaHero implements ServerTickingHero {
         }
 
         @Override
-        public int getCooldown(int level) {
-            int index = (int) ((double)(level - 1) / (30F / (double) COOLDOWNS.length));
-            index = index < 0 || index > COOLDOWNS.length - 1 ? 0 : index;
-            return COOLDOWNS[index] * 20;
+        public int[] getCooldowns() {
+            return COOLDOWNS;
         }
 
         @Override
-        public void use(PlayerEntity source, HeroComponent component) {
+        public void use(PlayerEntity source, SkillInstance skillInstance) {
             if (source.getWorld() instanceof ServerWorld world) {
                 float yaw = source.getYaw();
 
@@ -87,7 +79,7 @@ public class PudgeHero extends DotaHero implements ServerTickingHero {
 
     private static class RotSkill extends ToggleSkill {
         private static final double MANA = 0;
-        private static final int COOLDOWN = 0;
+        private static final int[] COOLDOWNS = {0, 0, 0, 0};
 
         @Override
         public double getMana(int level) {
@@ -95,17 +87,17 @@ public class PudgeHero extends DotaHero implements ServerTickingHero {
         }
 
         @Override
-        public int getCooldown(int level) {
-            return COOLDOWN * 20;
+        public int[] getCooldowns() {
+            return COOLDOWNS;
         }
 
         @Override
-        public void use(PlayerEntity source, HeroComponent component) {}
+        public void use(PlayerEntity source, SkillInstance skillInstance) {}
     }
 
     private static class MeatShieldSkill extends Skill {
         private static final double MANA = 80;
-        private static final int COOLDOWN = 17;
+        private static final int[] COOLDOWNS = {20, 19, 18, 17};
 
         @Override
         public double getMana(int level) {
@@ -113,39 +105,39 @@ public class PudgeHero extends DotaHero implements ServerTickingHero {
         }
 
         @Override
-        public int getCooldown(int level) {
-            return COOLDOWN * 20;
+        public int[] getCooldowns() {
+            return COOLDOWNS;
         }
 
         @Override
-        public void use(PlayerEntity source, HeroComponent component) {
-            component.deactivateSkill(Type.THIRD);
+        public void use(PlayerEntity source, SkillInstance skillInstance) {
+            skillInstance.setActive(false);
         }
     }
 
     private static class DismemberSkill extends Skill {
-        private static final double MANA = 170;
-        private static final int COOLDOWN = 20;
+        private static final double[] MANA = {100, 130, 170};
+        private static final int[] COOLDOWNS = {30, 25, 20};
 
         @Override
         public double getMana(int level) {
-            return MANA;
+            return MANA[level - 1];
         }
 
         @Override
-        public int getCooldown(int level) {
-            return COOLDOWN * 20;
+        public int[] getCooldowns() {
+            return COOLDOWNS;
         }
 
         @Override
-        public void use(PlayerEntity source, HeroComponent component) {
-            component.deactivateSkill(Type.ULT);
+        public void use(PlayerEntity source, SkillInstance skillInstance) {
+            skillInstance.setActive(false);
         }
     }
 
     PlayerEntity provider;
 
-    byte delayTick;
+    byte tickTimer;
     HeroComponent _component; // cache
 
     public PudgeHero(DotaHeroType<PudgeHero> type, AttributesComponent attributes,
@@ -198,25 +190,26 @@ public class PudgeHero extends DotaHero implements ServerTickingHero {
 
     public void serverTick() {
         // damage per 2 ticks
-        if (_component.isSkillActive(Skill.Type.SECOND)) {
-            if (delayTick == 0) {
+        SkillInstance skillInstance = _component.getSkillInstance(Skill.Type.SECOND);
+        if (skillInstance.isActive()) {
+            if (tickTimer == 0) {
                 for (Entity entity : getEntitiesInCircle(provider, 5.0)) {
                     DamageSources damageSources = provider.getWorld().getDamageSources();
                     DamageSource damageSource = damageSources.create(DamageTypes.PLAYER_ATTACK, provider);
-                    entity.damage(damageSource, (float)(3 * _component.getLevel()));
+                    entity.damage(damageSource, (float)(3 * skillInstance.getLevel()));
                 }
-                delayTick = 1;
+                tickTimer = 1;
             } else {
-                delayTick--;
+                tickTimer--;
             }
         }
     }
 
     public void readFromNbt(NbtCompound tag) {
-         delayTick = tag.getByte("delayTick");
+         tickTimer = tag.getByte("timer");
     }
 
     public void writeToNbt(NbtCompound tag) {
-        tag.putByte("delayTick", delayTick);
+        tag.putByte("timer", tickTimer);
     }
 }

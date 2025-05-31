@@ -2,11 +2,9 @@ package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.component.custom.HeroComponent;
-
 import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
 import com.larrian.dotacraft.attribute.DotaAttribute;
-import com.larrian.dotacraft.attribute.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -31,9 +29,16 @@ public class HeavenHalberdItem extends DotaItem {
     private static final double MAX_HEALTH = 275;
     private static final double REGENERATION_HEALTH = 6;
     private static final double ALLS = 5;
+    private static final Map<DotaAttribute, Double> MODIFIERS = Map.of(
+            ModAttributes.MAX_HEALTH, MAX_HEALTH,
+            ModAttributes.REGENERATION_HEALTH, REGENERATION_HEALTH,
+            ModAttributes.STRENGTH, ALLS,
+            ModAttributes.AGILITY, ALLS,
+            ModAttributes.INTELLIGENCE, ALLS
+    );
 
     public HeavenHalberdItem() {
-        super(new FabricItemSettings().maxCount(1), ID);
+        super(new FabricItemSettings().maxCount(1), MODIFIERS, ID);
     }
 
     @Override
@@ -44,7 +49,7 @@ public class HeavenHalberdItem extends DotaItem {
         HeroComponent component = user.getComponent(HERO_COMPONENT);
         if (
                 targetedEntity instanceof PlayerEntity playerTarget && !user.isTeammate(playerTarget) &&
-                (component.getMana() >= MINUS_MANA || user.isCreative())) {
+                        (component.getMana() >= MINUS_MANA || user.isCreative())) {
             if (!user.isCreative()) {
                 component.addMana(-MINUS_MANA);
                 user.getItemCooldownManager().set(this, COOLDOWN);
@@ -61,14 +66,4 @@ public class HeavenHalberdItem extends DotaItem {
     private void applyEffects(PlayerEntity player) {
         player.setStatusEffect(new StatusEffectInstance(DISARM, DURATION, 0), null);
     }
-
-    @Override
-    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
-        attributes.get(ModAttributes.MAX_HEALTH).addModifier(String.valueOf(slot), MAX_HEALTH);
-        attributes.get(ModAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH);
-        attributes.get(ModAttributes.STRENGTH).addModifier(String.valueOf(slot), ALLS);
-        attributes.get(ModAttributes.AGILITY).addModifier(String.valueOf(slot), ALLS);
-        attributes.get(ModAttributes.INTELLIGENCE).addModifier(String.valueOf(slot), ALLS);
-    }
 }
-

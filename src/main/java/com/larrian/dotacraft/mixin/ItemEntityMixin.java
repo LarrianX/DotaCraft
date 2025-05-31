@@ -30,9 +30,6 @@ public abstract class ItemEntityMixin extends Entity {
     public abstract ItemStack getStack();
 
     @Shadow
-    private int pickupDelay;
-
-    @Shadow
     private UUID owner;
 
     private ItemEntityMixin(EntityType<?> type, World world) {

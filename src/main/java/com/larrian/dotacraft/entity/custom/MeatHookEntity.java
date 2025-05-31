@@ -46,7 +46,8 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
     
     private void _discard() {
         if (this.getOwner() != null) {
-            this.getOwner().getComponent(HERO_COMPONENT).deactivateSkill(Skill.Type.FIRST);
+            this.getOwner().getComponent(HERO_COMPONENT).getSkillInstance(Skill.Type.FIRST).setActive(false);
+            this.getOwner().getComponent(HERO_COMPONENT).sync();
         }
         this.discard();
     }

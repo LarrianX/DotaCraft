@@ -3,6 +3,7 @@ package com.larrian.dotacraft.component.custom;
 import com.larrian.dotacraft.hero.DotaHero;
 import com.larrian.dotacraft.hero.DotaHeroType;
 import com.larrian.dotacraft.hero.Skill;
+import com.larrian.dotacraft.hero.SkillInstance;
 import dev.onyxstudios.cca.api.v3.component.ComponentV3;
 import dev.onyxstudios.cca.api.v3.component.tick.ClientTickingComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
@@ -33,10 +34,8 @@ public interface HeroComponent extends ComponentV3, ServerTickingComponent, Clie
     int getLevel();
     void setLevel(int level);
     void addLevel(int level);
-    EnumMap<Skill.Type, Integer> getSkillCooldowns();
     void useSkill(Skill.Type skillType);
-    void deactivateSkill(Skill.Type skillType);
-    boolean isSkillActive(Skill.Type skillType);
+    SkillInstance getSkillInstance(Skill.Type skillType);
     @Environment(EnvType.CLIENT)
     void setBlock(int slot, boolean blocked);
     @Environment(EnvType.CLIENT)

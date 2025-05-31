@@ -15,6 +15,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
 
+import static com.larrian.dotacraft.DotaCraft.TICKS_PER_SECOND;
+
 public class TangoTFItem extends DotaItem {
     private static final String ID = "tango_tf";
     private static final String TIME_KEY = "time";
@@ -44,7 +46,7 @@ public class TangoTFItem extends DotaItem {
         long startTime = getTime(stack);
 
         int tickPassed = (int) (world.getTime() - startTime);
-        int secondsLeft = (TIME / 20) - (tickPassed / 20);
+        int secondsLeft = (TIME / TICKS_PER_SECOND) - (tickPassed / TICKS_PER_SECOND);
 
         if (!world.isClient && entity instanceof ServerPlayerEntity player) {
             if (player.getStackInHand(player.getActiveHand()) == stack) {

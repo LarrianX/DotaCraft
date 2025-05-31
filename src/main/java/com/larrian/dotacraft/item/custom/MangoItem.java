@@ -2,11 +2,9 @@ package com.larrian.dotacraft.item.custom;
 
 import com.larrian.dotacraft.DotaCraft;
 import com.larrian.dotacraft.component.custom.HeroComponent;
-
 import com.larrian.dotacraft.attribute.ModAttributes;
 import com.larrian.dotacraft.item.DotaItem;
 import com.larrian.dotacraft.attribute.DotaAttribute;
-import com.larrian.dotacraft.attribute.DotaAttributeInstance;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.HungerManager;
@@ -24,11 +22,13 @@ import static com.larrian.dotacraft.component.ModComponents.HERO_COMPONENT;
 public class MangoItem extends DotaItem {
     private static final String ID = "mango";
     private static final int REGENERATION = 100;
-
     private static final double REGENERATION_HEALTH = 0.4;
+    private static final Map<DotaAttribute, Double> MODIFIERS = Map.of(
+            ModAttributes.REGENERATION_HEALTH, REGENERATION_HEALTH
+    );
 
     public MangoItem() {
-        super(new FabricItemSettings().maxCount(64), ID);
+        super(new FabricItemSettings().maxCount(64), MODIFIERS, ID);
     }
 
     @Override
@@ -50,21 +50,15 @@ public class MangoItem extends DotaItem {
     }
 
     private void applyEffects(PlayerEntity user) {
-        // Воспроизводим звуки и эффекты
         HeroComponent component = user.getComponent(HERO_COMPONENT);
 
         if (component.isHero()) {
             component.addMana(REGENERATION);
             component.sync();
         } else {
-            HungerManager hunger = (user.getHungerManager());
+            HungerManager hunger = user.getHungerManager();
             hunger.setFoodLevel(hunger.getFoodLevel() + 6);
         }
         user.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0F, 1.5F);
-    }
-
-    @Override
-    public void addModifiers(Map<DotaAttribute, DotaAttributeInstance> attributes, int slot, int count) {
-        attributes.get(ModAttributes.REGENERATION_HEALTH).addModifier(String.valueOf(slot), REGENERATION_HEALTH * count);
     }
 }

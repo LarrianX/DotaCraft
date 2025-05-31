@@ -18,4 +18,11 @@ public abstract class ClientPlayerEntityMixin {
             cir.setReturnValue(false);
         }
     }
+
+    @Inject(method="canSprint()Z", at = @At("RETURN"), cancellable = true)
+    private void onCanSprint(CallbackInfoReturnable<Boolean> cir) {
+        ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity) (Object) this;
+        if (clientPlayerEntity.getComponent(HERO_COMPONENT).isHero())
+            cir.setReturnValue(true);
+    }
 }
