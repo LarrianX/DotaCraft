@@ -1,9 +1,11 @@
 package com.larrian.dotacraft.entity.custom;
 
 import com.larrian.dotacraft.Custom;
+import com.larrian.dotacraft.component.custom.HeroComponent;
 import com.larrian.dotacraft.entity.ModEntities;
 import com.larrian.dotacraft.hero.Skill;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.hit.BlockHitResult;
@@ -29,13 +31,21 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
     }
 
     @Override
-    protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
-        Entity hit = entityHitResult.getEntity();
+    protected void onHit(LivingEntity hit) {
         if (!world.isClient && this.getOwner() != null) {
             Vec3d direction = this.getOwner().getPos().subtract(hit.getPos()).normalize().multiply(3);
             hit.addVelocity(direction.x, direction.y, direction.z);
             _discard();
         }
+    }
+
+    @Override
+    protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
+    }
+
+    @Override
+    public void onPlayerCollision(PlayerEntity player) {
+        super.onPlayerCollision(player);
     }
 
     @Override
@@ -46,8 +56,9 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
     
     private void _discard() {
         if (this.getOwner() != null) {
-            this.getOwner().getComponent(HERO_COMPONENT).getSkillInstance(Skill.Type.FIRST).setActive(false);
-            this.getOwner().getComponent(HERO_COMPONENT).sync();
+            HeroComponent component = this.getOwner().getComponent(HERO_COMPONENT);
+            component.getSkillInstance(Skill.Type.FIRST).setActive(false);
+            component.sync();
         }
         this.discard();
     }

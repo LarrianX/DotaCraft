@@ -204,9 +204,8 @@ public class SyncedHeroComponent implements HeroComponent, AutoSyncedComponent {
                     ClientPlayNetworking.send(ServerEvents.SKILL_PACKET,
                             new SkillPacket(skillType).toPacketByteBuf());
                     provider.sendMessage(Text.literal("Used " + skillType.name().toLowerCase() + " skill"));
-                } else {
-                    skill.use(provider, skillInstance);
                 }
+                skill.use(provider, skillInstance);
             }
         }
     }
