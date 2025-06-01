@@ -8,6 +8,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
@@ -36,16 +37,9 @@ public class MeatHookEntity extends PersistentProjectileEntity implements Custom
         if (!world.isClient && this.getOwner() != null) {
             Vec3d direction = this.getOwner().getPos().subtract(hit.getPos()).normalize().multiply(3);
             hit.addVelocity(direction.x, direction.y, direction.z);
-            _discard();
-        }
-    }
-
-    @Override
-    public void onPlayerCollision(PlayerEntity hit) {
-        super.onPlayerCollision(hit);
-        if (!world.isClient && this.getOwner() != null) {
-            Vec3d direction = this.getOwner().getPos().subtract(hit.getPos()).normalize().multiply(3);
-            hit.addVelocity(direction.x, direction.y, direction.z);
+            if (hit instanceof PlayerEntity) {
+                hit.velocityModified = true;
+            }
             _discard();
         }
     }
